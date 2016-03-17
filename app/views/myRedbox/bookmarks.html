@@ -1,0 +1,79 @@
+<div id="bookmark">
+    <div id="dashboard">
+        <div id="top-bar-text">
+            <div class="tabs-container">
+                <div class="wrapper-tab">
+                    <div id="menu_{{$index}}" ng-repeat="pane in panes" class="tab-1"
+                        ng-class="{'tab-1High': $index==2,'list-item-img-highlight': ((menuCurrentIndex==$index) && (CurrentLevelIndex==1))}" outerlinewidth="4px"
+                         ng-click="eventHandler.onClickEvent(1,$index);"
+                         ng-mouseover="eventHandler.onMouseOverEvent(1,$index);">
+                        {{pane.title}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inner-container">
+        <div rbikeyevent rbimousewheel class="bookmarks-content" id="bookmarks">
+
+            <div class="bookmarks-wrapper" id="bookmarks-wrapper" ng-style="{'margin-top':title_list_margin}">
+                <div class="no-results" ng-show="bookmarks.length==0"><strong> You currently have no bookmarks.</strong>
+                </div>
+                <div class="div-content">
+                    <div class="gridCol">
+                        <div id="2_{{$index}}" ng-repeat="item in bookmarks" class="bookmarks-list"   check-last>
+                            <div id="imgId_{{$index}}" ng-class="{'focused': ($index==focusIndex) && (CurrentLevelIndex==2) }"
+                                 class="ribbonParent">
+                                <div class="top ribbon red" style="visibility:{{item.isComingSoon}}">
+                                    <span>Coming Soon</span>
+                                </div>
+                                <img onerror="this.src='images/default-img.png';" ng-src="{{item.imageUrl}}"
+                                     border="0" src="" ng-click="eventHandler.onClickEvent(2,$index);"
+                                     ng-mouseover="eventHandler.onMouseOverEvent(2,$index);"/>
+                                <input type="hidden" value="{{item.productId}}" id="productId_{{$index}}"/>
+
+                                <div class="badge-content">
+                                    <div ng-switch on="scrollTitle($index==focusIndex,item)">
+                                        <div ng-switch-when="true">
+                                            <div class="grid-title-scroll title5" ng-style="{'width':titleWidth(item)}"
+                                                 id="bookmark-title_{{$index}}">{{item.title}}
+                                            </div>
+                                        </div>
+                                        <div class="badge-content-title"
+                                             id="bookmark-title_{{$index}}" ng-style="{'width':titleWidth(item)}"
+                                             ng-switch-default>{{item.title}}
+                                        </div>
+                                    </div>
+
+                                    <div class="icon-content" id="icon-list_{{$index}}">
+                                        <span class="icons subscribe" ng-style="{'display': isSubscription(item)}">&nbsp;</span>
+                                            <span class="icons buy-rent"
+                                                  ng-style="{'display':isVOD(item)}">&nbsp;</span>
+                                        <span class="icons kiosk" ng-style="{'display':isKiosk(item)}">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="help-div" ng-style="{'visibility':helpOverLay}">
+                <div class="help-image"></div>
+                <div class="wh-options-menu wh-help_hover_div"  ng-class="{'focused': CurrentLevelIndex =='dismiss' }" id='dismiss'
+                     ng-click="eventHandler.onClickEvent('dismiss','dismiss');"
+                     ng-mouseover="eventHandler.onMouseOverEvent('dismiss','dismiss');">
+                </div>
+            </div>
+        </div>
+        <div id="bottomGrad">
+            <div class="seperator"></div>
+        </div>
+    </div>
+    <div class="wh-options-menu-container dash">
+        <ul class="wh-options-menu" id='help' ng-class="{'focused': CurrentLevelIndex =='help' }" ng-click="eventHandler.onClickEvent('help','help');"
+            ng-mouseover="eventHandler.onMouseOverEvent('help','help');">
+            <li>My Redbox Help</li>
+            <li class="icons control-square"></li>
+        </ul>
+    </div>
+</div>

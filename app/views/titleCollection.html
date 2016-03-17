@@ -1,0 +1,31 @@
+<div id="background-big-image" ng-style="{'background':backgroundStyle}">
+    <div id='collection-page' ng-cloak rbikeyevent=''>
+	<div class="title1">{{collectionTitle}}</div>
+    <div id='grid' style="width:100000px;">
+      <div class="search_gridItem" ng-repeat="title in allTitlesInCollection" id="0_{{$index}}"  ng-class="{search_gridItem_highlight: currentIndex==$index}" pid="{{title.getProductID()}}">
+        <div class="grid-item">
+          <a href="#/titledetail/{{title.getProductID()}}"> <img  onerror="this.src='images/default-img.png';" class="grid-item-img"  outerlinewidth="5px"
+                        ng-src="{{title.getBoxCoverImage()}}" posterTitle="" ng-click="eventHandler.onGridClickEvent(0,$index);"  ng-mouseover="eventHandler.onGridMouseOverEvent(0,$index);"/></a>
+        </div>
+        <div class="search_gridIconWrapper">
+			<div class="grid-sub-text">
+                <div ng-switch on="scrollTitle($index==currentIndex,title)">
+                    <div ng-switch-when="true">
+                        <div class="grid-title-scroll title5" ng-style="{'width':titleWidth(title)}">{{title.getTitle()}}</div>
+                    </div>
+                    <div class="title5"
+                         ng-style="{'width':titleWidth(title)}" ng-switch-default>{{title.getTitle()}}
+                    </div>
+                </div>
+
+			</div>
+			<div class="grid-sub-ics">
+				<span id="sub_0" class="icons subscribe" ng-show="isSubscription(title)">&nbsp;</span> <span id="buyrent_0" class="icons buy-rent" ng-show="isVOD(title)">&nbsp;</span> <span id="kiosk_0" class="icons kiosk" ng-show="isKiosk(title)">&nbsp;</span>
+			</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

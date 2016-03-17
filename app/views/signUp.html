@@ -1,0 +1,39 @@
+    <div id="signup-page2" class="container" rbikeyevent="">
+        <div id="wrapper">
+            <div class="sigin-up-main-text">
+                <div class="title1">Get a <span>FREE Month of Movies</span> when you sign up!</div>
+            </div>
+
+            <!-- device conditional section-->
+            <div class="play-image-text" ng-show="PlayStationType=='PS3'">
+				<p id="sub-txt">GO TO:</p>
+                <img src="images/play.png" />
+				<p id="sub-txt">OR</p>
+                <div id="offer-text">
+					<span class="icons msg-icon"></span>
+					<p id="note-div">Text <span>PS3</span> to <span>727272</span> to learn more about Redbox Instant by Verizon*.</p>
+				</div>
+            </div>
+
+
+            <div class="play-image-text" ng-show="PlayStationType=='PS4'">
+				<p id="sub-txt">GO TO:</p>
+                <img src="images/play-ps4.png" />
+				<p id="sub-txt">OR</p>
+				<div id="offer-text">
+					<span class="icons msg-icon"></span>
+					<p id="note-div">Text <span>PS4</span> to <span>727272</span> to learn more about Redbox Instant by Verizon*.</p>
+				</div>
+            </div>
+
+          <!--   <div id="signup-divider-1"></div> -->
+
+
+            <div class="bottom-text">
+               <p><span>*Msg &amp; data rates may apply.</span> Reply <span>STOP to Cancel, or HELP for help.</span>By texting "{{PlayStationType}}" to 727272, I hereby consent to receive autodialed and/or <br>pre-recorded telemarketing calls or messages from or on behalf of Redbox Instant by Verizon to the phone number provided. I understand that consent is not a condition of purchase of Redbox Instant by Verizon. Terms &amp; Privacy at <span>www.redboxinstant.com/sms</span></p>
+            </div>
+
+        </div>
+        <div id="signup-divider-2"></div>
+    </div>
+

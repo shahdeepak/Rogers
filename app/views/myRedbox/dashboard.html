@@ -1,0 +1,193 @@
+<div rbikeyevent="" rbimousewheel>
+    <div id="dashboard">
+        <div id="top-bar-text">
+            <div class="tabs-container">
+                <div class="wrapper-tab">
+                    <div id="menu_{{$index}}" ng-repeat="pane in panes" class="tab-1 "
+						ng-class="{'tab-1High': $index==0, 'list-item-img-highlight': ((menuCurrentIndex==$index) && (CurrentLevelIndex==1))}"
+                         outerlinewidth="4px" ng-click="eventHandler.onClickEvent(1,$index);"
+                         ng-mouseover="eventHandler.onMouseOverEvent(1,$index);">
+                        {{pane.title}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inner-container">
+            <div class="scroll-main">
+                <div class="scroll-container" id="scrollContainerDiv" ng-style="{'margin-top':TITLE_LIST_MARGIN}">
+                    <div class="div-content" id="dashboard-reminders">
+                        <div class="title2">Heads Up!</div>
+                        <div class="gridCol">
+                            <div id="reminderScrollHorizontal" style="width:100000px;" ng-style="{'margin-left':RemindersLeftMargin}">
+                                <div id="2_{{$index}}" ng-repeat="item in reminders" class="dashboardList" check-last>
+                                    <div id="2imgid_{{$index}}" class="ribbonParent" ng-class="{'focused': ($index==currentIndex) && (CurrentLevelIndex==2) }">
+                                       
+                                        <img onerror="this.src='images/default-img.png';" ng-src="{{item.imageUrl}}"
+                                             border="0" ng-click="gotoTitleDetails()"
+                                             ng-mouseover="eventHandler.onMouseOverEvent(2,$index);"/>
+                                        <input type="hidden" value="{{item.productId}}" id="2productid_{{$index}}"/>
+
+                                        <div class="badge-content">
+                                            <div ng-show="showProgressBar(item)" class="purchases-progressbar">
+                                                <div class="progress-bar-value"
+                                                     style="width: {{item.watchedProgress}}%"></div>
+                                            </div>
+                                                <div ng-show="scrollReminderTitle($index==focusIndex,item)">
+                                                    <div class="grid-title-scroll title5" id="reminders-title_{{$index}}"  ng-style="{'width':getReminderWidth(item)}" >
+                                                        {{item.reminderText}}&nbsp; {{item.reminderDaysLeft}}
+                                                    </div>
+                                                </div>
+                                                <div ng-show="!scrollReminderTitle($index==focusIndex,item)" class="badge-content-title" id="reminders-title_{{$index}}"  ng-style="{'width':getReminderWidth(item)}">
+                                                    {{item.reminderText}}&nbsp; {{item.reminderDaysLeft}}
+                                                </div>
+
+                                            <!--badges are require in case of kiosk reminder plz don not remove this code  -->
+                                            <div class="icon-content" id="icon-list_{{$index}}">
+                                                <span id="dvd_0" class="icons dvd" ng-show="isDvd(item)">&nbsp;</span>
+                                                <span id="blueray_0" class="icons blu-ray" ng-show="isBluray(item)">&nbsp;</span>
+                                            </div>	
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboardNoItemText my-dashboard-no-titleclass"
+                                 style="visibility: {{noReminder}}" ng-show="dbNoReminders" ng-class="{'whiteText': 2==CurrentLevelIndex}" id="2_0">You currently have no reminders.
+                            </div>
+                        </div>
+                        <div id="right-shadow"></div>
+                    </div>
+                    <div class="div-content" id="dashboard-whistory">
+                        <div class="title2">WATCH HISTORY</div>
+                        <div class="gridCol">
+                            <div id="3_{{$index}}" ng-repeat="item in watchItems" class="dashboardList"  check-last>
+                                <div id="3imgid_{{$index}}" class="ribbonParent" ng-class="{'focused': ($index==currentIndex) && (CurrentLevelIndex==3) }" >
+                                    <div class="top ribbon red" style="visibility: {{item.isExpired}}">
+                                        <span>Expired Rental</span></div>
+                                    <div class="top ribbon red" ng-style="{visibility: item.isUnavailable}">
+                                        <span>Unavailable</span></div>
+                                    <img ng-src="{{item.URL}}" onerror="this.src='images/default-img.png';"
+                                         ng-click="playTitle()"
+                                         ng-mouseover="eventHandler.onMouseOverEvent(3,$index);"/>
+                                    <input type="hidden" value="{{item.ProductID}}" id="3productid_{{$index}}"/>
+
+                                    <div class="badge-content">
+                                        <div class="purchases-progressbar">
+                                            <div class="progress-bar-value"
+                                                 style="width: {{item.watchedProgress}}%"></div>
+                                        </div>
+                                        <div ng-show="scrollWHTitle($index==focusIndex,item.Title)">
+                                            <div class="grid-title-scroll title5" ng-style="{'width':titleWidth(item)}"
+                                                 id="whistory-title_{{$index}}">{{item.Title}}
+                                            </div>
+                                        </div>
+                                        <div ng-show="!scrollWHTitle($index==focusIndex,item.Title)"
+                                             class="badge-content-title" ng-style="{'width':titleWidth(item)}"
+                                             id="whistory-title_{{$index}}">{{item.Title}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboardNoItemText my-dashboard-no-titleclass"
+                                 style="visibility: {{noWatchHistory}};" ng-show="dbNoWatchHistory" ng-class="{'whiteText': 3==CurrentLevelIndex}" id="3_0">You have not watched any titles.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-content" id="dashboard-bookmarks">
+                        <div class="title2">BOOKMARKS</div>
+                        <div class="gridCol">
+                            <div id="4_{{$index}}" ng-repeat="item in bookmarks" class="dashboardList" check-last>
+                                <div id="4imgid_{{$index}}" class="ribbonParent" ng-class="{'focused': ($index==currentIndex) && (CurrentLevelIndex==4) }">
+                                    <div class="top ribbon red" ng-style="{visibility: item.isUnavailable}"><span>Unavailable</span>
+                                    </div>
+                                    <div class="top ribbon red" style="visibility:{{item.isExpired}}"><span>Expired Rental</span>
+                                    </div>
+                                    <div class="top ribbon red" style="visibility:{{item.isComingSoon}}"><span>Coming Soon</span>
+                                    </div>
+                                    <img ng-src="{{item.imageUrl}}" onerror="this.src='images/default-img.png';"
+                                         ng-click="eventHandler.onClickEvent(4,$index);"
+                                         ng-mouseover="eventHandler.onMouseOverEvent(4,$index);"/>
+                                    <input type="hidden" value="{{item.productId}}" id="4productid_{{$index}}"/>
+
+                                    <div class="badge-content">
+                                        <div ng-show="scrollTitle($index==focusIndex,item, true)">
+                                            <div class="grid-title-scroll title5" id="bookmark-title_{{$index}}"
+                                                 ng-style="{'width':titleWidth(item)}">{{item.title}}
+                                            </div>
+                                        </div>
+                                        <div ng-show="!scrollTitle($index==focusIndex,item, true)"
+                                             class="badge-content-title" id="bookmark-title_{{$index}}"
+                                             ng-style="{'width':titleWidth(item)}">{{item.title}}
+                                        </div>
+
+                                        <div class="icon-content" id="icon-list_{{$index}}">
+                                            <span class="icons subscribe" ng-style="{'display': isSubscription(item)}">&nbsp;</span>
+                                            <span class="icons buy-rent"
+                                                  ng-style="{'display':isVOD(item)}">&nbsp;</span>
+                                            <span class="icons kiosk" ng-style="{'display':isKiosk(item)}">&nbsp;</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboardNoItemText my-dashboard-no-titleclass"
+                                 style="visibility: {{noBookmark}};" ng-show="dbNoBookmarks" ng-class="{'whiteText': 4==CurrentLevelIndex}" id="4_0">You currently have no bookmarks.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-content" id="dashboard-purchases">
+                        <div class="title2">PURCHASES</div>
+                        <div class="gridCol">
+                            <div id="5_{{$index}}" ng-repeat="item in purchases" class="dashboardList" check-last>
+                                <div id="5imgid_{{$index}}" class="ribbonParent" ng-class="{'focused': ($index==currentIndex) && (CurrentLevelIndex==5) }">
+                                    <div class="top ribbon red" ng-style="{visibility: item.isUnavailable}"><span>Unavailable</span>
+                                    </div>
+                                    <img ng-src="{{item.imageUrl}}" onerror="this.src='images/default-img.png';"
+                                         ng-click="eventHandler.onClickEvent(5,$index);"
+                                         ng-mouseover="eventHandler.onMouseOverEvent(5,$index);"/>
+                                    <input type="hidden" value="{{item.productId}}" id="5productid_{{$index}}"/>
+
+                                    <div class="badge-content">
+                                        <div class="purchases-progressbar">
+                                            <div class="progress-bar-value"
+                                                 style="width:{{item.watchedProgress}}%"></div>
+                                        </div>
+                                        <div ng-show="scrollTitle($index==focusIndex,item, false)">
+                                            <div class="grid-title-scroll title5" id="purchase-title_{{$index}}"
+                                                 ng-style="{'width':titleWidth(item)}">{{item.title}}
+                                            </div>
+                                        </div>
+                                        <div ng-show="!scrollTitle($index==focusIndex,item, false)"
+                                             class="badge-content-title" id="purchase-title_{{$index}}">{{item.title}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboardNoItemText my-dashboard-no-titleclass"
+                                 style="visibility:{{noPurchase}};" ng-show="dbNoPurchases" ng-class="{'whiteText': 5==CurrentLevelIndex}" id="5_0">You have not purchased any titles.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="help-div" ng-style="{'visibility':helpOverLay}">
+                    <div class="help-image"></div>
+                    <div class="wh-options-menu wh-help_hover_div" ng-class="{'focused': CurrentLevelIndex =='dismiss' }" id='dismiss'
+                         ng-click="eventHandler.onClickEvent('dismiss','dismiss');"
+                         ng-mouseover="eventHandler.onMouseOverEvent('dismiss','dismiss');">
+                    </div>
+                </div>
+                <div id="bottomGrad">
+                    <div class="seperator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wh-options-menu-container dash">
+        <ul class="wh-options-menu" id='help' ng-class="{'focused': CurrentLevelIndex =='help' }" ng-click="eventHandler.onClickEvent('help','help');"
+            ng-mouseover="eventHandler.onMouseOverEvent('help');">
+            <li>My Redbox Help</li>
+            <li class="icons control-square "></li>
+        </ul>
+    </div>
+</div>

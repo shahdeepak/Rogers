@@ -1,0 +1,12 @@
+﻿<Zoe>
+  <TransactionInfo>
+    <TransactionID>$transactionInfo.id</TransactionID>
+    <TransactionTime>$transactionInfo.time</TransactionTime>
+    <TransactionAccessPoint>$transactionInfo.transactionAccessPoint</TransactionAccessPoint>
+    <Format>$transactionInfo.format</Format>
+  </TransactionInfo>
+  <RequestInfo>
+    <Event>$requestInfo.event</Event>
+    $requestInfo.content
+  </RequestInfo>
+</Zoe>

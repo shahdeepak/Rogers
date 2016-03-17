@@ -1,0 +1,105 @@
+<div class="search-container">
+    <div id="browse">
+        <div class="menu-bar">
+            <div class="nav-btns"><span class="icons l1-btn">&nbsp;</span></div>
+
+            <div class="menu-content">
+                <div id="2_0" class="menu-items"  ng-click="eventHandler.onViewClick(0);"><span class="icons subscribe"></span>Subscription</div>
+                <div id="2_1" class="menu-items" ng-click="eventHandler.onViewClick(1);"><span class="icons kiosk"></span>At the Box</div>
+                <div id="2_2" class="menu-items" ng-click="eventHandler.onViewClick(2);"><span class="icons buy-rent"></span>Rent/Buy</div>
+                <div id="2_3" class="menu-items" ng-click="eventHandler.onViewClick(3);">All</div>
+            </div>
+            <div class="nav-btns"><span class="icons r1-btn">&nbsp;</span></div>
+        </div>
+    </div>
+    <div class="search-left-right-cnt">
+        <div class="left-content">
+        <div class="search-div">
+            <div class="title6">Search:</div>
+            <div class="search-text-box" id="searchBox" rbikeyevent="" rbimousewheel>
+                <input id="1_0" ng-model='searchString' type="text" placeholder="Enter Title, Actor or Keyword"
+                       onFocus="invokeOSK(this);"  ng-mouseover="eventHandler.onMouseOverEvent(1,$index);"/>
+            </div>
+            <div class="current-loc-text" id="currentloctext" ng-show=" titles.length>0">{{maxelements}} results for
+                "{{search_term}}"
+            </div>
+        </div>
+    </div>
+        <div class="right-content">
+            <div class="error-msgs">{{RecommendedErrorMsg}}</div>
+        <div id="drawing-area" class="drawing-area">
+            <div class="search-grid-container" id="gridContainer"> <!-- main blocks -->
+                <div class="grid-item-longwrapper" id="grid-item-longwrapper">
+                    <div class="title2" ng-show="search_term==''">Enter a Title, Actor or Keyword</div>
+                    <div class="title3" ng-show="titles.length==0 && search_term!='' && showNoResultMessage ==true">Sorry, we couldn�t find any titles matching your request.
+                    </div>
+                    <div id="grid-container" class="search-main-grid">
+                        <div class="search_gridItem" ng-repeat="title in titles" id="divid_{{$index}}"
+                             ng-class="{'list-item-img-highlight': $index==currentIndex}" check-last>
+                            <div class="top ribbon red" ng-show="isComingSoon(title)">
+                                <span>Coming Soon</span></div>
+                            <div class="top ribbon red" ng-show="isNewRelease(title)">
+                                <span>Now Available</span></div>
+                            <div class="grid-item">
+                            <input type="hidden" value="{{title.getProductID()}}" id="search_productid_{{$index}}"  pname="{{title.getTitle()}}"/>
+                            <img class="grid-item-img" class="grid-item-img"
+                                     ng-src="{{title.getBoxCoverImage()}}" pid="" posterTitle="" border="0" ng-mouseover="eventHandler.onMouseOverEvent(3,$index)" ng-click="eventHandler.onGridClickEvent(3,$index);"/>
+                            <div class="title-badge-wrapper">
+                                <div class="badge-icon">
+
+                                    <span id="sub_0" class="icons subscribe"
+                                          ng-show="isSubscription(title)">&nbsp;</span>
+                                    <span id="buyrent_0" class="icons buy-rent" ng-show="isVOD(title)">&nbsp;</span>
+                                    <span id="kiosk_0" class="icons kiosk" ng-show="isKiosk(title)">&nbsp;</span>
+                                    <span id="dvd_0" class="icons dvd" ng-show="isDVD(title)">&nbsp;</span>
+                                    <span id="blueray_0" class="icons blu-ray" ng-show="isBluRay(title)">&nbsp;</span>
+                                    <span id="price_0" class="pricebadge" ng-show="false">from $4.99</span>
+                                </div>
+                                <div ng-switch on="scrollTitle($index==currentIndex,title)">
+                                    <marquee ng-switch-when="true">
+                                        <div class="title5 badge-title-scroll" ng-style="{'width':titleWidth(title)}">{{title.getTitle()}}</div>
+                                    </marquee>
+                                    <div class="title5 badge-title"
+                                         ng-style="{'width':titleWidth(title)}" ng-switch-default>{{title.getTitle()}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div id="grid-container" class="search-main-grid">
+                        <div class="search_gridItem" ng-repeat="title in gridtitles | limitTo:4" ng-show="row < totRows">
+                            <div class="top ribbon red" ng-show="isComingSoon(title)">
+                                <span>Coming Soon</span></div>
+                            <div class="top ribbon red" ng-show="isNewRelease(title)">
+                                <span>Now Available</span></div>
+                            <div class="grid-item">
+                                <input type="hidden" value="{{title.getProductID()}}" id="search_productid_{{$index}}"  pname="{{title.getTitle()}}"/>
+                                <img class="grid-item-img" class="grid-item-img"
+                                     ng-src="{{title.getBoxCoverImage()}}" pid="" posterTitle="" border="0" ng-click="eventHandler.onGrid2ClickEvent(3,$index);"/>
+                                <div class="title-badge-wrapper">
+                                    <div class="badge-icon">
+
+                                    <span id="sub_0" class="icons subscribe"
+                                          ng-show="isSubscription(title)">&nbsp;</span>
+                                        <span id="buyrent_0" class="icons buy-rent" ng-show="isVOD(title)">&nbsp;</span>
+                                        <span id="kiosk_0" class="icons kiosk" ng-show="isKiosk(title)">&nbsp;</span>
+                                        <span id="dvd_0" class="icons dvd" ng-show="isDVD(title)">&nbsp;</span>
+                                        <span id="blueray_0" class="icons blu-ray" ng-show="isBluRay(title)">&nbsp;</span>
+                                        <span id="price_0" class="pricebadge" ng-show="false">from $4.99</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- main blocks -->
+
+            </div>
+			<div class="bottom-grd"></div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>

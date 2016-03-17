@@ -1,0 +1,76 @@
+<div id='notice-page' rbikeyevent="">
+  <div id="imp-notice">
+    <div class="inner-container">
+      <div class="notice-content">
+        <div class="title1">Important Notice About Redbox Accounts</div>
+        <div class="col-1"><img src="images/redbox.png" /></div>
+        <div class="col-2">
+          <p>In order to better serve you, your Redbox Instant by Verizon service will be linked with any Redbox.com account you have or create and both will be accessible by logging into Redbox or Redbox Instant by Verizon web sites and applications using the same login email and password. </p>
+          <p>We'll use this email address to send you news, deals, and special offers from Redbox Instant by Verizon. We'll also use this email address to send you emails from Redbox. You can unsubscribe at any time from Redbox Instant by Verizon or Redbox by going to the account section of redboxinstant.com or redbox.com.</p>
+          <p>NOTICE: My sign-in is my consent to both Redbox Instant by Verizon and Redbox having access to all of my Redbox Instant by Verizon and my Redbox account information, including streaming and video rental history. Redbox's Privacy Policy and Verizon's Privacy Policy can be viewed below. If you do not consent, do not sign-in </p>
+            <!--<div class="accept-btn">
+
+               <input id=type='button' class='AcceptButton' autofocus ng-click="acceptSignIn()" value="ACCEPT and SIGN IN"/>
+          </div> -->
+          <div class="btn-div">
+			<button type="submit" id='sign-in-button' ng-click='acceptSignIn()' ng-mouseover='eventHandler.handleMouseoverEvent("sign-in-button")' autofocus>ACCEPT and SIGN IN</button>
+			</div>
+        </div>
+      </div>
+    </div>
+    <div id="spinner" ng-show="loginInProgress"><img id="loading-bar" class="spinner" src="images/spinner.gif"/></div>
+    <div id="imp-notice-page-menu">
+      <div id='back-button' class="left-div" ng-click='redirectUserToLoginPage()' ng-mouseover='eventHandler.handleMouseoverEvent("back-button")'> <span class="icons cancel-small"></span>No thanks, I'd rather create a new account</div>
+      <div class="right-div">
+        <div id='rbi-pp-button' class="rbi-pp-button" ng-click='isRedboxPolicyOpen = true; startpos = 0;'  ng-mouseover='eventHandler.handleMouseoverEvent("rbi-pp-button")'>Redbox Instant Privacy Policy<span class="icons control-triangle"></span> </div>
+        <div id='vz-pp-button' class="vz-pp-button" ng-click='isVerizonPolicyOpen = true; startpos = 0;'  ng-mouseover='eventHandler.handleMouseoverEvent("vz-pp-button")'>Redbox Privacy Policy<span class="icons control-square"></span> </div>
+      </div>
+    </div>
+  </div>
+  <div class="verizon-policy pop-up" ng-show="isVerizonPolicyOpen">
+    <div class="pop-up-content-ctn">
+		<div class="pop-up-content-bg">
+            <!-- Creating a separate common html template for Redbox Privacy Policy -->
+            <ng-include src="'views/rbPrivacyPolicy.html'"></ng-include>
+            <!-- -->
+			<div class='action-buttons'>
+				<div class="pop-up-btn-container">
+					<div class="btn-accept-ctn inline-block" ng-click='isVerizonPolicyOpen = false; verizonstartpos = 0;'>
+						<div class="btn-label inline-block">OK</div>
+						<button class="btn-accept inline-block" id="0_1" type="submit" name="btnAccept" value="Accept">
+							<div class="btn-accept-img"></div>
+						</button>
+					</div>
+					<div class="scroll-div">
+						<span>Scroll</span>
+						<div class="icons l-icon"></div>
+					</div>
+				</div>
+			</div>
+         </div>
+    </div>
+ </div>
+ <div class="verizon-policy pop-up" ng-show="isRedboxPolicyOpen">
+    <div class="pop-up-content-ctn">
+		<div class="pop-up-content-bg">
+            <!-- Creating a separate common html template for Redbox Instant Privacy Policy -->
+            <ng-include src="'views/rbInstantPrivacyPolicy.html'"></ng-include>
+            <!-- -->
+			<div class='action-buttons'>
+				<div class="pop-up-btn-container">
+					<div class="btn-accept-ctn inline-block" ng-click='isRedboxPolicyOpen = false; redboxstartpos = 0;'>
+						<div class="btn-label inline-block">OK</div>
+						<button class="btn-accept inline-block" id="0_1" type="submit" name="btnAccept" value="Accept">
+							<div class="btn-accept-img"></div>
+						</button>
+					</div>
+					<div class="scroll-div">
+						<span>Scroll</span>
+						<div class="icons l-icon"></div>
+					</div>
+				</div>
+			</div>
+         </div>
+    </div>
+ </div>
+</div>

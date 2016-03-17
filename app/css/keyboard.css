@@ -1,0 +1,39 @@
+/* keyboard - jQuery UI Widget */
+body{position:relative;}
+#key-bg{background:#000; position:fixed; top:0; left:0; width:100%; height:100%; opacity:0.2; z-index:490;}
+.ui-keyboard { padding: .3em 0; position: absolute; left: 3% !important; top:55% !important; z-index: 16000; width:93%;}
+.ui-widget-content{background: url(../images/default.png) 50% 50% repeat-x; background-size:contain;}
+.ui-keyboard-has-focus { z-index: 16001; }
+.ui-keyboard div { font-size: 1.1em;text-align: left; margin-left:7px;}
+.ui-keyboard-bksp {width:6em !important;}
+.ui-keyboard-button { height: 46px; width: 2.9em; min-width: 1em; margin: .1em; cursor: pointer; overflow: hidden; line-height: 2em; -moz-user-focus: ignore; }
+.ui-keyboard-button span { padding: 0; margin: 0; white-space:nowrap; display: inline-block; }
+.ui-keyboard-button-endrow { clear: left; }
+.ui-keyboard-widekey { min-width: 6em; width: auto; }
+.ui-keyboard-space { width: 15.8em; }
+#keyboard-button .ui-keyboard-preview-wrapper .pw-popup-input{margin-left:0;}
+#pwpopup .pop-up-input-ctn .ui-widget-content{background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#939598), color-stop(100%,#bcbec0));
+  background: -webkit-linear-gradient(top, #939598 0%,#bcbec0 100%); outline:none;}
+.ui-keyboard-space span, .ui-keyboard-empty span { font: 0/0 a; text-shadow: none; color: transparent; } /* see http://nicolasgallagher.com/another-css-image-replacement-technique/ */
+.ui-keyboard-preview-wrapper { text-align: center; }
+.ui-keyboard-preview-wrapper input{background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#939598), color-stop(100%,#bcbec0));
+  background: -webkit-linear-gradient(top, #939598 0%,#bcbec0 100%); outline:none; padding:5px 10px; width:97%; border:3px solid #75777a; color:#58595b;
+  font:bold 22px Helvetica, Arial, sans-serif; margin-bottom:3px;}
+.ui-keyboard-keyset span.ui-keyboard-button{ text-align: center; white-space: nowrap; float:left; }
+.ui-keyboard-preview-wrapper input:focus{
+  border:3px solid #fff;
+  outline:none;
+	color:#58595b;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d1d3d4), color-stop(100%,#bcbec0));
+	background: -webkit-linear-gradient(top, #d1d3d4 0%,#bcbec0 100%); 
+.ui-keyboard-preview { text-align: left; margin: 0 0 3px 0; display: inline; width: 99%;} /* width is calculated in IE, since 99% = 99% full browser width =( */ 
+.ui-keyboard-keyset { text-align: center; white-space: nowrap; }
+
+.ui-keyboard-input { text-align: left; }
+.ui-keyboard-input-current {}
+.ui-keyboard-placeholder { color: #888; }
+.ui-keyboard-nokeyboard { color: #888; border-color: #888; } /* disabled or readonly inputs, or use input[disabled='disabled'] { color: #f00; } */
+.ui-keyboard-button.disabled { opacity: 0.5; filter: alpha(opacity=50); } /* used by the acceptValid option to make the accept button appear faded */
+.ui-keyboard-spacer { display: inline-block; width: 1px; height: 0; }
+
+

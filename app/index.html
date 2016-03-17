@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html ng-app='rbi'>
+<head>
+    <title></title>
+    <link href="css/app.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/platform.css" rel="stylesheet"/>
+    <!-- jQuery & jQuery UI + theme (required) -->
+	<link href="css/jquery-ui.css" rel="stylesheet">
+	<link href='css/keyboard.css' rel='stylesheet'>
+	<meta charset="UTF-8">
+	
+	<!--<script>
+      window.onload = function(){
+		   document.body.style.background="url('images/bg.png') repeat-x";
+		};
+    </script>
+-->
+
+</head>
+<body>
+<div class="splash-screen-container" style="#splash{ width: 100%; height: 100%; background:#b0151a; background: -webkit-gradient(radial, center center, 0, center center, 100%, color-stop(0%, #b0151a), color-stop(100%, #660c0f)); background: -webkit-radial-gradient(center, ellipse cover, #b0151a 0%, #660c0f 100%); float: left; background-size: cover; position: fixed; top: 0; left: 0; z-index: 50000; } #splash .splash-strip { background: url('images/splash-strip.png') repeat-x 0 0; width: 100%; height: 720px; } #splash .splash-strip .spl-logo img { text-align: center; margin: 15% auto 0; } #splash .splash-strip .spinner { text-align: center; clear: both; }">
+    <div id="splash">
+        <div class="splash-strip">
+            <div class="spl-logo"><img src="images/redbox-instant.png" border="0" alt=""/></div>
+		</div>
+    </div>
+</div>
+<object id='pluginPlayer' border=0 classid='clsid:SAMSUNG-INFOLINK-PLAYER' style='position:absolute; visibility:hidden;'></object><object id='PluginNetwork' border=0 classid='clsid:SAMSUNG-INFOLINK-SEF' style='position:absolute; visibility: hidden;'></object><object id='pluginAudio1' border=0 classid='clsid:SAMSUNG-INFOLINK-AUDIO' style='position:absolute; visibility: hidden;'></object><object id='pluginTVMW' border=0 classid='clsid:SAMSUNG-INFOLINK-TVMW' style='position:absolute; visibility: hidden;' ></object><object id='pluginObjectNetwork' border=0 classid='clsid:SAMSUNG-INFOLINK-NETWORK' style='position:absolute; visibility: hidden;'></object><object id='pluginObjectTVMW' border=0 classid='clsid:SAMSUNG-INFOLINK-TVMW' style='position:absolute; visibility: hidden;'></object><object id='pluginObjectNNavi' border=0 classid='clsid:SAMSUNG-INFOLINK-NNAVI' style='position:absolute; visibility: hidden;'></object><object id='pluginDRM' border=0 classid='clsid:SAMSUNG-INFOLINK-SEF' style='position:absolute; visibility: hidden;'></object><object id='pluginTV' border=0 classid='clsid:SAMSUNG-INFOLINK-TV' style='position:absolute; visibility: hidden;'></object><object id='PluginSecureStorage' border=0 classid='clsid:SAMSUNG-INFOLINK-SEF' style='position:absolute; visibility: hidden;'></object><object id='PluginExternal' border=0 classid='classid:SAMSUNG-INFOLINK-SEF' style='position:absolute; visibility:hidden;'></object><object id='NNaviPlugin' border='0' classid='clsid:SAMSUNG-INFOLINK-NNAVI' style='position:absolute; visibility: hidden;'></object><object id='PluginNetwork2' border=0 classid='clsid:SAMSUNG-INFOLINK-SEF' style='position:absolute; visibility: hidden;'></object>
+
+<script src="js/config/config.js"></script>
+<!--External libraries-->
+<script src="js/lib/jquery-1.10.2.js"></script>
+<script src="js/lib/angular-1.0.7.min.js"></script>
+<script src="js/lib/angular-ui.min.js"></script>
+<script src="js/lib/porthole-playstation.js"></script>
+
+
+<!--App Config-->
+<script src="js/app.js"></script>
+<script src="js/config/errorcodes.js"></script>
+
+<script src="js/config/keyCodes.js"></script>
+<script src="js/platform/PlatformLogger.js"></script>
+<script src="js/platform/PlatformInfo.js"></script>
+<script src="js/platform/platformStorage.js"></script>
+
+
+<!-- jQuery & jQuery UI + theme (required) -->
+<script src="js/lib/jquery-ui.min.js"></script>
+<script type='text/javascript'>if(typeof curWidget != 'undefined')curWidget.setPreference('ready', 'true');document.onkeydown = function(event){if(event.keyCode == 88 || event.keyCode == 45){event.preventDefault();}};</script><script type='text/javascript' language='javascript' src='$MANAGER_WIDGET/Common/API/TVKeyValue.js'></script><script type='text/javascript' language='javascript' src='$MANAGER_WIDGET/Common/API/Widget.js'></script><script type='text/javascript' language='javascript' src='$MANAGER_WIDGET/Common/API/Plugin.js'></script><script src='js/keyboard/jquery.keyboard.js'></script><script src='js/keyboard/jquery.keyboard.extension-navigation.js'></script><script src='js/keyboard/jquery.mousewheel.js'></script>
+<script src="js/lib/api/Utility.js"></script>
+<script src="js/lib/platformconfig.js"></script>
+<script src="js/lib/api/AppConstant.js"></script>
+<script src="js/lib/api/Logger.js"></script>
+
+<script src="js/lib/ui-bootstrap-tpls-0.3.0.min.js"></script>
+<script src="js/lib/jquery.cookies.2.2.0.min.js"></script>
+<script src="js/lib/DocumentIdleTimer.js"></script>
+
+<!--Helper-->
+<script src="js/constants.js"></script>
+<script src="js/helper/helper.js"></script>
+<script src="js/helper/TitleDetailsHelper.js"></script>
+<script src="js/helper/playerHelper.js"></script>
+<script src="js/helper/accountHelper.js"></script>
+<script src="js/helper/pwPopupHelper.js"></script>
+
+<script src="js/lib/rbi-common.js"></script>
+<!--External-->
+<script src="js/controls/psnCheck.js"></script>
+
+
+
+<!--Controls-->
+<script src="js/controls/popup/popupMetadata.js"></script>
+<script src="js/helper/PopupBox.js"></script>
+<script src="js/controls/mainmenu.js"></script>
+<script src="js/controls/keyboard.js"></script>
+
+
+<!--Services-->
+<script src="js/services/promotionService.js"></script>
+<script src="js/services/productService.js"></script>
+<script src="js/services/playerService.js"></script>
+<script src="js/services/loginService.js"></script>
+<script src="js/services/collectionservice.js"></script>
+<script src="js/services/KioskService.js"></script>
+<script src="js/services/customerservice.js"></script>
+<script src="js/services/myRedboxService.js"></script>
+<script src="js/services/rbiCommonService.js"></script>
+<script src="js/services/ratingReviewService.js"></script>
+<script src="js/services/reservationService.js"></script>
+<script src="js/services/sharedServices.js"></script>
+<script src="js/services/creditcardservice.js"></script>
+
+<!--Controllers-->
+<script src="js/controllers/eulaCtrl.js"></script>
+<script src="js/controllers/splashCtrl.js"></script>
+<script src="js/controllers/homeCtrl.js"></script>
+<script src="js/controllers/titleCollectionCtrl.js"></script>
+<script src="js/controllers/loginCtrl.js"></script>
+<script src="js/controllers/impNoticeCtrl.js"></script>
+<script src="js/controllers/myRedbox/bookmarksCtrl.js"></script>
+<script src="js/controllers/myRedbox/purchasesCtrl.js"></script>
+<script src="js/controllers/myRedbox/dashboardCtrl.js"></script>
+<script src="js/controllers/playerConstants.js"></script>
+<script src="js/controllers/playerCtrl.js"></script>
+<script src="js/controllers/SearchCtrl.js"></script>
+<script src="js/controllers/account/summaryCtrl.js"></script>
+<script src="js/controllers/account/creditCardsCtrl.js"></script>
+<script src="js/controllers/account/preferencesCtrl.js"></script>
+<script src="js/controllers/account/captionEditorCtrl.js"></script>
+<script src="js/controllers/createAccountCtrl.js"></script>
+<script src="js/controllers/browseCtrl.js"></script>
+<script src="js/controllers/myRedbox/watchHistoryCtrl.js"></script>
+<script src="js/controllers/myRedbox/dashboardCtrl.js"></script>
+<script src="js/controllers/titleDetailCtrl.js"></script>
+<script src="js/controllers/KioskCtrl.js"></script>
+<script src="js/controllers/impNoticeCtrl.js"></script>
+<script src="js/controllers/account/creditCards/cardDetailsCtrl.js"></script>
+<script src="js/controllers/account/creditCards/billingInfoCtrl.js"></script>
+<script src="js/controllers/account/creditCards/cardPreferencesCtrl.js"></script>
+<script src="js/controllers/kioskCheckoutCtrl.js"></script>
+<script src="js/controllers/titleCheckoutCtrl.js"></script>
+<script src="js/controllers/parentCtrl.js"></script>
+<script src="js/controllers/signupCtrl.js"></script>
+<script src="js/controllers/confirmSubscriptionCtrl.js"></script>
+<script src="js/controllers/subscriptionCtrl.js"></script>   
+<script src="js/controllers/freeTrialCtrl.js"></script>    
+<script src="js/controllers/subscribeNoFreeTrialCtrl.js"></script>
+
+
+<!--Directives-->
+<script src="js/directive/RBIKeyEventDirective.js"></script>
+<script src="js/directive/rbitopNavBar.js"></script>
+<script src="js/directive/pwpopup.js"></script>
+<script src="js/directive/abandonpopup.js"></script>
+
+<!--Event Handlers-->
+<script src="js/eventhandlers/LocationEventHandler.js"></script>
+<script src="js/eventhandlers/homeEventHandler.js"></script>
+<script src="js/eventhandlers/browseEventHandler.js"></script>
+<script src="js/eventhandlers/account/summaryEventHandler.js"></script>
+<script src="js/eventhandlers/account/creditCardsEventHandler.js"></script>
+<script src="js/eventhandlers/account/preferencesEventHandler.js"></script>
+<script src="js/eventhandlers/account/captionEditorEventHandler.js"></script>
+<script src="js/eventhandlers/account/creditCards/cardDetailsEventHandler.js"></script>
+<script src="js/eventhandlers/account/creditCards/billingInfoEventHandler.js"></script>
+<script src="js/eventhandlers/account/creditCards/cardPreferencesEventHandler.js"></script>
+<script src="js/eventhandlers/EulaEventHandler.js"></script>
+<script src="js/eventhandlers/TitleDetailEventHandler.js"></script>
+<script src="js/eventhandlers/WatchHistoryEventHandler.js"></script>
+<script src="js/eventhandlers/bookmarksEventHandler.js"></script>
+<script src="js/eventhandlers/purchasesEventHandler.js"></script>
+<script src="js/eventhandlers/dashboardEventHandler.js"></script>
+<script src="js/eventhandlers/searchEventHandler.js"></script>
+<script src="js/eventhandlers/playerEventHandler.js"></script>
+<script src="js/eventhandlers/titleCollectionEventHandler.js"></script>
+<script src="js/eventhandlers/loginEventHandler.js"></script>
+<script src="js/eventhandlers/impNoticeEventHandler.js"></script>
+<script src="js/eventhandlers/createAccountEventHandler.js"></script>
+<script src="js/eventhandlers/freeTrialEventHandler.js"></script>
+<script src="js/eventhandlers/subscribeNoFreeTrialEventHandler.js"></script>
+<script src="js/eventhandlers/splashEventHandler.js"></script>
+       
+<script src="js/eventhandlers/TitdetailCheckoutEventHandler/kioskCheckoutEventHandler.js"></script>
+<script src="js/eventhandlers/TitdetailCheckoutEventHandler/titleCheckoutEventHandler.js"></script>
+<script src="js/eventhandlers/TitdetailCheckoutEventHandler/titleSuccessCheckoutEventHandler.js"></script>
+<script src="js/eventhandlers/TitdetailCheckoutEventHandler/kioskCheckoutSuccessEventHandler.js"></script>
+<script src="js/eventhandlers/signupEventHandler.js"></script>
+<script src="js/eventhandlers/subscriptionEventHandler.js"></script>
+<script src="js/eventhandlers/confirmSubscriptionEventHandler.js"></script>   
+    
+
+<script src="js/lib/omniture/omniture_config.js"></script>
+<script src="js/lib/omniture/AppMeasurement.js"></script>
+<script src="js/lib/omniture/AppMeasurement_Module_Integrate.js"></script>
+<script src="js/lib/omniture/AppMeasurement_Module_Media.js"></script>
+<script src="js/lib/omniture/OmnitureHelper.js"></script>
+
+<script src="js/lib/conviva/ConvivaLivePassLibrary.js"></script>
+<script src="js/lib/conviva/conviva.js"></script>
+
+<div class="body-bg">
+<div class="body-bg-strip">
+<div id="mask" ng-show="mask.display"></div>
+<div id="container">
+    <div id="header">
+        <div class="top-banner-bg">
+            <div class="strip">
+                <div class="logo-holder"></div>
+            </div>
+        </div>
+    </div>
+
+	<div class="splash-screen-container" ng-controller="parentCtrl" ng-cloak>
+       	<!--<div id="spinner" class="global-spinner" ng-hide={isDevice()}><img id='theImg' src='images/spinner.gif'  /></div>-->
+        <!-- <div id="spinner"><img src="images/spinner.gif"/></div>  -->
+        
+        <div id="spinner">
+    		<img id="loading-bar" class="spinner" src="images/spinner.gif"/>
+		</div>
+        
+        <div id="main-view" ng-view></div>
+
+    </div>	
+
+
+    <div id="main-menu-container" ng-show="mainMenuContainer.display">
+        <div id="">
+            <div id="100_0" class="menu-item-ctn" outerlinewidth="menu"  onmouseover="OnMenuMouseOver('100_0')" onclick="OnMenuMouseClick('100_0');">
+                <div class="menu-item icons menu-home">
+                </div>
+            </div>
+            <div id="100_1"  class="menu-item-ctn" outerlinewidth="menu"  onmouseover="OnMenuMouseOver('100_1')" onclick=" OnMenuMouseClick('100_1');">
+                <div class="menu-item icons menu-browse">
+                </div>
+            </div>
+            <div id="100_2" class="menu-item-ctn" outerlinewidth="menu"  onmouseover="OnMenuMouseOver('100_2')" onclick="OnMenuMouseClick('100_2');">
+                <div class="menu-item icons menu-my-redbox">
+                </div>
+            </div>
+            <div id="100_3" class="menu-item-ctn" outerlinewidth="menu"  onmouseover="OnMenuMouseOver('100_3')" onclick="OnMenuMouseClick('100_3');">
+                <div class="menu-item icons menu-search">
+                </div>
+            </div>
+            <div id="100_4" class="menu-item-ctn" outerlinewidth="menu"  onmouseover="OnMenuMouseOver('100_4')" onclick="OnMenuMouseClick('100_4');">
+                <div class="menu-item icons menu-locations">
+                </div>
+            </div>
+            <div id="100_5" class="menu-item-ctn" outerlinewidth="menu"  onmouseover="OnMenuMouseOver('100_5')" onclick="OnMenuMouseClick('100_5');">
+                <div class="menu-item icons menu-account">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-menu-return" ng-show="mainMenuReturn.display">
+        <div id="back-button-wrapper" class="back-button-wrapper" ng-show="backBtnWrapper.display" onclick="onMouseClick('back-button-wrapper')" onmouseover="onMouseOver('back-button-wrapper')"><span class="icons cancel-small-noshadow"></span>Back</div>
+        <div id="menu-button-wrapper" class="menu-button-wrapper" ng-show="backBtnWrapper.display"  onclick="onMouseClick('menu-button-wrapper')" onmouseover="onMouseOver('menu-button-wrapper')"><span class="icons sel-menu"></span>&nbsp;<span
+                id="menu-button-text-close" ng-show="menuBtnTxtClose.display">Close</span> Menu
+        </div>
+    </div>
+
+</div>
+
+	<div class="popupboxouterdiv">
+		<div id="popupboxcontainer"></div>
+	</div>
+	<div id="screenLog"></div>
+</div>
+</div>
+</body>
+</html>

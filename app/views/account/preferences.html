@@ -1,0 +1,95 @@
+<div rbikeyevent>
+    <div id="account-top-nav-bar">
+        <div class="top-nav-wrapper">
+            <ul class="top-nav-ul">
+                <li id="2_{{$index}}" ng-repeat="pane in panes" class="nav-li"
+                     ng-class="{'account-top-nav-bar-highlight': ($index==selectedTab), 'nav-li-highlight': (selectedTab==0 && $index==0)}"
+                     ng-click="CurrentLevelIndex = 2; selectedTab=$index; onTabClick($index)"
+                     ng-mouseover="eventHandler.HandlePreferencesMouseOver('2_'+$index)">
+                    {{pane.title}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="preferences" class="drawing-area">
+        <div class="preferences-text">Please note all Restrictions apply only to streaming transactions and not disc rentals (DVD or Blu-ray)
+        </div>
+        <div class="restrict-purchases-wrapper roundedRow">
+            <div class="copyContainer" ng-show="selectedRestrictPurchase">
+                <div id="purchase-text" class="purchase-text accountPageHeader">PURCHASE RESTRICTIONS: ON</div>
+                <div id="purchase-password-text" class="copy purchase-text-tick">
+                    Purchases DO require a password
+                </div>
+            </div>
+
+            <div class="copyContainer" ng-hide="selectedRestrictPurchase">
+                <div id="restrict-purchase-text" class="purchase-text accountPageHeader">PURCHASE RESTRICTIONS: OFF</div>
+                <div id="restrict-password-text" class="copy">Purchases DO NOT require a password
+                </div>
+            </div>
+			<div class="buttonContainer">
+           		<div id="9_0" class="lrg-button red"
+                     ng-mouseover="eventHandler.HandlePreferencesMouseOver('9_0')"
+                     ng-click="eventHandler.ChangePreferenceRestriction()">
+                    CHANGE
+                </div>
+			</div>
+            <div ng-show="closedCationEnable">
+	            <div class="copyContainer">
+	                <div id="cc-text" class="purchase-text accountPageHeader">{{CC_ON}}</div>
+	            </div>
+				<div class="buttonContainer">
+	            	<div id="CC" class="turn-cc lrg-button gr"
+	                 ng-mouseover="eventHandler.HandlePreferencesMouseOver('CC')"
+	                 ng-click="eventHandler.toggleCaption()">{{CC_Option}}</div>
+	        	</div>
+			</div>
+        </div>
+        <div class="restrict-content-wrapper roundedRow">
+            <div id="" class="purchase-text accountPageHeader">CONTENT RESTRICTIONS</div>
+            <p>Select a content restriction level that best applies for the viewers on this device:</p>
+            <div id="restrict-item-wraper" class="restrict-item-wrapper">
+                <div name="parentalOption" outerlinewidth="preference" id="10_0" class="pref-restrict-item"
+                     ng-mouseover="eventHandler.HandlePreferencesMouseOver('10_0')"
+                     ng-click="eventHandler.HandleParentalOptionClick('4', '10_0')">
+                    <div class="restrict-item-text">
+                        {{preferenceContentRestrictionButton1}}
+                    </div>
+                </div>
+                <div name="parentalOption" outerlinewidth="preference" id="10_1" class="pref-restrict-item"
+                     ng-mouseover="eventHandler.HandlePreferencesMouseOver('10_1')"
+                     ng-click="eventHandler.HandleParentalOptionClick('3', '10_1')">
+                    <div class="restrict-item-text">
+                        {{preferenceContentRestrictionButton2}}
+                    </div>
+                </div>
+                <div name="parentalOption" outerlinewidth="preference" id="10_2" class="pref-restrict-item"
+                     ng-mouseover="eventHandler.HandlePreferencesMouseOver('10_2')"
+                     ng-click="eventHandler.HandleParentalOptionClick('2', '10_2')">
+                    <div class="restrict-item-text">
+                        {{preferenceContentRestrictionButton3}}
+                    </div>
+                </div>
+                <div name="parentalOption" outerlinewidth="preference" id="10_3" class="pref-restrict-item"
+                     ng-mouseover="eventHandler.HandlePreferencesMouseOver('10_3')"
+                     ng-click="eventHandler.HandleParentalOptionClick('1', '10_3')">
+                    <div class="restrict-item-text">
+                        {{preferenceContentRestrictionButton4}}
+                    </div>
+                </div>
+            </div>
+			<div id="SafeContentText" class="copy"
+                 ng-class="{true:'SafeContentText', false:'SafeContentTextSmall'}[selectedParentalControl.getDescription().length > 10]">
+                {{selectedParentalControl.getDescription()}}
+            </div>
+        </div>
+    </div>
+
+    <div id='logout-btn' class="logout-button-account" ng-click='logoutUser();'
+         ng-mouseover="eventHandler.HandlePreferencesMouseOver('logout-btn')">
+   		<div class="filter-text logout-acc-text">Sign Out</div>
+		<span class="icons control-square"></span>
+	</div>
+
+    <div pwpopup></div>
+</div>

@@ -1,0 +1,62 @@
+<div id="add-card-page" rbikeyevent>
+    <div id='add-card'>
+        <div class="inner-container">
+            <div id="add-card-header-title" ng-show="isAdd">
+                <div id="add-card-title" ng-hide="isFreeTrial" class="title1">Add credit card.</div>
+                <div id="add-card-title" ng-show="isFreeTrial" class="title1">Ok, let's get you that first month free!</div>
+                <p id="P1" ng-hide="isFreeTrial">
+                 We'll need your credit card information so you can conveniently rent or buy movies on demand with ease, since we'll save your info.
+                </p>
+                <p id="add-card-title-2" ng-show="isFreeTrial">
+                    We'll need your credit card info just to identify you at the box when you use your DVD credits. Don't worry, you won't be charged for a subscription yet. After all, the first month's on us!
+                </p>
+            </div>
+            <div id="modify-card-header-title" ng-show="isModify">
+                <div id="modify-card-title" ng-hide="isFreeTrial" class="title1">Modify credit card.</div>
+                <div id="modify-card-title" ng-show="isFreeTrial" class="title1">Ok, let's get you that first month free!</div>
+                <p id="modify-card-title-2">
+                    Edit your credit card information so you can conveniently rent or buy movies on demand, since we'll save your info.
+                </p>
+            </div>
+            <form name="newFeed" id="add-update-card" novalidate class="inner-container">
+                <ul id="modify-card-page3">
+                    <li class="modify-use-card-text" ng-show="!isAlreadyPreferred">
+                        <input type="checkbox" class="checkbox-container"
+                             ng-class="{'red':currentIndex==0,'gr':currentIndex!=0}"
+                              ng-mouseover="eventHandler.addCardMouseOver(0)"
+                             id="0" ng-model="isPreferedSelected">
+                        <span class="checkbox-copy">Use as Primary Card for Rentals and Purchases </span>
+                    </li>
+                    <li ng-show="!isSubscriptionCard && !noSubscription">
+                        <input type="checkbox" 
+                             ng-class="{'red':currentIndex==1,'gr':currentIndex!=1}"
+                             ng-mouseover="eventHandler.addCardMouseOver(1)"  id="1" ng-model="isSubscriptionSelected">
+                        <span class="checkbox-copy">Use for monthly Subscription charges </span>
+                    </li>
+                </ul>
+                <div class="clearAll">&nbsp;</div>
+                <div class="button-container align-right">
+                    <button type="submit" class="lrg-button" id='modify-continue' ng-mouseover="eventHandler.addCardMouseOver(2)"
+                            ng-click="SaveCard()" ng-class="{'red':currentIndex==2,'gr':currentIndex!=2}">CONTINUE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="specific-back" id="specific-back" ng-class="{'focused':3==currentIndex}" ng-click="eventHandler.handleBackButton()"  ng-mouseover="eventHandler.addCardMouseOver(3)">
+        <span class="icons cancel-small-noshadow"></span><label>Back</label> <!-- ZOE-30796 - Back button should be always labeled as 'Back' -->
+        <!--<span class="icons cancel-small-noshadow"></span><label ng-hide="isSignupFlow">Back</label><label-->
+            <!--ng-show="isSignupFlow">I'm going to wait</label>-->
+    </div>
+	<div class="giftcard-div">Redbox Gift Cards are not currently supported on Redbox Instant. We apologize for any inconvenience.</div>
+	
+</div>
+<style type="text/css">
+    #menu-button-wrapper, #back-button-wrapper {
+        display: none !important;
+    }
+
+    label {
+        display: inline;
+    }
+</style>

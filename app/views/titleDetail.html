@@ -1,0 +1,420 @@
+<div id="title-detail" ng-cloak rbikeyevent="" rbimousewheel>
+    <div id="selected-kiosk-wrapper" ng-show="isFromKiosk">
+        <div id="selected-kiosk">
+        </div>
+        <div id="selected-kiosk-text">
+            <div id="selected-kiosk-text1">
+                {{kioskName}}
+            </div>
+            <div id="selected-kiosk-text2">
+                {{kioskAddressLine1}} {{kioskAddressLine2}}
+            </div>
+        </div>
+    </div>
+    <div class="inner-container">
+        <div class="left-content">
+            <div class="grid-item-wrapper">
+                <img class="default-image" onerror="this.src='images/default-poster.png';"  src="{{title.posterImage}}" />
+            </div>
+            <div class="progressWatched" ng-show="title.isMovie">
+                <div class="progressWatchedRed" style="width:{{ title.progressWatched }}%;">
+                </div>
+            </div>
+            <div class="grid-item-details">
+                <div class="{{ratingCss}} {{ratingCss}}-{{title.ratingValueStr}}">
+                </div>
+                <p>
+                    <span class="bold" ng-hide="title.ratingValue==0.0">{{title.ratingValue}}</span>
+                    {{title.ratingLabel}}</p>
+            </div>
+        </div>
+        <div class="middle-content">
+            <div class="title1">
+                {{title.titleName}}
+            </div>
+            <div class="sub-tags">
+                <div id="media-format-container" class="media-format-container" ng-repeat="ratingValue in title.ratingsJson">
+                    <div id="rating" class="media-format-type borderclass">
+                        <span ng-show="isBluRay(ratingValue)"><div>Blu-ray&trade;</div></span>
+                        <span ng-hide="isBluRay(ratingValue)"><div>{{ratingValue}}</div></span>
+                    </div>
+                </div>
+            </div>
+            <div class="desc-text">
+                <div class="body-text-blue" ng-show="title.isMovie && title.expiresOn != '' && isRentPresent">
+                  		Rental Expires {{title.expiresOn | date:'short'}}
+                </div>
+                <input type="hidden" id="product_id" value="{{title.productId}}" />
+                <div class="body-text-gray-wrapper">
+                    <div class="body-text-gray" ng-repeat="item in title.titleDetailJson">
+                        <span class="item-id">{{item.id}}:</span>
+                        <span class="item-value">{{item.value}}</span>
+                    </div>
+                </div>
+                <div class="body-text">
+                    <span>{{title.description}}</span>
+                </div>
+                <div class="badge-container">
+                    <div class="icn1">
+                        <span id="sub_0" class="icons subscribe" ng-show="subscriptionBadge">&nbsp;</span>
+                        <span id="buyrent_0" class="icons buy-rent" ng-show="rentBadge">&nbsp;</span> <span
+                            class="body-text-gray-badge">{{instantOptionBadgeLabel}} </span>
+                    </div>
+                    <div class="icn2">
+                        <span id="kiosk_0" class="icons kiosk" ng-show="isATKioskListVisible">&nbsp;</span>
+                        <span id="dvd_0" class="icons kiosk" ng-show="onlyFindDVDPresent">&nbsp;</span> <span
+                            id="blueray_0" class="icons kiosk" ng-show="onlyFindBlueRayPresent">&nbsp;</span>
+                        <span class="body-text-gray-badge">{{kioskOptionBadgeLabel}} </span>
+                    </div>
+                </div>
+                <div class="clearAll">&nbsp;</div>
+                <div class="button-container align-left">
+                    <div class="lrg-button" ng-class="{'red':(currentIndex==$index)&&CurrentLevelIndex==1,'gr':currentIndex!=$index||CurrentLevelIndex!=1}" ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_BUTTONS,btn.BtnID)" ng-click="eventHandler.titleDetailClickEvent(LEVEL_BUTTONS,$index)" ng-repeat="btn in bttnArray" id="{{LEVEL_BUTTONS}}_{{btn.BtnID}}"
+                         ng-show="isComingSoon(title, btn.BtnName);">
+                        <span id ='drop-down-text_{{$index}}'>{{btn.BtnName}} </span> <span class="icons dwn-arrow" ng-show="btn.showList" ></span>
+                        <input type="hidden" ng-click="eventHandler.titleDetailClickEvent(LEVEL_BUTTONS,$index)"  ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_BUTTONS,btn.BtnID)" id="hidden_{{LEVEL_BUTTONS}}_{{$index}}" value="{{btn.BtnType}}" />
+                    </div>
+                    <div class="lrg-button" id="1_{{levelMap[LEVEL_BUTTONS].MaxElements}}" ng-show="isBookMark" ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_BUTTONS,levelMap[LEVEL_BUTTONS].MaxElements)" ng-click="eventHandler.titleDetailClickEvent()" ng-class="{'red':(currentIndex==levelMap[LEVEL_BUTTONS].MaxElements )&&CurrentLevelIndex==1,'gr':currentIndex!=levelMap[LEVEL_BUTTONS].MaxElements ||CurrentLevelIndex!=1}">
+                        <span id="UnBookmark" ng-show="title.isBookmarked">
+                            Bookmarks &nbsp;<span class="icons bookmark-minus"></span>
+                        </span>
+                        <span id="Bookmark" ng-hide="title.isBookmarked">
+                            Bookmarks &nbsp;<span class="icons bookmark-plus"></span>
+                        </span>
+                        
+                    </div>
+                </div>
+                <div class="clearAll">&nbsp;</div>
+                <div ng-show="isInstantOptionListVisible">
+                    <div class="titledetail-tooltip-container" ng-show="showInstantOptionsPopUp">
+                        <div class="arrow-left">
+                        </div>
+                        <ul class="tooltip-content tooltip-ul">
+                            <li class="tooltip-li" id="{{LEVEL_INSTANT_LIST}}_{{$index}}" ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_INSTANT_LIST,$index)" id="hidden_{{LEVEL_BUTTONS}}_{{$index}}" ng-click="eventHandler.titleDetailClickEvent(LEVEL_INSTANT_LIST,$index)" ng-class="{'highlight': $index == currentIndex}"
+                                ng-repeat="option in instantOptionPopUpjsonObj.instantoption">
+                                <div id="inst_{{$index}}">
+                                    <input type="hidden" id="hidden_{{LEVEL_INSTANT_LIST}}_{{$index}}" value="{{option.PurchaseOptionName}}" />
+                                    <span>{{option.PurchaseOptionName}}</span> <span ng-show="option.Price != '' && option.PurchaseOptionName != 'WATCH NOW' && option.PurchaseOptionName != 'Subscribe Now' "
+                                        class="pricing-div">{{option.Price|currency}}</span>
+                                </div>
+                            </li>
+                            <div class="bottom-shadow">
+                            </div>
+                            <li class="tooltip-li" id="{{LEVEL_INSTANT_LIST}}_{{levelMap[LEVEL_INSTANT_LIST].MaxElements-1}}"
+                                ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_INSTANT_LIST,levelMap[LEVEL_INSTANT_LIST].MaxElements-1)" ng-click="eventHandler.titleDetailClickEvent(LEVEL_INSTANT_LIST,levelMap[LEVEL_INSTANT_LIST].MaxElements-1)" ng-class="{'highlight': (levelMap[LEVEL_INSTANT_LIST].MaxElements-1)== currentIndex}">
+                                <div class="titledetail-buttonContainer">
+                                    <div class="back-button-wrapper">
+                                        Help with Instant Options<span class="icons question-small"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-show="isATKioskListVisible">
+                    <div class="titledetail-tooltip-container" ng-class="{'titledetail-tooltip-container2': isInstantOptionVisible}"
+                        ng-show="showAtKioskOptionsPopUp">
+                        <div class="arrow-left">
+                        </div>
+                        <ul class="tooltip-content tooltip-ul">
+                            <li class="tooltip-li" ng-class="{'list-item-disabled': title.kioskId && option.InStock == 'FALSE','highlight': $index == currentIndex}" id="{{LEVEL_AT_KIOSK_LIST}}_{{$index}}" ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_AT_KIOSK_LIST,$index)" ng-click="eventHandler.titleDetailClickEvent(LEVEL_AT_KIOSK_LIST,$index)"
+                                ng-repeat="option in aTkioskPopUpjsonObj.instantoption">
+                                <div id="ksk_{{$index}}">
+                                    <input type="hidden" id="hidden_{{LEVEL_AT_KIOSK_LIST}}_{{$index}}" value="{{option.PurchaseOptionName}}" />
+                                    <span ng-hide="isTitleOutOfStock(title,option)">{{option.PurchaseOptionName}}</span>
+                                    <span ng-show="isTitleOutOfStock(title,option)">{{option.PurchaseOptionName.split(' ')[1]+" Out Of Stock"}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-content" >
+            <div class="more-like-this-text">
+                {{MoreLikeThisText}}</div>
+            <div id="drawing-area">
+                <div class="list-item-container-div" id="list-item-container">
+				
+                    <div class="list-item-longwrapper" id="list-item-longwrapper" ng-style="{'margin-top':title_list_margin}">
+                        <div id="{{LEVEL_LIST}}_{{$index}}" ng-click="eventHandler.titleDetailClickEvent(LEVEL_LIST,$index)" ng-mouseover="eventHandler.titleDetailMouseOver(LEVEL_LIST,$index)" ng-repeat="item in RecommendedProductsResponse" ng-class="{'focused':$index==currentIndex&&CurrentLevelIndex==3}" class="related-title">
+                            <div class="more-img-contain">
+                                <input type="hidden" id="hidden_{{LEVEL_LIST}}_{{$index}}" value="{{item.key}}" />
+                                <img id="imgid_{{$index}}" onerror="this.src='images/default-img.png';"  src="{{item.imageUrl}}" height="{{Height}}"
+                                    width="{{Width}}">
+                            </div>
+                        </div>
+                    </div>
+					<div class="bottom-fade" ng-show="moreLikethis_Gradient"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu-cnt-title-detail">
+        <div id="Preview" ng-click="eventHandler.titleDetailPreviewClick()" ng-class="{'focused':'Preview'==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('Preview','Preview')" class="preview-button-wrapper" style="visibility: visible" ng-show="showPreview">
+            Watch Preview <span class="icons preview-btn"></span>
+        </div>
+        <div id="synopsis" ng-click="eventHandler.handleSynopsisVisibility()"  ng-class="{'focused':'synopsis'==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('synopsis','synopsis')" class="bookmark-button-wrapper" style="visibility: visible" ng-show="isDescriptionElipsised">
+           Full Synopsis<span class="rate-this icons done-small-noshadow"></span></div>
+       
+        <div id="Rating" ng-click="eventHandler.titleDetailRatingClick()" ng-class="{'focused':'Rating'==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('Rating','Rating')" class="rating-button-wrapper" style="visibility: visible">
+            Ratings &amp; Reviews<span class="icons rate-small-noshadow"></span></div>
+    </div>
+    <div ng-show="showBookmarkPopUp">
+        <div class="wh-filter-popup" ng-show="title.isBookmarked">
+            <div class="syn">
+                <img src="images/title-added-to-my-redbox.png">
+            </div>
+        </div>
+        <div class="wh-filter-popup" ng-hide="title.isBookmarked">
+            <div class="syn">
+                <img src="images/title-removed-from-my-redbox.png">
+            </div>
+        </div>
+    </div>
+    <div class="synop pop-up" ng-show="showFullSynopsis">
+        <div class="pop-up-content-ctn">
+            <div class="pop-up-content-bg">
+                <div class="title2">
+                    {{title.titleName}}</div>
+                <div id="content_text" class="wh-pu-text">
+                    {{title.longDescription}}
+					<div class="shade-bg"></div>
+				</div>
+                <div class='action-buttons'>
+                    <div class="pop-up-btn-container">
+						
+                        <div class="btn-accept-ctn">
+							<div  class="yes-btn-wrapper" id="yes-btn-wrapper" ng-class="{'focused':112==currentIndex}" ng-click="eventHandler.titleDetailClickEvent(1,0)" ng-mouseover="eventHandler.titleDetailMouseOver('Yes',112)">
+								<label>OK</label>
+								<button type="submit"   name="btnAccept" value="Accept">
+									<div class="icons close-small"></div>
+								</button>
+							</div>                            
+                        </div>
+						<div class="scroll-div">
+							<span>Scroll</span>
+							<div class="icons l-icon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="browse">
+        <div id="ratingPopup" class="popup-background" ng-show="showRatings">
+            <div id="popup-container">
+                <div class="wrapper">
+                    <div id="ratingContainer" ng-show="showRate">
+                        <div id="PopupTitle" class="title2">
+                            Ratings</div>
+                        <div class="popup-body">
+                            <div class="title7">
+                                {{title.ratingMessage}}</div>
+                            <div class="rating-star">
+                                <div>
+                                </div>
+                                <div  ng-style="{'width':rateWidth(ratval)}""
+                                    class="rating_on">
+                                </div>
+                                 <div  class="rating_on_dummy" ng-mousemove="eventHandler.titleDetailMouseOver('','rating')"/>
+                            </div>
+                            <input type="hidden" ng-model="ratval" />
+                        </div>
+                        <div id="buttonContainer">
+                            <div class="popup-bottom-line">
+                            </div>
+                            <div id="53_0" ng-click="eventHandler.titleDetailBackButtonClick()" ng-class="{'focused':'53_0'==currentIndex}"  ng-mouseover="eventHandler.titleDetailMouseOver('53_0','53_0')" class="back-button-wrapper popup-back-button">
+                                <span class="icons cancel-small"></span>Back
+                            </div>
+                            <div id="53_1" class="ratings-ctrl">
+                                <span class="icons control-fw-rw rating-inc-dec"></span>Increase or Decrease rating
+                            </div>
+                            <div id="53_2"  ng-click="eventHandler.titleDetailClickEvent('','')" ng-class="{'focused':'53_2'==currentIndex}"  ng-mouseover="eventHandler.titleDetailMouseOver('53_2','53_2')" class="back-button-wrapper rightButton">
+                                <span  class="icons close-small"></span>Save
+                            </div>
+                            <div  id="53_3" ng-click="eventHandler.titleDetailClickEvent()"   ng-class="{'focused':'53_3'==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('53_3','53_3')" class="back-button-wrapper rightButton">
+                                <span  class="icons control-triangle-shadow"></span>Reviews
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reviewContainer" ng-show="showReview">
+                        <div id="PopupTitle" class="title2">
+                            Reviews</div>
+                        <div id="reviews">
+							<div class="reviews-wrapper" id="allReviews">
+								<div id="fullreviews" style="display:inline-table; float:left;">	
+									<div class="reviewcontainer" ng-repeat="review in Reviews">
+										<div class="sprite-rating-small  sprite-rating-small-{{parseRating(review.ReviewRating).ratingString}} rating">
+										</div>
+										<span id="name" class="name">{{review.DisplayName}}</span>
+										<div class="review">
+											{{review.ReviewText}}
+										</div>
+										<div class="shade-bg"></div>
+									</div>
+									<div class="reviewcontainer" ng-show="noReviews">
+										<div class="review">
+										 There are currently no Reviews for this title.
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							<div id="buttonContainer">
+								<div class="popup-bottom-line">
+								</div>
+								<div id="53_4"  ng-click="eventHandler.titleDetailBackButtonClick()" ng-class="{'focused':'53_4'==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('','53_4')" class="back-button-wrapper popup-back-button">
+									<span class="icons cancel-small"></span> Back
+								</div>
+								<div id="53_5" ng-click="eventHandler.titleDetailClickEvent()" ng-class="{'focused':'53_5'==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('','53_5')" class="back-button-wrapper rightButton">
+									<span class="icons control-triangle-shadow"></span> Ratings
+								</div>
+								<div class="scroll-div">
+									<span>Scroll</span>
+									<div class="icons l-icon"></div>
+								</div>
+							</div>
+						</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <div class="synop pop-up" ng-show="showAgeVerificationPopup" ng-cloak>
+        <div class="pop-up-content-ctn">
+            <div class="pop-up-content-bg">
+                <div class="title2">
+                    Age Verification</div>
+                <div class="title4">
+                    Please enter your date of birth to continue.</div>
+                <div id="age_verification_popup">
+                    <div class="alert-content">
+                        <div class="invalid-text">
+                            {{ageVerificationErrorMessage}}</div>
+                    </div>
+                    <div class="age-inputs">
+                        <ul>
+                            <li>
+                                <label>
+                                    Month
+                                </label>
+                                <input id="41" ng-model='month' focus-me  placeholder="Month" type="text" ng-class="{'focused':41==currentIndex}" onFocus="invokeOSK(this);"   ng-mouseover="eventHandler.titleDetailMouseOver('','41');"/>
+                            </li>
+                            <li class="slas-new">/</li>
+                            <li>
+                                <label>
+                                    Day
+                                </label>
+                                <input id="42" ng-model='day' placeholder="Day" type="text" onFocus="invokeOSK(this);" ng-class="{'focused':42==currentIndex}"  ng-mouseover="eventHandler.titleDetailMouseOver('','42');"/>
+                            </li>
+                            <li class="slas-new">/</li>
+                            <li>
+                                <label>
+                                    Year
+                                </label>
+                                <input id="43" ng-model='year' placeholder="Year" type="text" onFocus="invokeOSK(this);" ng-class="{'focused':43==currentIndex}"  ng-mouseover="eventHandler.titleDetailMouseOver('','43');"/>
+                            </li>
+                        </ul>
+                        <p>
+                            Example: 11/30/1987</p>
+                    </div>
+                     <div class="button-container align-left">
+                            <div id='44' ng-class="{'red':44==currentIndex , 'gr':44!=currentIndex}"  class="lrg-button"
+                                 ng-click="eventHandler.titleDetailClickEvent()" ng-mouseover="eventHandler.titleDetailMouseOver('',44)">
+                                 Continue
+                            </div>
+                        </div>
+                </div>
+                <div class='action-buttons'>
+                    <div class="pop-up-btn-container">
+                       <!--<div class="btn-accept-ctn">
+                            <label>Continue</label>
+                            <button id="agebutton_1" type="submit" name="btnAccept" value="Accept">
+                                <div class="icons close-small"></div>
+                            </button>
+                        </div>-->
+                        <div id="45" class="btn-cancel-ctn popup-cancel-btn" ng-click="eventHandler.titleDetailBackButtonClick()" ng-class="{'focused':45==currentIndex}" ng-mouseover="eventHandler.titleDetailMouseOver('',45)">
+                            <label>Cancel</label>
+							<button id="agebutton_1" type="submit" name="btnAccept" value="Accept">
+                                <div class="icons cancel-small"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="synop pop-up" ng-show="showHelpPopUp">
+        <div class="pop-up-content-ctn">
+            <div class="pop-up-content-bg">
+                <div class="title2">
+                    <span class="icons question-small"></span> Help with Instant Options
+                </div>
+                
+                <div id="content_text" class="wh-pu-text">
+                    <div class="alert-content">
+						<div class="title3">Your instant options</div>
+						<div class="">
+							You can rent or purchase Redbox Instant Titles in standard or high definition.<br>
+							<br>
+							When you rent a title, you'll have 30 days to start watching, and then 48 hours to watch it as many times as you'd like.<br>
+							<br>
+							When you purchase a title, it's yours to enjoy whenever and wherever you'd like.
+						</div>
+                    </div>
+                </div>
+                <div class='action-buttons'>
+                    <div class="pop-up-btn-container">
+                        <div class="btn-accept-ctn inline-block">
+                            <label>
+                                OK</label>
+                            <button id="0_1" type="submit" ng-click="eventHandler.titleDetailClickEvent('','')" name="btnAccept" value="Accept">
+                                <div class="icons close-small">
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="synop pop-up" ng-show="showBlurayPopup">
+            <div class="pop-up-content-ctn">
+                <div class="pop-up-content-bg">
+                    <div class="title2">You've selected a Blu-ray Disc<sup>&trade;</sup></div>
+                    <div id="Div2" class="wh-pu-text">
+                        <div class="alert-content">
+                            <div class="confirm-title">
+								<div class="bluray-img"><img src="images/blu-ray.png" border="0" /></div>
+								<div class="bluray-txt">Blu-ray Discs won't play on standard DVD players. If your player is compatible, it'll most likely have a Blu-ray logo on it. <br><br>Are you sure you want to rent a Blu-ray movie?</div>
+							</div>
+                        </div>
+                    </div>
+                    <div class='action-buttons'>
+                        <div class="pop-up-btn-container">
+                            <div class="btn-accept-ctn">
+								<div id ='Yes_112' class="yes-btn-wrapper" ng-class="{'focused':'112'==currentIndex}"  ng-click="eventHandler.titleDetailClickEvent('Yes',112)" ng-mouseover="eventHandler.titleDetailMouseOver('Yes',112)">
+									<label>Yes</label>
+									<button id="Button4" type="submit" name="btnAccept" value="Accept">
+										<div class="icons close-small"></div>
+									</button>
+								</div>
+                                <div id ='No_111'class="no-btn-wrapper" ng-class="{'focused':'111'==currentIndex}" ng-click="eventHandler.titleDetailClickEvent('No',111)" ng-mouseover="eventHandler.titleDetailMouseOver('No',111)">
+                                    <label>No</label>
+                                    <button id="Button3" type="submit" name="btnAccept" value="Accept">
+                                        <div class="icons cancel-small"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div pwpopup></div>
+        <div abandonpopup></div>
+</div>
+

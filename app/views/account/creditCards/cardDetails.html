@@ -1,0 +1,124 @@
+<div id="add-card-page" rbikeyevent>
+    <div id='add-card'>
+        <div class="inner-container">
+            <div id="add-card-header-title" ng-show="isAdd">
+                <div id="add-card-title" ng-hide="isFreeTrial" class="title1">Add credit card.</div>
+                <div id="add-card-title" ng-show="isFreeTrial" class="title1">Ok, let's get you that first month free!</div>
+                <p id="P1" ng-hide="isFreeTrial">
+                 We'll need your credit card information so you can conveniently rent or buy movies on demand with ease, since we'll save your info.
+                </p>
+                <p id="add-card-title-2" ng-show="isFreeTrial">
+                    We'll need your credit card info just to identify you at the box when you use your DVD credits. Don't worry, you won't be charged for a subscription yet. After all, the first month's on us!
+                </p>
+            </div>
+            <div id="modify-card-header-title" ng-show="isModify">
+                <div id="modify-card-title" ng-hide="isFreeTrial" class="title1">Modify credit card.</div>
+                <div id="modify-card-title" ng-show="isFreeTrial" class="title1">Ok, let's get you that first month free!</div>
+                <p id="modify-card-title-2">
+                    Edit your credit card information so you can conveniently rent or buy movies on demand, since we'll save your info.
+                </p>
+            </div>
+            <form name="newFeed" id="add-update-card" novalidate class="row form-horizontal">
+                <div class="left-clm onethird">
+                    <div class="form-content">
+                        <div class="input-wrapper" id="add-card-user-name-label">
+                            <label>Name</label>
+                        </div>
+                        <div class='input-wrapper' id="add-card-nick-name-label">
+                            <label>Card Nickname</label>
+                        </div>
+
+                        <div class='input-wrapper' id="modify-cc-number-label">
+                            <label>Card Number</label>
+                        </div>
+
+                        <div class='input-wrapper hide-for-modify-2' id="add-card-exp-date-label">
+                            <label>Expiration Date</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-clm twothird">
+                    <div class="input-wrapper">
+                        <div class="controls" id="add-card-user-name" ng-show="creditcard.canModifyName">
+                            <input type="text" ng-mouseover="eventHandler.addCardMouseOver(0)" id='1_0'
+                                   placeholder="Name" ng-class="{'focused':0==focusIndex}"
+                                   ng-model='creditcard.name' required maxlength="50"
+                                   onFocus="invokeOSK(this);">
+
+                            <div class="sub-text">(as it appears on credit card)</div>
+                        </div>
+                        <div class="controls" id="modify-card-user-name" ng-show="!creditcard.canModifyName">
+                            <label class="control-label">{{ creditcard.name }}</label>
+
+                            <div class="sub-text">(as it appears on credit card)</div>
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <div class="controls" id="add-card-nick-name">
+                            <input ng-mouseover="eventHandler.addCardMouseOver(1)" ng-model='creditcard.nickname'
+                            id="1_1" type="text" placeholder="Card Nickname" ng-class="{'focused':1==focusIndex}" onFocus="invokeOSK(this);">
+                            <div class="sub-text">(optional)</div>
+
+                        </div>
+
+                    </div>
+                    <div class="input-wrapper">
+                        <div class="controls">
+                            <div id="add-card-credit-number" ng-show="isAdd">
+                                <input ng-mouseover="eventHandler.addCardMouseOver(2)"  ng-class="{'focused':2==focusIndex}"ng-model='creditcard.cardnumber' class="cc-number" required
+                                       type="text" id="1_2" placeholder="Card number" onFocus="invokeOSK(this);"
+                                       maxlength="16">
+                            </div>
+                            <div id="modify-card-credit-number" ng-show="isModify">
+                                <label class="control-label">XXXX-XXXX-XXXX-{{ creditcard.cardnumber }}</label>
+                            </div>
+                            <div id="add-cvv-holder">
+                                <div class="cvv-number-text">CVV</div>
+                                <input ng-mouseover="eventHandler.addCardMouseOver(3)" ng-class="{'focused':3==focusIndex}" id="1_3" ng-model='creditcard.cvv'
+                                       class="cvv-number" required type="text"
+                                       placeholder="CVV" onFocus="invokeOSK(this);" maxlength="4">
+                                <div class="sub-text">(what's this)</div>
+                                <div ng-mouseover="eventHandler.addCardMouseOver(4)" ng-class="{'cvv-help-focus':4==focusIndex}"  ng-click="eventHandler.showCVVPopup()" class="cvv-help" id="1_4">?</div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="input-wrapper">
+                        <div class="controls hide-for-modify-2" id="year-dd-list">
+                            <div class="cvv-number-text">Month</div>
+                            <input ng-mouseover="eventHandler.addCardMouseOver(5)" type="text" id='1_5' placeholder="mm" ng-model="creditcard.expMonth"                                   onFocus="invokeOSK(this);" class="cvv-number" ng-class="{'focused':5==focusIndex}"
+                                   maxlength="2"/>
+                            <div class="cvv-number-text">Year</div>
+                            <input ng-mouseover="eventHandler.addCardMouseOver(6)" type="text" id='1_6' ng-class="{'focused':6==focusIndex}" ng-model="creditcard.expYear"
+                                   placeholder="yyyy" onFocus="invokeOSK(this);" class="year-number" maxlength="4"/>
+
+                        </div>
+
+                    </div>
+
+                    <div class="button-container align-right">
+						<div id='add-sign-in-btn' class="lrg-button" ng-class="{'red':7==focusIndex , 'gr':7!=focusIndex}"  ng-mouseover="eventHandler.addCardMouseOver(7)"  ng-show="isAdd && !isBilling" ng-click="SaveCard()">
+                            Next
+						</div>
+						<div id='modify-next-btn-1' class="lrg-button" ng-mouseover="eventHandler.addCardMouseOver(7)" ng-class="{'red':7==focusIndex , 'gr':7!=focusIndex}" ng-show="isModify && !isBilling" ng-click="SaveCard()">
+                            Next
+						</div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div pwpopup ng-show="uiPWPopup"></div>
+    <div class="specific-back" id="specific-back" ng-class="{'specific-back-highlight':8==focusIndex}" ng-click="eventHandler.handleBackButton();" ng-mouseover="eventHandler.addCardMouseOver(8)">
+		<span class="icons cancel-small-noshadow"></span><label ng-hide="isSignupFlow">Back</label><label ng-show="isSignupFlow">I'm going to wait</label>
+ 	</div>
+	<div class="giftcard-div">Redbox Gift Cards are not currently supported on Redbox Instant. We apologize for any inconvenience.</div>
+	
+</div>
+<style type="text/css">
+#menu-button-wrapper, #back-button-wrapper{display:none !important;}
+label{display: inline;}
+</style>

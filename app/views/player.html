@@ -1,0 +1,308 @@
+<div id="player" rbikeyevent="" ng-click="PlayerCoreUI_ShowControlBar();" ng-mouseover="PlayerCoreUI_ShowControlBar();">
+<link href="css/player-controller.css" rel="stylesheet"/>
+    <!-- Start / resume buttons -->
+    <ul class="show-start-resume-buttons-container">
+        <li id='resume-button' ng-show="showStartResumeButtons">
+            <button type="submit" class='lrg-button player-button' ng-class="{'red':focusIndex==0,'gr':focusIndex!=0}" ng-click="startPlayer(false);" ng-mouseover="eventHandler.handleMouseOverStartupScreen(0);">RESUME</button>
+        </li>
+        <li id='start-over-button'  ng-show="showStartResumeButtons">
+            <button type="submit" class='lrg-button player-button' ng-class="{'red':focusIndex==1,'gr':focusIndex!=1}" ng-click="startPlayer(true);" ng-mouseover="eventHandler.handleMouseOverStartupScreen(1);">START OVER</button>
+        </li>
+    </ul>
+    <!-- Scrubber images -->
+   <div id="scrubber-image">
+       <img ng-src="{{scrubberImageUrl}}" class="stretch" ng-show="showScrubberImage">
+   </div>
+
+    <!-- FF / RW / Pause indicators -->
+    <div id="fastForward2x" class="fast-forward-2x-indicator" ng-show="seekDirection==1&&currentSeekSpeed==2"></div>
+    <div id="fastForward4x" class="fast-forward-4x-indicator" ng-show="seekDirection==1&&currentSeekSpeed==4"></div>
+    <div id="fastForward8x" class="fast-forward-8x-indicator" ng-show="seekDirection==1&&currentSeekSpeed==8"></div>
+    <div id="rewind2x" class="rewind-2x-indicator" ng-show="seekDirection==-1&&currentSeekSpeed==2"></div>
+    <div id="rewind4x" class="rewind-4x-indicator" ng-show="seekDirection==-1&&currentSeekSpeed==4"></div>
+    <div id="rewind8x" class="rewind-8x-indicator" ng-show="seekDirection==-1&&currentSeekSpeed==8"></div>
+    
+
+    <div id="pause" class="pause-indicator" ng-show="isVideoPaused">
+        <div class="ctrls">
+          	<div class="icons pause"></div>
+    	</div>
+    </div>
+
+    <!-- Loading screen -->
+    <div class="loading-screen" ng-show="showLoadingScreen()">
+        <div class="video-loading" ng-show="showLoadingScreen()"></div>
+        <div class="speed-test-message" ng-show="isVideoLoading&&!isPreview&&isSpeedTestEnabled">
+            Optimizing video quality based on your connection ...
+        </div>
+    </div>
+
+    <!-- HD indicator -->
+    <div class="hd-indicator" ng-show="isVideoPlaying()&&showHD">
+         <div class="icons hd-icon"></div>
+    </div>
+
+    <!-- Chapter bar -->
+    <div id="chapter-bar" ng-show="scenesOpen&&!isPreview&&!endOfMovie">
+        <div id=chapter-list-container>
+            <ul class="chapter-list">
+                <li class='chapter-item' ng-repeat="item in chapterData">
+                    <div ng-show="item.showThumbnail">
+                        <div ng-show="!item.isSelected">
+                            <div class="chapter-thumbnail" ng-click="PlayerCoreUI_SelectScene(item.chapterNumber);" ng-mouseover="PlayerCoreUI_FocusScene(item.chapterNumber);">
+                                <img ng-src="{{item.thumbnail}}" class="stretch" ng-show="item.showThumbnail">
+                            </div>
+                            <div id="chapter-time">{{item.chapterName}} - {{item.chapterTime}}</div>
+                        </div>
+                        <div ng-show="item.isSelected">
+                            <div class="chapter-thumbnail-highlight" ng-click="PlayerCoreUI_SelectScene(item.chapterNumber);" ng-mouseover="PlayerCoreUI_FocusScene(item.chapterNumber);">
+                                <img ng-src="{{item.thumbnail}}" class="stretch" ng-show="item.showThumbnail">
+                            </div>
+                            <div id="chapter-time-selected">{{item.chapterName}} - {{item.chapterTime}}</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="chapter-bar-left-arrow" ng-click="PlayerCoreUI_ScrollChapterBar(-1);" ng-show="currentChapter>2"></div> <!-- TODO: Do we need handle mouseover here? -->
+        <div id="chapter-bar-right-arrow" ng-click="PlayerCoreUI_ScrollChapterBar(1);" ng-show="currentChapter<numChapters-3"></div>
+    </div>
+
+    <!-- Closed captioning-->
+    <div id="caption-container" ng-show="isCaptionDisplayed"><div id="caption-text"></div></div>
+
+    <!-- Info bar -->
+    <div id="info-bar" ng-show="showInfo">
+        <div id="info-bar-image">
+            <img ng-src="{{titleDetails.image}}">
+        </div>
+        <div id="info-bar-badge-container">
+            <div class="info-bar-badges">
+                <div class="info-bar-media-format-container" ng-repeat="item in titleDetails.badges">
+                    <div id="badge" class="info-bar-media-format-type borderclass">
+                        <div>{{item}}<span ng-show="isBluRay(item)">&trade;</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="titleDetails.genres!=''">
+            <div id="info-bar-genres-header">Genres:</div>
+            <div id="info-bar-genres">{{titleDetails.genresDisp}}</div>
+        </div>
+        <div ng-show="titleDetails.actors!=''">
+            <div id="info-bar-actors-header">Starring:</div>
+            <div id="info-bar-actors">{{titleDetails.actors}}</div>
+        </div>
+        <div id="info-bar-description">{{titleDetails.description}}</div>
+    </div>
+
+    <!-- End of movie experience -->
+    <div id="endOfMovie" class="end-of-movie-overlay" ng-show="endOfMovie">
+         <div id="end-of-movie-msg">What would you like to do next?</div>
+        <div id='title-details-button'>
+            <button type="submit" class='player-button' ng-click="goToTitleDetails();" ng-mouseover="eventHandler.handleMouseOverEndOfMovie(0,0);">DETAILS</button>>
+        </div>
+        <div id='my-redbox-button'>
+            <button type="submit" class='player-button' ng-click="goToMyRedbox();" ng-mouseover="eventHandler.handleMouseOverEndOfMovie(1,0);">MY REDBOX</button>
+        </div>
+        <div id='remove-bookmark-button' class='bookmark-button' ng-show="titleDetails.isBookmarked">
+            <button type="submit" class='player-button' ng-click="removeBookmark();" ng-mouseover="eventHandler.handleMouseOverEndOfMovie(3,0);"><span id="remove-bookmark-icon" class="icons bookmark-minus"></span>BOOKMARK</button>
+        </div>
+        <div id='add-bookmark-button' class='bookmark-button' ng-show="!titleDetails.isBookmarked">
+            <button type="submit" class='player-button' ng-click="addBookmark();" ng-mouseover="eventHandler.handleMouseOverEndOfMovie(2,0);"><span id="add-bookmark-icon" class="icons bookmark-plus"></span>BOOKMARK</button>
+        </div>
+
+        <!-- bookmark popup -->
+        <div ng-show="showBookmarkPopUp">
+            <div class="bookmark-popup" ng-show="titleDetails.isBookmarked">
+                <div class="scale-popup-msg">
+                    <img src="images/title-added-to-my-redbox.png">
+                </div>
+            </div>
+            <div class="bookmark-popup" ng-hide="titleDetails.isBookmarked">
+                <div class="scale-popup-msg">
+                    <img src="images/title-removed-from-my-redbox.png">
+                </div>
+            </div>
+        </div>
+
+        <!-- More like This section -->
+        <div id="recommended-products" ng-show="showRecommendedProducts">
+            <div id="more-like-this-title">RELATED</div>
+            <div class="more-like-this-wrapper" id="more-like-this">
+                <div class="div-content">
+                    <div class="grid-col">
+                        <div id="more-like-this-list" ng-repeat="item in recommendedProducts" class="more-like-this-list">
+                            <div id="imgId_{{$index}}" ng-class="{'list-item-img-highlight': item.isSelected}" class="more-like-this-item" ng-click="PlayerCoreUI_GoToTitleDetails(item.productId);" ng-mouseover="eventHandler.handleMouseOverEndOfMovie($index,1);">
+                                <img ng-src="{{item.imageUrl}}" border="0" src=""/>
+                                <input type="hidden" value="{{item.productId}}" id="productId_{{$index}}" />
+                                <div class="badge-content">
+                                        <div ng-switch on="scrollTitle(item)">
+                                            <div ng-switch-when="true">
+                                                <div class="grid-title-scroll title5"
+                                                     id="more-like-this-scroll-title_{{$index}}"
+                                                     ng-style="{'width':item.width}" style="width:auto;">{{item.title}}
+                                                </div>
+                                            </div>
+                                            <div class="badge-content-title" id="more-like-this-title_{{$index}}"
+                                                 ng-style="{'width':item.width}" ng-switch-default>{{item.title}}
+                                            </div>
+                                        </div>
+                                    <div class="icon-content" id="icon-list_{{$index}}">
+                                        <span class="icons subscribe" ng-style="{'display':item.isSubscription}">&nbsp;</span>
+                                        <span class="icons buy-rent" ng-style="{'display':item.isRentBuy}">&nbsp;</span>
+                                        <span class="icons kiosk" ng-style="{'display':item.isKiosk}">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Control bar -->
+    <div id="controlBar" ng-show="showProgressBar()">
+        <!-- Progress bar -->
+   		<div id="titleProgressStatusBar" class="title-progress-status-bar">
+			<div id="progress-time-indicator">{{progressTime}}</div>
+			<div class="progress-content">
+				<div id="current-position-indicator"></div>
+				<div id="gray-loading"></div>
+				<div id="white-loading"></div>
+				<div id="progress-bar"></div>
+			</div>
+            <div id="total-time-indicator">{{totalTime}}</div>
+    	</div>
+
+         <!-- Control Buttons -->
+
+        <div id="bottom-container" class="bottom-container">
+            <div id="title-div" align="left" class="title5" ng-show="showTitle">{{titleDetails.title}}</div>
+
+            <div id="player-button-div" align="center">
+
+                <div id="cc-button" ng-show="showCCButton()">
+                    <div id="ccOffIcon" class="cc-button-icon" ng-show="!captionsEnabled">
+                        <div class="icons cc-icon"></div>
+                    </div>
+                    <div id="ccOnIcon" class="cc-button-icon" ng-show="captionsEnabled">
+                        <div class="icons cc-blue-icon"></div>
+                    </div>
+                    <div id="cc-button-img" class="cc-button-img">
+                        <div class="icons control-triangle"></div>
+                    </div>
+                </div>
+
+                <div id="close-scenes-button" ng-show="showScenesButton()&&scenesOpen">
+                    <div id="close-scenes-button-text">Close Scenes</div>
+                    <div id="close-scenes-icon">
+                        <div id=close-scenes-icon-wrapper class="icons close-scenes"></div>
+                    </div>
+                </div>
+
+                <div id="open-scenes-button" ng-show="showScenesButton()&&!scenesOpen">
+                    <div id="open-scenes-button-text">Scenes</div>
+                    <div id="open-scenes-icon">
+                        <div class="icons scenes"></div>
+                    </div>
+                </div>
+
+                <div id="open-info-button" ng-show="infoAvailable&&!showInfo">
+                    <div id="open-info-button-text">Info</div>
+                    <div id="open-info-button-icon">
+                        <div class="icons control-square"></div>
+                    </div>
+                </div>
+
+                <div id="close-info-button" ng-show="infoAvailable&&showInfo">
+                    <div id="close-info-button-text">Close Info</div>
+                    <div id="close-info-button-icon">
+                        <div class="icons control-square"></div>
+                    </div>
+                </div>
+
+                <div id="stop-button">
+                    <div id="stop-button-text">
+                        <span ng-show="!endOfMovie">Stop</span>
+                        <span ng-show="endOfMovie">Back</span>
+                    </div>
+                    <div class="stop-button-icon">
+                        <div class="icons control-circle"></div>
+                    </div>
+                </div>
+
+
+                <div id="play-button" ng-show="!endOfMovie">
+                    <div id="play-button-text">
+                        <span ng-show="scenesOpen">Play Scene</span>
+                        <span ng-show="!scenesOpen">Pause/Play</span>
+                    </div>
+                    <div class="play-button-icon">
+                        <div class="icons enter-small-noshadow"></div>
+                    </div>
+                </div>
+
+                <div id="ff-rw-button" ng-show="showFFRwButton()">
+                    <div id="ff-rw-button-text">RWD/FWD</div>
+                    <div class="ff-rw-button-icon">
+                        <div class="icons control-fw-rw"></div>
+                    </div>
+                </div>
+            </div>
+			<div id="splayer-button-div" align="center">
+				<div class="controls"  ng-show="!endOfMovie">
+					<div id="skipRwd" class="play-icons skip-backward-btn" ng-click="PlayerCoreUI_SkipBackward();" ng-mouseover="eventHandler.handleMouseOverPlayer(10);"></div>
+					<div id="Rwd" class="play-icons backward-btn" ng-click="PlayerCoreUI_Rewind();" ng-mouseover="eventHandler.handleMouseOverPlayer(3);"></div>
+					<div id="playPause" class="play-icons pause-btn" ng-click="PlayerCoreUI_HandlePlayPauseKey();" ng-mouseover="eventHandler.handleMouseOverPlayer(0);"></div>
+					<div id="Fwd" class="play-icons forward-btn" ng-click="PlayerCoreUI_FastForward();" ng-mouseover="eventHandler.handleMouseOverPlayer(2);"></div>
+					<div id="skipFwd" class="play-icons skip-farward-btn" ng-click="PlayerCoreUI_SkipForward();" ng-mouseover="eventHandler.handleMouseOverPlayer(9);"></div>
+					<div id="stop" class="play-icons stop-btn" ng-click="PlayerCoreUI_StopPlayer();" ng-mouseover="eventHandler.handleMouseOverPlayer(4);"></div>
+				</div>
+				<div id="player-right-controls" class="right-controls">
+						<div id="cc-button" ng-show="showCCButton()"  ng-click="PlayerCoreUI_ClosedCaptions();" >
+	                    <div id="ccOffIcon" class="cc-button-icon" ng-show="!captionsEnabled">
+	                        <div class="icons cc-icon"></div>
+	                    </div>
+	                    <div id="ccOnIcon" class="cc-button-icon" ng-show="captionsEnabled">
+		                        <div class="icons cc-blue-icon"></div>
+		                    </div>
+		                    <div id="cc-button-img" class="cc-button-img">
+		                        <div class="icons control-triangle"></div>
+		                    </div>
+		                </div>
+	                
+					<div id="qmenu" class="play-icons qmenu"  ng-show="!endOfMovie&&!showStartResumeButtons" ng-click="eventHandler.HandleQMenu();" ng-mouseover="eventHandler.handleMouseOverPlayer(13);"></div>
+                    <div id="scenes" class="play-icons scenes" ng-show="showScenesButton()&&!scenesOpen" ng-click="PlayerUI_HandleKeyScenes();" ng-mouseover="eventHandler.handleMouseOverPlayer(5);"></div>
+                    <div id="close-scenes" class="play-icons close-scenes" ng-show="showScenesButton()&&scenesOpen" ng-click="PlayerUI_HandleKeyScenes();" ng-mouseover="eventHandler.handleMouseOverPlayer(6);"></div>
+                    <div id="info" class="play-icons info" ng-show="infoAvailable&&!showInfo" ng-click="PlayerCoreUI_ShowInfoBar();" ng-mouseover="eventHandler.handleMouseOverPlayer(7);"></div>
+                    <div id="close-info" class="play-icons close-info" ng-show="infoAvailable&&showInfo" ng-click="PlayerCoreUI_ShowInfoBar();" ng-mouseover="eventHandler.handleMouseOverPlayer(8);"></div>
+                    <div id="back-button" class="back-button-player" ng-show="endOfMovie" ng-click="PlayerCoreUI_StopPlayer();" ng-mouseover="eventHandler.handleMouseOverPlayer(12);"><span class="icons cancel-small-noshadow"></span>Back</div>
+                </div>
+
+			</div>
+        </div>
+    </div>
+
+    <!-- Offline screen -->
+    <div id="offline-screen" ng-show="isOffline">
+        <div align="center" class="error-msg-1">Sorry, we are having trouble connecting to the service.
+        </div>
+        <div align="center" class="error-msg-2">If you continue to have this
+            problem, please visit our Help Center and select Contact Us.
+        </div>
+        <div align="center" class="error-msg-2" >Also please check your internet
+            connection and try again.
+        </div>
+        <style type="text/css">
+            /* Do not show the menu */
+            #menu-button-wrapper{
+                display: none !important;
+            }
+        </style>
+    </div>
+
+    <!-- Parental control popup -->
+    <div pwpopup></div>
+</div>

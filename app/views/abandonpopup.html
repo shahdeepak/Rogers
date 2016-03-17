@@ -1,0 +1,39 @@
+ <div class="synop pop-up top-index" ng-show="showHangOnthere">
+        <div class="pop-up-content-ctn">
+            <div class="pop-up-content-bg">
+                <div class="title2">
+                    Hang On there...
+                </div>
+                <div id="content-text" class="wh-pu-text">
+                    <div class="alert-content">
+                        <div class="title-2">
+                            <p>
+                                Are you sure you want to abandon your cart? You will lose all the titles you have
+                                previously selected and will no longer be viewing titles in your selected kiosk.</br></br>To
+                                do this, continue on by selecting "OK";.</br><br>If you want to return to checkout,
+                                    select "Checkout".</br>
+                                </br></p>
+                        </div>
+                    </div>
+                </div>
+                <div class='action-buttons'>
+                    <div class="pop-up-btn-container">
+                        <div class="btn-accept-ctn">
+							<div id='no-btn' ng-click="eventHandler.processBottomButtonClick('53_0')" ng-mouseover="eventHandler.hangonMouseOver('no-btn')" class="no-btn-wrapper">
+								<label>OK</label>
+								<button id="Button5" type="submit"  name="btnAccept" value="Accept">
+									<div class="icons cancel-small"></div>
+								</button>
+							</div>
+							<div id='yes-btn' ng-click="eventHandler.processBottomButtonClick('Checkout')" ng-mouseover="eventHandler.hangonMouseOver('yes-btn')" class="yes-btn-wrapper">
+								<label>Checkout</label>
+								<button type="submit"  name="btnAccept" value="Accept">
+									<div class="icons close-small"></div>
+								</button>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,195 @@
+<div id="title-detail-checkout" rbimousewheel ng-cloak rbikeyevent="" class="checkout-page title-checkout">
+        <!-- TITLE CHECKOUT FLOW START HERE -->
+        <div class="checkout-filter-popup" ng-show="$root.showTitleConfirmCheckout">
+            <div class="inner-container">
+                <div class="title1">
+                    Reserve At the Box</div>
+                    <div id="content_text" class="wh-pu-text">
+                        <div class="content-block">
+                            <div class="content-block-left title-img">
+                                <img src="{{title.posterImage}}" onerror="this.src='images/default-poster.png';" /></div>
+                            <div class="content-block-right title-ctnr">
+                                <div class="pop-title">
+                                    {{title.titleName}}</div>
+                                <div class="clearAll">&nbsp;</div>
+                                <div class="sub-tags">
+                                    <div id="media-format-container" class="media-format-container" ng-repeat="ratingValue in title.ratingsJson">
+                                        <div id="rating" class="media-format-type borderclass">
+                                            <span>{{ratingValue}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearAll">&nbsp;</div>
+                                <div class="grid-item-details">
+                                    <div class="{{title.ratingCss}} {{title.ratingCss}}-{{title.ratingValueStr}}">
+            </div>
+                                    <div class="clearAll">&nbsp;</div>
+                                    <div class="checkout-popup-description">{{confirmCheckOutUi.detail}}</div>
+                                    <div class="clearAll">&nbsp;</div>
+                                </div>
+                                <div class="title-btns">
+                                    <div id="titlecheckout_0_0" class="lrg-button lrg-button-dropdown" ng-class="{'red': titleCheckoutCurrentControlIndex == 0,'gr':titleCheckoutCurrentControlIndex != 0}" ng-mouseover="eventHandler.titleCheckoutMouseOver(0,'titlecheckout')" ng-click="eventHandler.titlecheckoutClickEvent()">
+                                        <span class="lrg-button-dropdown-title">
+                                           {{selectedInstantOption.PurchaseOptionName}} {{selectedInstantOption.Price |currency}}
+                                        </span>
+                                        <span class="icons dwn-arrow"></span>
+                                    </div>
+                                    <div class="clearAll">&nbsp;</div>
+                                    <div ng-show="$root.titleCheckoutSelectedOptionVisible" class="lrg-button-dropdown-subnav down">
+                                        <div class="down-arrow"></div>
+                                        <div class="clearAll">&nbsp;</div>
+                                        <div class="button-drp-down" id="titlecheckout_changecard_ul">
+                                            <div class="drp-up-list" id="checkout_changecard_list">
+                                                <ol id="titlecheckout_rentbuy_ul">
+                                                    <li ng-repeat="instantoption in filteredInstantOptions">
+                                                        <div ng-class="{'red':titleCheckoutRentBuyCurrentCount == $index}" ng-click="setSelectedInstantOption(instantoption)"  ng-mouseover="eventHandler.titleCheckoutMouseOver($index,'titlecheckout_option')" id="titlecheckout_option_{{$index}}">
+                                                            <span ng-class="{'select-card':((selectedInstantOption.PurchaseOptionName==instantoption.PurchaseOptionName)&&(selectedInstantOption.Price==instantoption.Price))}"></span>
+                                                            {{instantoption.PurchaseOptionName}} {{instantoption.Price |currency}}
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block billing-information">
+                            <div class="content-block-left">
+                                <p ng-show="selectedCardAccount!=null">
+                                    Bill to this card ending in {{selectedCardAccount.getLastFour()}}</p>
+                                <p ng-show="selectedCardAccount==null">
+                                    No credit card on file</p>
+                                <div class="clearAll">&nbsp;</div>
+                                <ul class="card-description-container">
+                                    <li id="checkout_card">
+                                        <img src="images/vod-card.png" />
+                                    </li>
+                                    <li class="select-box-container">
+                                        <div id="titlecheckout_0_1" class="lrg-button lrg-button-dropdown" ng-class="{'red':titleCheckoutCurrentControlIndex == 1,'gr':titleCheckoutCurrentControlIndex != 1}" ng-mouseover="eventHandler.titleCheckoutMouseOver(1,'titlecheckout')" ng-click="eventHandler.titlecheckoutClickEvent('0_1')">
+                                            <span ng-show="selectedCardAccount!=null">
+                                                CHANGE CARD</span>
+                                            <span ng-show="selectedCardAccount==null">
+                                                ADD CARD</span>
+                                            <span class="icons dwn-arrow"></span>
+                                        </div>
+                                        <div class="clearAll">&nbsp;</div>
+                                        <div ng-show="$root.titleCheckoutChangeCardVisible" class="lrg-button-dropdown-subnav up">
+                                            <div class="down-arrow"></div>
+                                            <div class="clearAll">&nbsp;</div>
+                                            <div class="drp-up-ctnr" id="titlecheckout_changecard_ul">
+                                                <div class="drp-up-list" id="checkout_changecard_list">
+                                                    <ol>
+                                                        <li ng-show="canAddCards" class="add-title" id="titlecheckout_changecard_0" ng-mouseover="eventHandler.titleCheckoutMouseOver(0,'titlecheckout_changecard')" ng-click="addCard();">Add Card</li>
+                                                        <li ng-repeat="card in cards">
+                                                            <div ng-class="{'red':titleCheckoutChangeCardCurrentCount == $index}" ng-click="eventHandler.titlecheckoutClickEvent(card)" ng-mouseover="eventHandler.titleCheckoutMouseOver($index,'titlecheckout_changecard')" id="titlecheckout_changecard_{{$index + 1}}">
+                                                                <span ng-class="{'select-card':(card.getLastFour()==selectedCardAccount.getLastFour())}"></span>
+                                                                Use Credit Card ending in {{card.getLastFour()}}</div>
+                                                        </li>
+                                                        <li class="gift-card" id="titlecheckout_changecard_{{cards.length+1}}" ng-click="setSelectedCardAccount('Gift')">
+                                                            <div class="titledetail-buttonContainer">
+                                                                <div class="back-button-wrapper">
+                                                                    Got a Redbox Gift Card?<span class="icons question-small">
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="clearAll">&nbsp;</div>
+                                <p class="secure-text">
+                                    <span class="icons secure"></span>Secure Checkout</p>
+                            </div>
+                            <div class="content-block-right" ng-show="isCalculationDone">
+                                <div class="title4 no-border">
+                                    Total: {{onDemandCartPricing.getTotal()|currency}}</div>
+                                <p>
+                                    ({{onDemandCartPricing.getPrice()|currency}} + {{onDemandCartPricing.getTax()|currency}} tax)</p>
+                            </div>
+                        </div>
+                        <div class="content-block reserve-button-container">
+                            <div class="content-block-left">
+                                &nbsp;
+                                <div class="verify-check">
+                                </div>
+                            </div>
+                            <div class="content-block-right action-buttons">
+                                <div ng-class="{'lrg-button red':titleCheckoutCurrentControlIndex == 2, 'lrg-button gr':titleCheckoutCurrentControlIndex != 2}" ng-mouseover="eventHandler.titleCheckoutMouseOver(2,'titlecheckout')" ng-click="eventHandler.titlecheckoutClickEvent()"
+                                     id="titlecheckout_0_2">
+                                    {{confirmCheckOutUi.buttonText}}
+                                </div>
+                                <div class="clearAll">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!-- Kiosk check out flow end here -->
+ <div class="synop pop-up" id="showAbandon"  ng-show="showAbandonCheckout">
+        <div class="pop-up-content-ctn">
+            <div class="pop-up-content-bg">
+                <div class="title2">
+                    Abandon Checkout
+                </div>
+                <div id="content_text" class="wh-pu-text">
+                    <div class="alert-content">
+                        <div class="confirm-title">
+                            Are you sure you want to abandon your cart? You will lose all the titles you have
+                            previously selected.
+                        </div>
+                    </div>
+                </div>
+                <div class='action-buttons'>
+                    <div class="pop-up-btn-container">
+                        <div class="btn-accept-ctn">
+							<div class="yes-btn-wrapper" ng-click="eventHandler.titlecheckoutClickEvent('Button2')" ng-mouseover="eventHandler.titleCheckoutMouseOver('Button2','Button2')">
+								<label>Yes</label>
+								<button id="Button2" type="submit" name="btnAccept" value="Accept">
+									<div class="icons close-small"></div>
+								</button>
+							</div>
+                            <div class="no-btn-wrapper" ng-click="eventHandler.titlecheckoutClickEvent('Button1')" ng-mouseover="eventHandler.titleCheckoutMouseOver('Button1','Button1')">
+                                <label>No</label>
+                                <button id="Button1" type="submit" name="btnAccept" value="Accept">
+                                    <div class="icons cancel-small"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="synop pop-up" id="giftcard" ng-show="RedboxGiftCard">
+            <div class="pop-up-content-ctn">
+                <div class="pop-up-content-bg">
+                    <div class="title2">
+                        Got a Redbox Gift Card?<span class="icons question-small">
+                    </div>
+                    
+                    <div id="Div1" class="wh-pu-text">
+                        <div class="alert-content">
+                            <div class="title-2">
+                                Redbox Gift Cards are not currently supported on Redbox Instant.
+								We apologize for any inconvenience
+                            </div>
+                        </div>
+                    </div>
+                    <div class='action-buttons'>
+                        <div class="pop-up-btn-container">
+                            <div class="lrg-button red" ng-click="eventHandler.changecardClickEvent()" id='okRedboxGift'>
+                            OK
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+    #menu-button-wrapper{display:none !important;}
+    </style>
+ </div>

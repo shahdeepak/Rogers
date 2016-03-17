@@ -1,0 +1,61 @@
+<div rbikeyevent>
+    <div id="account-top-nav-bar">
+        <div class="top-nav-wrapper">
+            <ul class="top-nav-ul">
+                <li id="2_{{$index}}" ng-repeat="pane in panes" class="nav-li"
+                     ng-class="{'account-top-nav-bar-highlight': ($index==selectedTab), 'nav-li-highlight': (selectedTab==0 && $index==0)}"
+                     ng-click="CurrentLevelIndex = 2; selectedTab=$index; onTabClick($index)" ng-mouseover="eventHandler.mouseOverEvent('2_'+$index);">
+                    {{pane.title}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="caption-editor">
+        <div id="caption-settings" class="drawing-area">
+            <div class="caption-setting-wrapper reset-default-settings-wrapper">
+                <div class="caption-setting-text">Reset to Default Settings</div>
+                <div id="reset-defaults-button" class="lrg-button" ng-click="resetDefaults();"
+                        ng-mouseover="eventHandler.mouseOverEvent('reset-defaults-button');"
+                        ng-class="{'red':focusIndex==0,'gr':focusIndex!=0}"> OK </div>
+            </div>
+            <div id="scroll-bar" class="scrollbar"><div id="scroll-bar-indicator" class="scroll-indicator"></div></div>
+            <div id="drop-down-list-wrapper" ng-repeat="listItem in dropDownOptionsList">
+                <div class="caption-setting-wrapper" ng-show="listItem.isDisplayed">
+                    <div class="caption-setting-text">{{listItem.title}}</div>
+                    <div id="list_{{$index}}" class="drp-dwn-ctnr" ng-show="!listItem.isOpen" ng-click="expandDropDownList(listItem);" ng-mouseover="eventHandler.mouseOverEvent('3_' + $index);">
+                        <div class="drp-dwn-list">
+                            <div ng-show="listItem.showPreviewColor" class="drop-down-list-previewColor" ng-style="{'background-color':listItem.selectedItem.value}">&nbsp;</div>
+                            <div class="drop-down-list-item">{{listItem.selectedItem.description}}</div>
+                        </div>
+                        <div class="drop-down-arrow-container" ng-click="expandDropDownList(listItem);">
+                            <span class="drop-down-arrow"></span>
+                        </div>
+                   </div>
+                    <div id="list-expanded_{{$index}}" class="drp-dwn-ctnr-expanded" ng-show="listItem.isOpen">
+                        <div class="drp-dwn-list-expanded">
+                            <ul>
+                                <li ng-repeat="item in listItem.options">
+                                    <div ng-switch on="item.selected">
+                                        <div ng-show="listItem.showPreviewColor" class="drop-down-list-previewColor" ng-style="{'background-color':item.value}">&nbsp;</div>
+                                        <div ng-switch-when="true" ng-click="eventHandler.clickEvent(item);" ng-mouseover="eventHandler.mouseOverEvent('4_' +$index);" class="drop-down-list-expanded-item-selected">{{item.description}}</div>
+                                        <div ng-switch-default ng-click="eventHandler.clickEvent(item);" ng-mouseover="eventHandler.mouseOverEvent('4_' +$index);" class="drop-down-list-expanded-item">{{item.description}}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bg-image">
+            <div id="caption-window">
+                <div id="caption-text">Captions will look like this</div>
+            </div>
+        </div>
+    </div>
+    <div id='logout-btn' class="logout-button-account" ng-click="eventHandler.clickevent('logout-btn');"
+         ng-mouseover="eventHandler.mouseOverEvent('logout-btn');">
+        <div class="filter-text logout-acc-text" ng-click='logoutUser();'>Sign Out</div>
+        <span class="icons control-square"></span>
+    </div>
+</div>

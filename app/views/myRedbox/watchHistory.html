@@ -1,0 +1,310 @@
+<div id="watch-history">
+<div id="dashboard">
+    <div id="top-bar-text">
+        <div class="tabs-container">
+            <div class="wrapper-tab">
+                <div id="menu_{{$index}}" ng-repeat="pane in panes" class="tab-1 "
+                     ng-class="{'tab-1High': $index==1, 'list-item-img-highlight': ((menuCurrentIndex==$index) && (currentLevelIndex==0))}" outerlinewidth="4px"
+                     ng-click="eventHandler.onClickEvent('menu',$index);"
+                     ng-mouseover="eventHandler.onMouseOverEvent(0,$index);">
+                    {{pane.title}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="inner-container">
+    <div class="watch-history-content" rbikeyevent rbimousewheel>
+        <div class="div-content">
+
+            <div class="no-results" ng-show="isNoItemsInWatchHistory"><strong>You have not watched any titles.</strong>
+            </div>
+
+            <div class="wh-items-ctn" tabindex="-1" set-focus>
+                <ul class="wh-items" set-focus>
+                    <li id="1_{{$index}}" class="wh-item-li"  ng-repeat="watchItem in watchItems"
+                        ng-style="styleSelectedItem($index)" ng-click="eventHandler.onClickEvent(1,$index);"
+                        ng-mouseover="eventHandler.onMouseOverEvent(1,$index);" check-last>
+                        <div ng-class="{'focused': ($index==selectedTitleIndex) && (currentLevelIndex==1) }"
+                             class="wh-img-div ribbonParent">
+                            <div class="top ribbon red" ng-show="isUnavailable(watchItem)"><span>Unavailable</span>
+                            </div>
+                            <div ng-show='isExpired(watchItem)' id='expiredBanner' class="top ribbon red"
+                                 style="visibility:{{watchItem.isExpired}}">Expired Rental
+                            </div>
+                            <img class="wh-watchitem-img" onerror="this.src='images/default-img.png';"
+                                 ng-src="{{watchItem.URL}}"/>
+                        </div>
+                        <div class="wh-details-ctn">
+                            <div ng-class="{'wh-item-highlight':$index==selectedTitleIndex}" class="title1">
+                                {{watchItem.Title}}
+                            </div>
+                            <div class="wh-progress"
+                                 ng-class="{'whblackouthide':watchItem.BlackoutIndicator == 'TRUE'}">
+                                <div class="wh-graybar"></div>
+                                <div ng-style="styleRedProgressBar($index)" class="wh-redbar"></div>
+                            </div>
+                            <div class="wh-blackout-msg"
+                                 ng-class="{'whblackoutshow':watchItem.BlackoutIndicator == 'TRUE'}">
+                                This title is no longer available in the catalog.
+                            </div>
+
+                            <div class="wh-remaining-time" ng-show="progressbarStatus!='COMPLETE'"
+                                 ng-class="{'whblackouthide':watchItem.BlackoutIndicator == 'TRUE'}">
+                                {{watchItem.RemainingTime | date:'h:mm' }}
+                            </div>
+                            <div class="wh-remaining-time" ng-show="progressbarStatus=='COMPLETE'"
+                                 ng-class="{'whblackouthide':watchItem.BlackoutIndicator == 'TRUE'}">
+                                -00:00
+                            </div>
+                            <!-- ZOE-33828: Do not show format type for subscription titles b/c it is incorrect -->
+                            <div ng-switch on="isSubscriptionTitle(watchItem)">
+                                <div ng-switch-when="true" class="wh-stopped-at"
+                                     ng-class="{'whblackouthide':watchItem.BlackoutIndicator == 'TRUE'}">
+                                    {{watchItem.PurchaseOptionName}}
+                                </div>
+                                <div ng-switch-default class="wh-stopped-at"
+                                     ng-class="{'whblackouthide':watchItem.BlackoutIndicator == 'TRUE'}">
+                                    {{watchItem.PurchaseOptionName}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    {{watchItem.FormatType}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wh-rating-ctn"
+                             ng-class="{'whblackoutrating':watchItem.BlackoutIndicator == 'TRUE'}">
+                            <div class="wh-rating" ng-style="styleRating($index)"></div>
+                            <div ng-class="{'wh-details-hide':$index==selectedTitleIndex}" class="wh-select-details">
+                                <div class="wh-label-div">Press&nbsp;&nbsp;</div>
+                                <div class="wh-img-accept"></div>
+                                &nbsp;&nbsp;
+                                <div class="wh-label-div">for Details</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="bottomGrad">
+                <div class="seperator"></div>
+            </div>
+        </div>
+    </div>
+    <div id="help-div" ng-style="{'visibility':helpOverLay}">
+        <div class="help-image"></div>
+        <div class="wh-options-menu wh-help_hover_div" id='dismiss'
+			 ng-class="{'focused': currentLevelIndex =='dismiss' }"
+             ng-click="eventHandler.onClickEvent('dismiss','dismiss');"
+             ng-mouseover="eventHandler.onMouseOverEvent('dismiss','dismiss');">
+        </div>
+    </div>
+</div>
+<div class="wh-options-menu-container dash">
+    <ul id='help' class="wh-options-menu" 
+	ng-class="{'focused': currentLevelIndex =='help' }"
+	ng-click="eventHandler.onClickEvent('help','help');"
+    ng-mouseover="eventHandler.onMouseOverEvent('help');">
+
+        <li>My Redbox Help</li>
+        <li class="icons control-square "></li>
+    </ul>
+    <ul ng-hide="isNoItemsInWatchHistory"  ng-class="{'focused': currentLevelIndex =='option' }" id='option' class="wh-whoption-menu"
+		ng-click="currentLevelIndex = 2; showOptionsPopup(); "
+        ng-mouseover="eventHandler.onMouseOverEvent('option')">
+        <li class='wh-option-text'>Options</li>
+        <li class="icons control-triangle "></li>
+    </ul>
+</div>
+<div class="synop pop-up" ng-show="uiFilterPopupOpen">
+    <div class="pop-up-content-ctn">
+        <div class="pop-up-content-bg">
+            <div class="wh-img-div">
+                <img src="" ng-src="{{popUpURL}}"/>
+            </div>
+            <div class="wh-pu-details-ctn">
+                <div class="wh-pu-movie-title pptitle">{{popUpTitle}}</div>
+                <div class="wh-progress">
+                    <div class="wh-graybar"></div>
+                    <div class="wh-popup-redbar"></div>
+                </div>
+                <div class="wh-popup-remaining-time" ng-show="canIamDone">{{popUpRemainingTime}}</div>
+                <div class="wh-popup-remaining-time" ng-hide="canIamDone">-00:00</div>
+                <div ng-show="isTitleExpired()"><span>Expired Rental</span></div>
+                <div ng-show="isTitleUnavailable()"><span>Title not available</span></div>
+                <div ng-show="!canPlayTitle()"><span>Subscription Required</span></div>
+            </div>
+            <div class='action-buttons'>
+                <div class="pop-up-btn-container">
+                    <div id='backBtn' class="bk-btn" 
+						ng-click="currentLevelIndex = 1; hideOptionsPopup();"
+                        ng-mouseover="eventHandler.onMouseOverEvent('backBtn','backBtn');" 
+						ng-class="{'focused': (currentLevelIndex =='backBtn')}">
+                        <span class="icons control-circle"></span>
+
+                        <p>Back</p>
+                    </div>
+                    <div class="rht-btn">
+                        <div id='rate'  class="RateTitle_btn" ng-click="eventHandler.onClickEvent('rate','rate');"
+                         ng-mouseover="eventHandler.onMouseOverEvent('rate','rate');" ng-class="{'focused': (currentLevelIndex=='rate')}">
+                        <p>Rate Title </p><span
+                            class="icons rate-small"></span> </div>
+                        <div id='watchNow' class='watcNow_btn' ng-show="canPlayTitle() && !isTitleExpired() && !isTitleUnavailable()"
+                             ng-click="playTitle()" ng-mouseover="eventHandler.onMouseOverEvent('watchNow','watchNow');"
+                             ng-class="{'focused': (currentLevelIndex=='watchNow')}"><p>Watch Now </p><span
+                             class="icons preview-btn"></span></div>
+                        <div id='done' class='ImDone_btn' ng-show="canIamDone && !isTitleExpired() && !isTitleUnavailable()"
+                    	     ng-click="eventHandler.onClickEvent('canIamDone','canIamDone');"
+                               ng-mouseover="eventHandler.onMouseOverEvent('done','done');"
+                               ng-class="{'focused': (currentLevelIndex=='done')}">
+                              <p class='ImDone_txt'>I'm Done </p><span class="icons done-small"></span>
+                         </div>
+                     </div>
+                  </div>
+               </div>
+        </div>
+    </div>
+</div>
+<div class="synop pop-up" ng-show="uiAreYouSurePopup">
+    <div class="pop-up-content-ctn">
+        <div class="pop-up-content-bg">
+            <div class="wh-img-div">
+                <img src="" ng-src="{{popUpURL}}"/>
+            </div>
+            <div class="wh-pu-details-ctn">
+                <div class="wh-pu-movie-title pptitle">{{popUpTitle}}</div>
+                <div class="sub-text">By selecting &quot;I&apos;m Done&quot;, this title will be removed
+                    from the &apos;Watch History&apos; section of the
+                    My Redbox Dashboard.
+                </div>
+            </div>
+            <div class='action-buttons'>
+                <div class="pop-up-btn-container">
+                    <div class="bk-btn" id='backBtnDone'
+                         ng-click="currentLevelIndex = 2; hideDonePopup(); showOptionsPopup(); "
+                         ng-mouseover="eventHandler.onMouseOverEvent('backBtnDone','backBtnDone');"  
+						 ng-class="{'focused': (currentLevelIndex =='backBtnDone')}">
+                        <span class="icons control-circle"></span>
+
+                        <p>Back</p>
+                    </div>
+                    <div class="rht-btn" id='rht-btnDone'
+                         ng-click="currentLevelIndex = 1; moveTitleToBottom(); hideDonePopup(); "
+                         ng-mouseover="eventHandler.onMouseOverEvent('rht-btnDone','rht-btnDone');" 
+						 ng-class="{'focused': (currentLevelIndex =='rht-btnDone')}">
+                        <p>OK </p><span class="icons close-small"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="synop pop-up" ng-show="uiRatePopup">
+    <div class="pop-up-content-ctn">
+        <div class="pop-up-content-bg">
+            <div class="wh-img-div">
+                <img src="" ng-src="{{popUpURL}}"/>
+            </div>
+            <div class="wh-pu-details-ctn">
+                <div class="wh-pu-movie-title pptitle center-text">{{popUpTitle}}</div>
+                <ul class="wh-rate-ul">
+                    <li id="4_{{$index}}" class="wh-rate-star-li" ng-repeat="star in stars">
+                        <div ng-class="{whNoStar:whNoStarOnOff, whHalfStar:whHalfStarOnOff, whWholeStar:whWholeStarOnOff}">
+                            {{blankSpace}}
+                        </div>
+                    </li>
+                </ul>
+                <ul class="wh-rate-ul whNoSquaresContainer">
+                    <li id="Li1" class="wh-rate-star-li" ng-repeat="square in squares">
+                        <div ng-class="{whNoSquares:whNoStarOnOff, whHalfStar:whHalfStarOnOff, whWholeStar:whWholeStarOnOff}"
+                             ng-click="eventHandler.onClickEvent(4,$index);"
+                             ng-mouseover="eventHandler.onMouseOverEvent(4,$index);">
+                            {{blankSpace}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class='action-buttons'>
+                <div class="pop-up-btn-container">
+                    <div class="bk-btn" id='backBtnRating'
+                        ng-click="currentLevelIndex = 2; hideRatePopup(); cancelRating();  showOptionsPopup();"
+                        ng-mouseover="eventHandler.onMouseOverEvent('backBtnRating','backBtnRating');" 
+						ng-class="{'focused': (currentLevelIndex =='backBtnRating')}">
+                        <span class="icons control-circle"></span>
+
+                        <p>Back</p>
+                    </div>
+                    <div class="increase-ratings"><span class="icons ico-spacer control-fw-rw"></span>
+
+                        <p>Increase or Decrease rating</p></div>
+
+                    <div class="rht-btn" id='ratingRgt' 
+						ng-click="currentLevelIndex = 1; saveRating(); hideRatePopup(); "
+                        ng-mouseover="eventHandler.onMouseOverEvent('ratingRgt','ratingRgt');" 
+						ng-class="{'focused': (currentLevelIndex =='ratingRgt')}">
+                        <p>Save </p><span class="icons close-small"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="synop pop-up" ng-show="uiErrorPopup">
+    <div class="pop-up-content-ctn">
+        <div class="pop-up-content-bg">
+            <div class="wh-img-div">
+                <img src="" ng-src="{{popUpURL}}"/>
+            </div>
+            <div class="wh-pu-details-ctn">
+                <div class="wh-pu-movie-title pptitle">{{popUpTitle}}</div>
+                <div class="sub-text">This title is no longer available in the catalog.
+                </div>
+            </div>
+            <div class='action-buttons'>
+                <div class="pop-up-btn-container">
+                    <div class="bk-btn" id='backBtnBlackout'
+                         ng-click="currentLevelIndex = 1; hideOptionsPopup(); "
+                         ng-mouseover="eventHandler.onMouseOverEvent('backBtnBlackout','backBtnBlackout');" 
+						 ng-class="{'focused': (currentLevelIndex =='backBtnBlackout')}">
+                        <span class="icons control-circle"></span>
+
+                        <p>Back</p>
+                    </div>
+                    <div class="rht-btn">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="synop pop-up" ng-show="uiBlackOutPopup">
+    <div class="pop-up-content-ctn">
+        <div class="pop-up-content-bg">
+            <div class="wh-img-div">
+                <img src="" ng-src="{{popUpURL}}"/>
+            </div>
+            <div class="wh-pu-details-ctn">
+                <div class="wh-pu-movie-title pptitle">{{popUpTitle}}</div>
+                <div class="sub-text">The {{movieTitle}} is no longer available, but have
+                    no fear! When it does become available, you&apos;ll find it
+                    under Watch History or Bookmarks
+                </div>
+            </div>
+            <div class='action-buttons'>
+                <div class="pop-up-btn-container">
+                    <div class="bk-btn" id='backBtnNL' 
+						 ng-click="currentLevelIndex = 1; hideOptionsPopup(); "
+                         ng-mouseover="eventHandler.onMouseOverEvent('backBtnNL','backBtnNL');" 
+						 ng-class="{'focused': (currentLevelIndex =='backBtnBlackout')}">
+                        <span class="icons control-circle"></span>
+
+                        <p>Ok</p>
+                    </div>
+                    <div class="rht-btn">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,207 @@
+<html>
+<head>
+    <script type="text/javascript" src="js/lib/angular-1.0.7.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/lib/porthole-playstation.js"></script>
+    <script type="text/javascript" src="js/lib/json2.js"></script>
+	<script src="js/config/config.js"></script>
+	<script src="js/helper/helper.js"></script>
+    <script src="js/platform/PlatformLogger.js"></script>
+    <script src="js/platform/PlatformInfo.js"></script>
+    <script type="text/javascript">
+        if (!window.console) {
+            window.console = {};
+	    window.console.log = function(){};
+        }
+
+        var port = document.location.port;
+        if (port == null || port == "") {
+            port = "";
+        } else {
+            port = ":" + port;
+        }
+    RegExp.escape = function (text) {
+        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+    }
+    String.prototype.replaceAll = function (search, replace) {
+        return this.replace(new RegExp(RegExp.escape(search), 'g'), replace);
+    };
+
+        //clean the body tag
+        //helper.debugLog("http://"+document.location.hostname+port);
+        secureProxy = new Porthole.WindowProxy("http://" + document.location.hostname + port);
+        secureProxy.addEventListener(function (event) {
+            if (event.data.action === 'POST') {
+                this.http({
+                    method: 'POST',
+                    url: event.data.url,
+                    data: event.data.postData,
+                    headers: {'Content-Type': event.data.contentType},
+                    "xhrFields": event.data.xhrFields
+            }).success(function(data)
+                    {
+                            secureProxy.post({ 'status': 'success', 'result': data });
+                        }).error(function (data) {
+                            helper.debugLog("SecureCallFrame ajax POST error. Status Code: " + data.status);
+                            if (data.status != 0) {
+                                secureProxy.post({ 'status': 'error', 'result': data });
+                            }
+                        });
+            }
+            if (event.data.action === 'GET')
+
+                this.http({
+                    method: 'GET',
+                    url: event.data.url,
+                    cache: true,
+                    headers: {'Content-Type': event.data.contentType},
+                    "xhrFields": event.data.xhrFields
+             }).success(function(data)
+                {
+                            secureProxy.post({ 'status': 'success', 'result': data });
+                        }).error(function (data) {
+                            helper.debugLog("SecureCallFrame ajax GET error. Status Code: " + data.status);
+                            if (data.status != 0) {
+                                secureProxy.post({ 'status': 'error', 'result': data });
+                            }
+                        });
+
+            if (event.data.action === 'ssologin') {
+
+            var formparams = "usernametoken=" + encodeURIComponent(event.data.ssousernametoken);
+            helper.debugLog("login url: " + event.data.formaction);
+            helper.debugLog("data: " + formparams)
+            $.ajax({
+                "type": 'POST',
+                "context": this,
+                "url": event.data.formaction,
+                "data" : formparams,
+                "contentType" : "application/x-www-form-urlencoded",
+                "success": function(response) {
+
+                    // extract values from XML reponse
+                    var loginFailed = false;
+                    try
+                    {
+                        response.indexOf("action");
+                    }
+                    catch(exception) {
+                        loginFailed = true;
+                    }
+                    if(loginFailed)
+                    {
+                        var errorMessage = "Bad username or password provided";
+                        var error = { "responseText": errorMessage, "status": 510 };
+                        secureProxy.post({ 'status': 'error', 'result': error });
+                    }
+                    else
+                    {
+					var action = response.substring(response.indexOf('action') + 8, response.indexOf('federation') + 10);
+                    //var action = response.substr(response.indexOf("action") + 8, response.substr(response.indexOf("action") + 8).indexOf("\""));
+                    var beginIndexWA = response.indexOf("input") - 1;
+                    var lengthWAVariable = response.substring(response.indexOf("input") + 1).indexOf("input") + 1;
+                    var waInput = response.substr(beginIndexWA, lengthWAVariable);
+                    var waValue = waInput.substring(waInput.indexOf('value=') + 7, waInput.lastIndexOf('"'));
+                    var beginIndexWresult = response.substring(response.indexOf(response.substr(beginIndexWA, lengthWAVariable)) + 2).indexOf("input") - 1;
+                    var lengthWresultVariable = response.substring(response.indexOf(response.substr(beginIndexWA, lengthWAVariable)) + 2).substring(beginIndexWresult + 2, response.length).indexOf("input") + 1;
+                    var wresultInput = response.substring(response.indexOf(response.substr(beginIndexWA, lengthWAVariable))).substr(beginIndexWresult + 2, lengthWresultVariable);
+                    var wresultValue = wresultInput.substring(wresultInput.indexOf('value=') + 7, wresultInput.lastIndexOf('"'));
+                    var newResponseString = response.substring(response.indexOf(wresultInput) + 2);
+                    var beginIndexWctx = newResponseString.indexOf("input");
+                    var endIndexWctx = newResponseString.substring(beginIndexWctx).indexOf("noscript");
+                    var wctxInput = newResponseString.substr(beginIndexWctx - 1, endIndexWctx);
+                    var wctxValue = wctxInput.substring(wctxInput.indexOf('value=') + 7, wctxInput.lastIndexOf('"'));
+                    wresultValue = wresultValue.replaceAll("&quot;", "\"");
+                    wresultValue = wresultValue.replaceAll("&lt;", "<");
+                    wresultValue = wresultValue.replaceAll("&amp;", "&");
+                    wctxValue = wctxValue.replaceAll("&amp;", "&");
+                    var formparams = "wa=" + encodeURIComponent(waValue) + "&wresult=" + encodeURIComponent(wresultValue).replaceAll("%20", "+") + "&wctx=" + encodeURIComponent(wctxValue);
+                    $('body').prepend('<form id="ssoAuthenticationForm" method="post" action="#"><input id="wa" type="hidden" name="wa" value=""/><input id="wresult" type="hidden" name="wresult" value=""/><input id="wctx" type="hidden" name="wctx" value=""/></form>');
+                    $("#wa").val(waValue);
+                    $("#wresult").val(wresultValue);
+                    $("#wctx").val(wctxValue);
+                    var ssoForm = $("#ssoAuthenticationForm");
+                    ssoForm.attr('action',action);
+                    ssoForm.submit();
+                    }
+                },
+
+                "error": function(data) {
+                    helper.debugLog("SecureCallFrame ajax POST error. Status Code: " + event.status);
+                    helper.debugLog("Response: " + JSON.stringify(data));
+                    helper.debugLog("failure");
+                    if (event.status != 0) {
+                        var error = { "responseText": event.responseText, "status": 510 };
+                        secureProxy.post({ 'status': 'error', 'result': error });
+                    }
+                }
+            });
+
+            } else if (event.data.action === 'logout') {
+
+                var form = document.createElement("form");
+                form.setAttribute('id', 'logoutForm');
+                form.setAttribute('method', 'get');
+                form.setAttribute('action', event.data.formaction);
+
+                var input = document.createElement("input");
+                input.setAttribute('id', 'wa');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', 'wa');
+                input.setAttribute('value', event.data.logoutJson.wa);
+                form.appendChild(input);
+
+                var input2 = document.createElement("input");
+                input2.setAttribute('id', 'wtrealm');
+                input2.setAttribute('type', 'hidden');
+                input2.setAttribute('name', 'wtrealm');
+                input2.setAttribute('value', event.data.logoutJson.wtrealm);
+                form.appendChild(input2);
+
+                var input3 = document.createElement("input");
+                input3.setAttribute('id', 'wres');
+                input3.setAttribute('type', 'hidden');
+                input3.setAttribute('name', 'wres');
+                input3.setAttribute('value', event.data.logoutJson.wres);
+                form.appendChild(input3);
+
+                var input4 = document.createElement("input");
+                input4.setAttribute('id', 'wct');
+                input4.setAttribute('type', 'hidden');
+                input4.setAttribute('name', 'wct');
+                input4.setAttribute('value', event.data.logoutJson.wct);
+                form.appendChild(input4);
+
+                var input5 = document.createElement("input");
+                input5.setAttribute('id', 'whr');
+                input5.setAttribute('type', 'hidden');
+                input5.setAttribute('name', 'whr');
+                input5.setAttribute('value', event.data.logoutJson.whr);
+                form.appendChild(input5);
+
+                var input6 = document.createElement("input");
+                input6.setAttribute('id', 'wreply');
+                input6.setAttribute('type', 'hidden');
+                input6.setAttribute('name', 'wreply');
+                input6.setAttribute('value', event.data.logoutJson.wreply);
+                form.appendChild(input6);
+
+                var input7 = document.createElement("input");
+                input7.setAttribute('id', 'wctx');
+                input7.setAttribute('type', 'hidden');
+                input7.setAttribute('name', 'wctx');
+                input7.setAttribute('value', event.data.logoutJson.wctx);
+                form.appendChild(input7);
+
+                document.getElementsByTagName('body')[0].appendChild(form);
+
+                form.submit();
+            }
+        });
+        //helper.debugLog("Finished defining secureCallProxy");
+    </script>
+    <title></title>
+</head>
+<body>
+</body>
+</html>
