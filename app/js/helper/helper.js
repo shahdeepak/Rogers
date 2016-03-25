@@ -1,1628 +1,757 @@
-var SPLIT_VARIABLE = "-+|$|+-";
-var screenLog = ["--- onScreen log set for " + config.debug + " lines in config.js ---"];
-
+/**
+ * @ngdoc object
+ * @name  Helper
+ */
+var xhttp;
 var helper = {
+    watchers: function () {
+        'use strict';
+        var root = angular.element(document.getElementsByTagName('body'));
 
-
-    ParseUTCDateToLocal: function (str) {
-        // we assume str is a UTC date ending in 'Z'
-
-        var parts = str.split('T');
-        var dateParts = parts[0].split('-');
-        var timeParts = (str.indexOf('Z') != -1)? parts[1].split('Z')[0]:parts[1];
-        var timeSubParts = timeParts.split(':');
-        var timeSecParts = timeSubParts[2].split('.');
-        var timeHours = parseInt(timeSubParts[0]);
-        var _date = new Date;
-
-        var year = parseInt(dateParts[0]);
-        var month = parseInt(dateParts[1]);
-        var day = parseInt(dateParts[2]);
-        var min = parseInt(timeSubParts[1]);
-        var sec = parseInt(timeSecParts[0]);
-
-        // ZOE-36968: The setUTCDate needs to be called with both month and a day as parameters b/c if user rents a title of the last day of
-        // a month that has 31 days that followed by a month that has 30 days, the converted date would be incorrect.
-        _date.setUTCFullYear(year);
-        _date.setUTCMonth(month-1, day);
-        _date.setUTCHours(timeHours);
-        _date.setUTCMinutes(min);
-        _date.setUTCSeconds(sec);
-        if (timeSecParts[1]) _date.setUTCMilliseconds(Number(timeSecParts[1]));
-
-        // by using setUTC methods the date has already been converted to local time
-        return _date;
-    },
-
-    NewGUID: function () {
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
-    },
-    PushItemToStartOfList: function (filterList, filterValueToMatch) {
-        var index = filterList.map(function (element) {
-            return element.FilterValue;
-        }).indexOf(filterValueToMatch);
-        var extract = filterList.splice(index, 1)[0];
-        filterList.unshift(extract);
-    },
-
-    GetShiftedElementId: function (elementId, shiftPos, levelChange) {
-        var arr = elementId.split('_');
-        var nextIndex = 0;
-        var newElementId = 0;
-        if (typeof (levelChange) != 'undefined' && levelChange) {
-            nextIndex = (parseInt(arr[0]) + shiftPos);
-            newElementId = nextIndex + "_" + "0"; // Moving to the first
-            // element of next level
-        } else {
-            nextIndex = (parseInt(arr[1]) + shiftPos);
-            newElementId = arr[0] + "_" + nextIndex;
-        }
-
-        return newElementId;
-    },
-
-    SetFocus: function (elementId) {
-        var element = document.getElementById(elementId);
-
-        if (element) {
-
-            if (typeof ($(element).attr("class")) != 'undefined') {
-                var level = elementId.split("_")[0];
-                var elemClass = $(element).attr("class").split(" ");
-                $(element).addClass(elemClass[0] + "-highlight");
-                var shadow = $(element).css('box-shadow');
-                $("#" + elementId + "_inp").addClass("inputActive");
-                var outerlinewidth = $(element).attr('outerlinewidth');
-                if (outerlinewidth != "none" && outerlinewidth != "null") {
-
-                    if (outerlinewidth == "menu") {
-                        $(element).addClass('menu-item-ctn-highlight');
-                    } else if (outerlinewidth == "preference") {
-                        $(element).addClass('menu-item-ctn-highlight');
-                    } else {
-                        if (elementId == "viewAllButton") {
-                            $(element).css('border', outerlinewidth + "  solid white");
-                        } else {
-                            $(element).css('outline', outerlinewidth + "  solid white");
-                        }
-                    }
-                }
-
-                element.focus();
-
-            } else {
-                if (typeof ($(element).attr("class")) != 'undefined') {
-                    var elemClass = $(element).attr("class").split(" ");
-                    $(element).addClass(elemClass[0] + "-highlight");
-                }
-                element.focus();
-
-            }
-
-
-        }
-    },
-    // Reset the focus
-    RemoveFocus: function (elementId) {
-        var element = document.getElementById(elementId);
-
-        if (element) {
-            if (typeof ($(element).attr("class")) != 'undefined') {
-                var level = elementId.split("_")[0];
-                var elemClass = $(element).attr("class").split(" ");
-                $(element).removeClass(elemClass[0] + "-highlight");
-                $(element).removeClass(elemClass[0] + "-hover");
-                $(element).removeClass('menu-item-ctn-highlight');
-
-                    if (level == "2") {
-                        $(element).css('outline', "0px  solid transparent");
-                    } else {
-                        if (elementId == "viewAllButton") {
-                            $(element).css('border', "3px  solid transparent");
-                        } else {
-                            $(element).css('outline', "0px  solid transparent");
-                        }
-
-                    }
-                    var outerlinewidth = $(element).attr('outerlinewidth');
-                    if (outerlinewidth != undefined && outerlinewidth != "none" && outerlinewidth != "null") {
-                        if (outerlinewidth == "menu") {
-                        } else if (outerlinewidth == "preference") {
-                            $(element).removeClass("menu-item-ctn-highlight");
-                        }
-                    }
-            }
-            element.blur();
-
-
-        }
-    },
-
-    // Set / remove button focus
-    SetButtonFocus: function (buttonID) {
-        // Button focus
-        // var SET_FOCUS_COLOR = '#9b1219';
-        //$(buttonID).addClass('button-divHighlight');
-        $(buttonID).addClass('red');
-        $(buttonID).removeClass('gr');
-    },
-
-    RemoveButtonFocus: function (buttonID) {
-        //  var REMOVE_FOCUS_COLOR = '#2e3233';
-        //$(buttonID).removeClass('button-divHighlight');
-        $(buttonID).removeClass('red');
-        $(buttonID).addClass('gr');
-    },
-
-
-    ShowPopupBox: function (popupkey, $scope) {
-
-    	 if (popupkey != null) {
-    		   if(popupkey == 'Popup_RESTRICT_CONTENT_PASSWORD' || popupkey == 'Popup_RESTRICT_PURCHASE_PASSWORD'){
-    		    popupObj_Meta[popupkey].msg_text = popupObj_Meta[popupkey].msg_text_template.replace('{userId}',helper.GetUserId());
-    		   }
-    		     PopupBox.Show(popupkey, $scope);
-    	  }
-    },
-
-    showErrorMessage: function (data, $scope, params, useDescription) {
-
-        if (isDefined(data) && data.status == 0) {
-            return;  // ignore timeout errors b/c the error message is displayed from the http interceptor
-        }
-
-        // If server did not provide valid error message use local error codes
-
-        var errorObject;
-        var errorObjectDefault = {
-            ResultInfo: { ResultCode: '101'}
-        };
-
-        // Check if the error code is in local error code table
-        // Used for local error codes and for server error codes that can be overridden locally
-        if (isDefined(data)) {
-            if (isDefined(data.value) && isDefined(data.value.ResultCode)) {
-                errorObject = hashObj[data.value.ResultCode];
-            }
-            else if (isDefined(data.ResultInfo)) {
-                errorObject = hashObj[data.ResultInfo.ResultCode];
-            }
-            else if (isDefined(data.data) && isDefined(data.data.ResultInfo)) {
-                errorObject = hashObj[data.data.ResultInfo.ResultCode];
-            }
-            else {
-                errorObject = hashObj[errorObjectDefault.ResultInfo.ResultCode];
-            }
-        }
-        else {
-            helper.debugLog("data not defined");
-            errorObject = hashObj[errorObjectDefault.ResultInfo.ResultCode];
-        }
-
-        if (errorObject != undefined) {
-            helper.debugLog("Error code found in local error code file");
-            var RBIErrorObject = {
-                title: errorObject.app_error_title,
-                publicErrorCode: errorObject.public_error_code,
-                msgText: "",
-                buttonText: errorObject.ok_button_text,
-                yesButtonText: "Yes"
-            };
-
-            if (params != null && errorObject.app_error_message.indexOf('{') != -1 && errorObject.app_error_message.indexOf('}') != -1) {
-                //replacing the place holders with the actual values
-                RBIErrorObject.msgText = errorObject.app_error_message.format(params);
-            }
-            else {
-                RBIErrorObject.msgText = errorObject.app_error_message;
-            }
-            //create error message from error object
-            createErrorPopUp(RBIErrorObject, $scope);
-        }
-        // Check if server has provided a valid error message
-        else if (isDefined(data) && isDefined(data.value) && isDefined(data.value.ResultCode) && isDefined(data.value.MachineID)) {
-            helper.debugLog("Error code not found in local error code file - using server error message");
-            showRemoteErrors(data.value, $scope);
-        }
-        else {
-            helper.debugLog("Error code not found in local error code file - using default error message");
-            PopupBox.Show("Error_PopUp", $scope);
-        }
-    },
-
-    HidePopupBox: function () {
-        PopupBox.Hide();
-        //$scope.close();
-    },
-
-    //For displaying the alert box for the error codes
-    ShowAlertBox: function (popupkey, $scope, $dialog, cntrl) {
-        $scope.opts = {
-            backdrop: false,
-            keyboard: true,
-            backdropClick: false,
-            //  template: POPUP_ALERT_TEMPLATE, // OR: templateUrl: 'path/to/view.html',
-            controller: cntrl
-        };
-        var errorTitle = popupObj_Meta[popupkey].title_text;
-        var errorMessage = popupObj_Meta[popupkey].msg_text;
-
-        var okButtonText = popupObj_Meta[popupkey].button_1_text;
-
-        var btns = [
-            { result: 'ok', label: okButtonText, cssClass: 'bootstrap-btn', id: '100_1' }
-        ];
-
-        // add the logic to loop over the hashObj to verify the text not blank for the button texts
-        //and adding the buttons accordingly
-
-        $dialog.messageBox(errorTitle, errorMessage, btns)
-            .open()
-            .then(function (result) {
-                if (result == "ok") {
-                    $scope.handleErrorPopUpClick();
-
-
-                }
+        function getElemWatchers(element) {
+            var isolateWatchers = getWatchersFromScope(element.data().$isolateScope);
+            var scopeWatchers = getWatchersFromScope(element.data().$scope);
+            var watchers = scopeWatchers.concat(isolateWatchers);
+            angular.forEach(element.children(), function (childElement) {
+                watchers = watchers.concat(getElemWatchers(angular.element(childElement)));
             });
-
-    },
-
-    GetUserId: function () {
-    	if (typeof (Storage) !== "undefined") {
-        	return platformStorage.getItem("CURRENT_LOGGEDIN_USER");
+            return watchers;
         }
-    },
 
-    SetUserId: function (username) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem("CURRENT_LOGGEDIN_USER", username);
-        }
-    },
-
-    GetUserPwd: function () {
-    	if (typeof (Storage) !== "undefined") {
-        	return platformStorage.getItem("CURRENT_LOGGEDIN_USER_PWD");
-        }
-    },
-
-    SetUserPwd: function (password) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem("CURRENT_LOGGEDIN_USER_PWD", password);
-        }
-    },
-    GetCards: function (rbiCommonService) {
-        var cardData = null;
-        if (rbiCommonService.isSharedItemExist(CREDIT_CARD_DATA)) {
-            cardData = rbiCommonService.getSharedItem(CREDIT_CARD_DATA);
-        }
-        return cardData;
-    },
-
-    SetCards: function (rbiCommonService, cards) {
-        rbiCommonService.setSharedItem(CREDIT_CARD_DATA, cards);
-    },
-
-    GetPreferredCard: function (rbiCommonService) {
-        var preferredCard = null;
-        if (rbiCommonService.isSharedItemExist(PREFERRED_CARD)) {
-            preferredCard = rbiCommonService.getSharedItem(PREFERRED_CARD);
-        }
-        return preferredCard;
-    },
-
-    SetPreferredCard: function (rbiCommonService, card) {
-        rbiCommonService.setSharedItem(PREFERRED_CARD, card);
-    },
-
-    DeletePreferredCard: function (rbiCommonService) {
-        if (rbiCommonService.isSharedItemExist(PREFERRED_CARD)) {
-            rbiCommonService.removeSharedItem(PREFERRED_CARD);
-        }
-    },
-
-    GetSubscriptionCard: function (rbiCommonService) {
-        var subscriptionCard = null;
-        if (rbiCommonService.isSharedItemExist(SUBSCRIPTION_CARD)) {
-            subscriptionCard = rbiCommonService.getSharedItem(SUBSCRIPTION_CARD);
-        }
-        return subscriptionCard;
-    },
-
-    SetSubscriptionCard: function (rbiCommonService, card) {
-        rbiCommonService.setSharedItem(SUBSCRIPTION_CARD, card);
-    },
-
-    DeleteSubscriptionCard: function (rbiCommonService) {
-        if (rbiCommonService.isSharedItemExist(SUBSCRIPTION_CARD)) {
-            rbiCommonService.removeSharedItem(SUBSCRIPTION_CARD);
-        }
-    },
-
-    DeleteCards: function (rbiCommonService) {
-        if (rbiCommonService.isSharedItemExist(CREDIT_CARD_DATA)) {
-            rbiCommonService.removeSharedItem(CREDIT_CARD_DATA);
-        }
-		if (rbiCommonService.isSharedItemExist(IS_CHECKOUT_CARD)) { // Code added for "ZOE-33385"
-            rbiCommonService.removeSharedItem(IS_CHECKOUT_CARD);
-        }
-        helper.DeletePreferredCard(rbiCommonService);
-        helper.DeleteSubscriptionCard(rbiCommonService);
-    },
-    IsValidPassword: function (inputPassword) {
-        //TODO:: Need to return correct password match
-        return true;
-    },
-
-    //Method to convert time miliseconds in to hour-minutes format
-    // Returns a fomatted time string: hh:mm padded with zeroes rounded to the next minute
-    GetFormattedTime: function (timeMs) {
-
-        var remainingTimeSec = Math.floor(timeMs / SECONDS_TO_MS);
-        var formattedTime = '00:00';
-
-        if (remainingTimeSec > 0) {
-            var seconds = remainingTimeSec % 60;
-            var minutes = Math.floor(remainingTimeSec / 60) % 60;
-            var hours = Math.floor(remainingTimeSec / 3600) % 24;
-            if (seconds > 30) {
-                minutes++; // round to the next minute
+        function getWatchersFromScope(scope) {
+            if (scope) {
+                return scope.$$watchers || [];
+            } else {
+                return [];
             }
-            var formattedTime = helper.padWithZeroes(hours,2) + ':' + helper.padWithZeroes(minutes,2);
-
-            helper.debugLog("Time in ms: " + timeMs + ", formattedTime: " + formattedTime);
         }
-        return formattedTime;
+
+        return getElemWatchers(root);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:debugLog
+     * @methodOf Helper
+     * @param {string} logData - Data
+     * @description Logs the logData to browser console
+     */
+    debugLog: function (logData) {
+        if (config.environment !== Environment.PROD) {
+            try {
+                console.log(JSON.stringify(logData));
+            } catch (a) {
+                console.log(a);
+                console.log(logData);
+            }
+        }
+    },
+    /**
+     *
+     * @ngdoc method
+     * @name Helper:redirectToSSP
+     * @methodOf Helper
+     * @description redirects to SSP.
+     *
+     */
+    redirectToSSP: function (url) {
+        var win = window.open(url, '_blank');
+        if (win) {
+            //Browser has allowed it to be opened
+            win.focus();
+        } else {
+            //Broswer has blocked it
+        }
+    },
+    /**
+     *
+     * @ngdoc method
+     * @name Helper:singlePinEntryPopup
+     * @methodOf Helper
+     * @description for setting flag for single pin entry popup.
+     *
+     */
+    singlePinEntryPopup: function (popup) {
+        popup.updatePin = false;
+        popup.showButton = false;
+        return popup;
+    },
+    /**
+     *
+     * @ngdoc method
+     * @name Helper:setDataToLocal
+     * @methodOf Helper
+     * @param {string} key - Key
+     * @param {string} val - Value
+     * @description Set item to the  Local Storage using key/value pairs
+     *
+     */
+    setDataToLocal: function (key, val) {
+        if (typeof val !== "string") {
+            localStorage.setItem(key, JSON.stringify(val));
+        } else {
+            localStorage.setItem(key, val);
+        }
+    },
+    /**
+     * @returns current page name
+     * @param  path - path
+     */
+    getPageName: function (path) {
+        var pageName;
+        if (isDefined(path)) {
+            var splitUrl;
+            if (path.indexOf("/") !== -1) {
+                splitUrl = path.split("/");
+            }
+            pageName = splitUrl[1];
+            if (pageName === "LiveTv") {
+                pageName = "Guide";
+            } else if (path === "Home") {
+                pageName = path;
+            }
+        }
+        return pageName;
+    },
+    /**
+     * @returns return menu name
+     * @param  path - path
+     */
+    getMenuName: function (path) {
+        var menuName;
+        if (isDefined(path)) {
+            var splitUrl;
+            if (path.indexOf("/") !== -1) {
+                splitUrl = path.split("/");
+            }
+            menuName = splitUrl[1];
+            if (path === "Home") {
+                menuName = path;
+            } else if (menuName === "LiveTv") {
+                menuName = "Guide";
+            }
+        }
+        return menuName;
+    },
+    /**
+     * @returns Sub menu name
+     * @param  path - path
+     */
+    getSubMenuName: function (path) {
+        var subMenuName;
+        if (isDefined(path)) {
+            var splitUrl;
+            if (path.indexOf("/") !== -1) {
+                splitUrl = path.split("/");
+            }
+            if (path === "Home") {
+                subMenuName = "";
+            } else {
+                subMenuName = splitUrl[2];
+            }
+        }
+        return subMenuName;
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getDataFromLocal
+     * @methodOf Helper
+     * @param {string} key - Key
+     * @description Return item Key to get the Data from Local Storage
+     */
+    getDataFromLocal: function (key) {
+        var value; // value to be return from localStorage
+
+        // This is a temporary logic to fix javascript integer precision handling
+        // issue where 17 digit number is getting converted, so converting to
+        // number in case of HHID
+        if (key === "HHID") {
+            (value = localStorage.getItem(key));
+        } else {
+            try {
+                value = JSON.parse(localStorage.getItem(key));
+            } catch (e) {
+                value = localStorage.getItem(key);
+            }
+        }
+        return value;
+    },
+    /**
+     *
+     * @ngdoc method
+     * @name Helper:addListener
+     * @methodOf Helper
+     * @param {string} key - Key
+     * @param {string} keyDown - keyDown Object
+     * @description add listner to window for scroll
+     *
+     */
+    addListener: function (key, keyDown) {
+        window.addEventListener(key, keyDown, false);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:removeListener
+     * @methodOf Helper
+     * @param {string} key - Key
+     * @param {string} keyDown - keyDown Object
+     * @description remove listener
+     */
+    removeListener: function (key, keyDown) {
+        window.removeEventListener(key, keyDown, false);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:removeDataFromLocal
+     * @methodOf Helper
+     * @param {string} key - Key
+     * @description Remove item Key from the Data from Local Storage
+     */
+    removeDataFromLocal: function (key) {
+        return localStorage.removeItem(key);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:isPlayerPluginInstalled
+     * @methodOf Helper
+     * @returns {boolean} status of VisualOn plugin
+     * @description Looks for VisualOn plugin installed or not.
+     */
+    isPlayerPluginInstalled: function () {
+        var plugins = navigator.plugins;
+        var os = platformHelper.getPlatformDetails().os;
+        var reg = /npvoBrowserPlugin/i;
+        if (os === 'win') {
+            reg = /npvoBrowserPlugin/i;
+        } else if (os === 'mac') {
+            reg = /VisualOn/i;
+        }
+        for (var i in plugins) {
+            var reg_val = reg.test(plugins[i].description);
+            if (reg_val) {
+                return true;
+            }
+        }
+        return false;
+    },
+    /**
+     *
+     * @ngdoc method
+     * @name Helper:getDeviceUniqueId
+     * @methodOf Helper
+     * @return {Integer} Device unique identifier
+     * @description Tries to get device id from localStorage if already stored,
+     * if not it will try to get it using VisualOn plugin if it installed.
+     */
+    getDeviceUniqueId: function () {
+        // Check for VisualOn plugin installed or not
+        console.log("this.isPlayerPluginInstalled() :" + this.isPlayerPluginInstalled());
+        if (this.isPlayerPluginInstalled()) {
+            if (isDefined(helper.getDataFromLocal(LS_UNIQUE_DEVICE_ID)) && isDefined(helper.getDataFromLocal(VO_VERSION))) {
+                config.setDeviceId(helper.getDataFromLocal(LS_UNIQUE_DEVICE_ID));
+                return helper.getDataFromLocal(LS_UNIQUE_DEVICE_ID);
+            } else {
+                // Create new object
+                var pluginObj = document.createElement("object");
+                pluginObj.setAttribute("id", 'VisualOn');
+                pluginObj.setAttribute("type", "application/x-visualon-osmp");
+                pluginObj.style.visibility = "hidden";
+                var contentWrapper = document.getElementById("contentWrapper");
+                contentWrapper.appendChild(pluginObj);
+                var counter = 0;
+                while (counter <= 3) {
+                    try {
+                        var voplayer = new VOCommonPlayer(pluginObj);
+                        voplayer.init(voOSMPType.VO_OSMP_PLAYER_ENGINE.VO_OSMP_VOME2_PLAYER, '');
+                        voplayer.setDRMLibrary(strDRMLibName, strDRMApiName);
+                        var uniqueDeviceId = voplayer.getDRMUniqueIdentifier();
+                        localStorage.setItem(VO_VERSION, voplayer.getVersion(voOSMPType.VO_OSMP_MODULE_TYPE.VO_OSMP_MODULE_TYPE_SDK));
+                        //  RTV-4374  Blocked Plugin flow is not working as expected
+                        if (uniqueDeviceId) {
+                            config.setDeviceId(uniqueDeviceId);
+                            helper.setDataToLocal(LS_UNIQUE_DEVICE_ID, uniqueDeviceId);
+                            if ($('#contentWrapper').find(pluginObj).length > 0) {
+                                contentWrapper.removeChild(pluginObj);
+                            }
+                            if (config.log) {
+                                config.log(uniqueDeviceId);
+                            }
+                            return uniqueDeviceId;
+                        }
+                    } catch (e) {
+                        if (counter > 2) {
+                            this.setDataToLocal('PLUGIN_BLOCKED', true);
+                            document.location = "#/PluginBlocked";
+                        }
+                    }
+                    counter++;
+                }
+                // Remove VisualOn Object from app
+                contentWrapper.removeChild(pluginObj);
+            }
+        } else {
+            this.setDataToLocal('PLUGIN_REQUIRED', true);
+            document.location = "#/PluginRequired";
+        }
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:applyChanges
+     * @methodOf Helper
+     * @param {Object} scope - controller where we want to apply changes
+     * @description Apply changes to controller entity
+     */
+    applyChanges: function (scope) {
+        if (!(scope.$$phase || (scope.$root && scope.$root.$$phase))) {
+            scope.$apply();
+        }
+    },
+    /**
+     * Install plugin pop up.
+     */
+    installPlugin: function () {
+        var os = platformHelper.getPlatformDetails().os;
+        var pluginUrl;
+        if (os === "win") {
+            pluginUrl = applications[0].attributes['com.uxpsystems.mint.videos.webconsole.player.vcas.download.pc'];
+        } else if (os === "mac") {
+            pluginUrl = applications[0].attributes['com.uxpsystems.mint.videos.webconsole.player.vcas.download.mac'];
+        }
+        window.open(pluginUrl, "_self");
+    },
+    /**
+     * Dismiss install plugin pop up and close the tab.
+     */
+    dismiss: function () {
+        $('#plugin_popUp_overlay').css('display', 'none');
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getBlockedChannels
+     * @methodOf Helper
+     * @param {Object} channelList - all channels Data
+     * @returns {Object} Channel object by adding blocked property
+     * @description Checks for all blocked channels Id's and change ChannelsData Object by
+     * adding blocked property to blocked channels.
+     */
+    getBlockedChannels: function (channelList) {
+        //blocked channel array
+        var blockedChannels = helper.getDataFromLocal(LS_BLOCKED_CHANNELS) || [];
+        // check for blocked channels
+        for (var i in channelList) {
+            if (blockedChannels.indexOf(channelList[i].id) !== -1) {
+                channelList[i].isBlocked = true;
+            } else {
+                channelList[i].isBlocked = false;
+            }
+        }
+        return channelList;
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getDeviceLocation
+     * @methodOf Helper
+     * @returns {Object} Location Object containing device's current latitude
+     * longitude position
+     * @description Tries to fetch Device location using GeoLocation API
+     */
+    getDeviceLocation: function (callback) {
+        var location = {};
+        if (location.latitude && location.longitude) {
+            callback(location);
+        } else {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    location.latitude = position.coords.latitude;
+                    location.longitude = position.coords.longitude;
+                    callback(location);
+                }, function (err) {
+                    // Error Fetching device Location
+                    helper.debugLog(err);
+                });
+            } else {
+                // Error Fetching device Location
+                helper.debugLog("Error fetching device location");
+            }
+        }
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:isPCRated
+     * @methodOf Helper
+     * @param {Object} ratings - System Ratings i.e. AGVOT ratings
+     * @param {Number} programRating - program's rating id
+     * @returns {Boolean} Check for parental Control ratings against the program ratings
+     * @description Validates the current device level parental Control ratings against the program ratings
+     */
+    isPCRated: function (ratings, programRating) {
+        if (isDefined(this.getDataFromLocal(LS_PARENTAL_CTRL))) {
+            for (var i in ratings) {
+                if ((ratings[i].id === programRating) &&
+                    (isDefined(helper.getDataFromLocal(LS_PARENTAL_CTRL_INDEX)) &&
+                        parentalControl[this.getDataFromLocal(LS_PARENTAL_CTRL_INDEX)].maxAge <= ratings[i].ageEquivalence)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getTImeStamp
+     * @methodOf Helper
+     * @param {Number} diff - difference in minutes with current time
+     * @returns {Number} timestamp - timestamp of time calculated after adding or subtracting diff
+     * @description Returns the timestamp in milliseconds by adding/subtracting
+     * time specified by diff parameter. If diff is a negative value then it will
+     * return timestamp for already passed time.
+     */
+    getTimeStamp: function (diff) {
+        return isDefined(Date.now()) ? Date.now() + (diff * 1000) :
+            new Date().getTime() + (diff * 1000);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:isColdStartDone
+     * @methodOf Helper
+     * @returns {Boolean} Cold strat status for device
+     * @description Returns status of cold start on device
+     */
+    isColdStartDone: function () {
+        return this.getBoolean(this.getDataFromLocal(LS_COLDSTART_DONE));
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:scrollTop
+     * @methodOf Helper
+     * @description it  scrolls to top of the window
+     */
+    scrollTop: function () {
+        $("html, body").animate({
+            scrollTop: 0
+        }, "slow");
     },
 
-    // Method to convert running time in to miliseconds
-    ConvertRunningTime: function (runningtime, scalingFactor) {
-        var timeData = runningtime.split(":");
-        var hours = parseInt(timeData[0]);
-        var minutes = parseInt(timeData[1]);
-        var seconds = parseInt(timeData[2]);
-        var totalmiliseconds = (((hours * 3600) + (minutes * 60) + seconds))*scalingFactor;
-
-        return totalmiliseconds;
+    getPrevPageName: function (current) {
+        var pageName;
+        //In production change the check for #
+        if (isDefined(current) && current.indexOf("#") !== -1) {
+            var url = current.split("#")[1];
+            if (isDefined(url) && url.indexOf("/") !== -1) {
+                pageName = url.split("/")[1];
+            }
+        } else {
+            pageName = "";
+        }
+        return pageName;
     },
 
-    GetProgressWatchedPercentage: function (progressWatched, runningTime, isComplete) {
-        var progressWatchedPerc = 0;
-        if (progressWatched == 0) {
-            progressWatchedPerc = (isComplete) ? 100 : 0;
+    /**
+     * Returns the name of next page
+     * @param next
+     * @returns {*}
+     */
+    getNextPageName: function (next) {
+        var nextPage;
+        // In production change the check for #
+        if (isDefined(next) && next.indexOf("#") !== -1) {
+            var url = next.split("#")[1];
+            if (isDefined(url) && url.indexOf("/") !== -1) {
+                nextPage = url.split("/")[1];
+            }
+        } else {
+            nextPage = "";
         }
-        else {
-            var runningTimeMs = helper.ConvertRunningTime(runningTime, SECONDS_TO_MS);
-            helper.debugLog("progressWatched: " + progressWatched + ", running time: " + runningTimeMs);
-            progressWatchedPerc = (progressWatched < runningTimeMs) ? Math.floor((progressWatched * 100) / runningTimeMs) : 100;
-        }
-        return progressWatchedPerc;
+        return nextPage;
     },
 
+    /**
+     * Returns name of secondary:tertiary menu
+     * @param current
+     * @param next
+     * @returns {string}
+     */
+    getSecTertiaryPageName: function (current, next) {
+        var secondaryMenuName;
+        var tertiaryMenuName;
+        if (isDefined(current) && current.indexOf("#") !== -1) {
+            var url = current.split("#")[1];
+            if (isDefined(url) && url.indexOf("/") !== -1) {
+                secondaryMenuName = url.split("/")[2];
+            }
+        }
+        if (isDefined(next) && next.indexOf("#") !== -1) {
+            var url = next.split("#")[1];
+            if (isDefined(url) && url.indexOf("/") !== -1) {
+                tertiaryMenuName = decodeURIComponent(url.split("/")[3]);
+            }
 
-    // Method to get user rating closest to star
-    calcAvgUserRating: function (aveUserRating) {
-        var i = 0;
-        var rating = parseInt(aveUserRating);
-        var ratingArray = [0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
-        var closest = null;
-
-        rating = rating * .100;
-        $.each(ratingArray, function () {
-            if (closest == null || Math.abs(this - rating) < Math.abs(closest - rating)) {
-                closest = this;
+        }
+        return secondaryMenuName + ":" + tertiaryMenuName;
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:setMomentLang
+     * @methodOf Helper
+     * @description it  sets the lang of moment (date library)
+     */
+    setMomentLang: function (lang) {
+        lang === LANG_ENG ? moment.lang('en') : moment.lang('fr');
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:globalNavigateChannel
+     * @methodOf Helper
+     * @description handle channel navigation globally
+     */
+    globalNavigateChannel: function () {
+        return "Movies/Channels/";
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getBoolean
+     * @methodOf Helper
+     * @description Return boolean value for passed value
+     */
+    getBoolean: function (value) {
+        try {
+            return Boolean(JSON.parse(value));
+        } catch (e) {
+            return false;
+        }
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getXml
+     * @methodOf Helper
+     * @param {string} xmlUrl - url for xml file
+     * @param {function} success -success
+     * @returns {string}  retirn xmldoc
+     * @description Get XMl file from URL and xml tags
+     .
+     */
+    getXml: function (xmlUrl, success) {
+        loadXMLDoc(xmlUrl, function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                success(xhttp.responseText);
             }
         });
-        return closest;
     },
-
-    // Method to get offset into star png image and return background-position
-    getAvgUserPngOffset: function (avgUserRating) {
-        var closest = null;
-        var mapArray = [
-            [0, "0px 0px"],
-            [.5, "0px -20px"],
-            [1, "0px -40px"],
-            [1.5, "0px -60px"],
-            [2, "0px -80px"],
-            [2.5, "0px -100px"],
-            [3, "0px -120px"],
-            [3.5, "0px -140px"],
-            [4, "0px -160px"],
-            [4.5, "0px -180px"],
-            [5, "0px -200px"]
-        ];
-
-        for (i = 0; i < mapArray.length; i++) {
-            if (avgUserRating == mapArray[i][0]) {
-                return mapArray[i][1];
+    /**
+     * @ngdoc method
+     * @name Helper:getIPAddress
+     * @methodOf Helper
+     * @description Return Ip address stored locally if any
+     */
+    getIPAddress: function () {
+        return (this.getDataFromLocal(IPAddress) ? this.getDataFromLocal(IPAddress) : false);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:getHHID
+     * @methodOf Helper
+     * @description Return HHID stored locally if any
+     */
+    getHHID: function () {
+        return (this.getDataFromLocal(HHID) ? this.getDataFromLocal(HHID) : false);
+    },
+    /**
+     * @ngdoc method
+     * @name Helper:removeBookarmsFromLocal
+     * @methodOf Helper
+     * @description remove boomarks for aall stored VOD assets
+     .
+     */
+    removeBookarmsFromLocal: function () {
+        var bookmarkedAssetArray = helper.getDataFromLocal(VOD_BOOKMARKED_KEY);
+        if (isDefined(bookmarkedAssetArray)) {
+            for (var index = 0; index < bookmarkedAssetArray.length; index++) {
+                helper.removeDataFromLocal(bookmarkedAssetArray[index]);
             }
+            helper.removeDataFromLocal(VOD_BOOKMARKED_KEY);
         }
     },
-    isUserLoggedIn: function () {
-        if (isDefined(platformStorage.getItem("isLoggedIn")) == true) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    },
-
-    isFreeTrialUsed: function () {
-    	if(platformStorage.getItem("IsFreeTrialUsed") != null && platformStorage.getItem("IsFreeTrialUsed") != undefined && platformStorage.getItem("IsFreeTrialUsed") != "false" &&( platformStorage.getItem("IsFreeTrialUsed") == "true" || platformStorage.getItem("IsFreeTrialUsed") == true)){
-    		return true;
-    	}else{
-    		return false;
-    	}
-    },
-
-    isSubscribedCustomer: function () {
-        if (platformStorage.getItem(SUBSCRIBED) != null && platformStorage.getItem(SUBSCRIBED) != undefined && platformStorage.getItem(SUBSCRIBED) == "true") {
-            return true;
-        }
-        else {
-            return false;
-        }
-    },
-
-    logoutUser: function () {
-        if (isDefined(platformStorage.getItem("isLoggedIn")) == true) {
-            platformStorage.removeItem("isLoggedIn");
-            platformStorage.removeItem("CURRENT_LOGGEDIN_USER");
-            platformStorage.removeItem("CURRENT_LOGGEDIN_USER_PWD");
-            platformStorage.removeItem("IsFreeTrialUsed");
-            platformStorage.removeItem("user_zipcode");
-            platformStorage.removeItem("kiosk_ids");
-            platformStorage.removeItem("is_Helpoverlayeopen");
-            platformStorage.removeItem("USERNAME");
-            platformStorage.removeItem("PASSWORD");
-            platformStorage.removeItem("LOCALDATA");
-            platformStorage.removeItem("PCN");
-            platformStorage.removeItem("checkouttype");
-            sessionStorage.removeItem("imageTitle");
-            sessionStorage.removeItem("imageURL");
-            sessionStorage.removeItem("searchFilters");
-            sessionStorage.removeItem("addr");
-            sessionStorage.removeItem("rec_kiosks");
-            helper.clearLocalStorage("browseFilter");
-            helper.clearLocalStorage("browseFilterForKiosk");
-
+    /**
+     * @ngdoc method
+     * @name Helper:getLiveBadges
+     * @methodOf Helper
+     * @description returs object of badges related to live
+     */
+    getLiveBadges: function (startDateTime, endDateTime, duration) {
+        var obj = {};
+        var comp;
+        var currentTime = moment().utc();
+        var within_hour = moment().utc().add(BADGE_NEXT_HOUR, 'h');
+        var next_day = moment().utc().add(BADGE_NEXT_DAY, 'd');
+        var next2next_day = moment().utc().add(BADGE_TOMORROW, 'd');
+        var next_7_days = moment().utc().add(BADGE_NEXT_SEVEN_DAY, 'd');
+        if ((currentTime.isSame(startDateTime) || moment(startDateTime).isAfter(currentTime)) && (currentTime.isSame(startDateTime) || moment(endDateTime).isBefore(currentTime))) {
+            comp = moment().utc().diff(startDateTime);
+            obj.percent = parseInt(comp / (duration * 600));
+            obj.percentHide = true;
+            obj.isOnNow = true;
+            obj.label = 'GUIDE_SCHEDULE_LABEL_ON_NOW';
+            obj.class = 'badge-on-now';
+            return obj;
+        } else if (moment(startDateTime).isAfter(currentTime) && moment(startDateTime).isBefore(within_hour)) {
+            obj.label = 'GUIDE_SCHEDULE_LABEL_ON_SOON';
+            obj.class = 'badge-on-soon';
+            return obj;
+        } else if (moment(startDateTime).isAfter(within_hour) && moment(startDateTime).isBefore(next_day)) {
+            obj.label = 'GUIDE_SCHEDULE_LABEL_ON_LATER';
+            obj.time = moment(startDateTime).format('hh:00 a');
+            obj.class = 'badge-on-soon';
+            return obj;
+        } else if ((next_day.isSame(startDateTime) || moment(startDateTime).isAfter(next_day)) && moment(startDateTime).isBefore(next2next_day)) {
+            obj.label = 'GUIDE_SCHEDULE_LABEL_ON_TOMORROW';
+            obj.class = 'badge-on-soon';
+            return obj;
+        } else if ((moment(startDateTime).isSame(next2next_day) || moment(startDateTime).isAfter(next2next_day)) && (next_7_days.isSame(startDateTime) || moment(startDateTime).isBefore(next_7_days))) {
+            obj.label = 'GUIDE_SCHEDULE_LABEL_ON_DAY';
+            obj.class = 'badge-on-soon';
+            obj.day = moment(startDateTime).format("dddd");
+            return obj;
         }
     },
-
-    getTimeRemaining: function (runningtime, progressWatched) {
-        var runningTimeMs = helper.ConvertRunningTime(runningtime, SECONDS_TO_MS);
-        var timeRemaining = 0;
-        if (progressWatched < runningTimeMs) {
-            timeRemaining = runningTimeMs - progressWatched;
-        }
-        return timeRemaining;
-    },
-
-    //Returns current kioskid for a kioskkey from local storage if it is supported
-    GetCurrentKiosk: function (SELECTED_KOISK_KEY) {
-        if (typeof (Storage) !== "undefined") {
-            var kiosk = platformStorage.getItem(SELECTED_KOISK_KEY);
-            if (isDefined(kiosk))
-                return JSON.parse(kiosk);
-            else {
-                return null;
-            }
-        }
-    },
-
-    //Saves current kioskid  for a kioskkey in local storage if it is supported
-    SaveCurrentKiosk: function (kiosk, SELECTED_KOISK_KEY) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem(SELECTED_KOISK_KEY, JSON.stringify(kiosk));
-        }
-        //else
-        //  TODO : add logic to handle if local storage is not supported.
-    },
-    //Returns stored state for a page key from local storage if it is supported
-    GetPageState: function (pagekey) {
-        if (typeof (Storage) !== "undefined") {
-            var state = platformStorage.getItem(pagekey);
-            return state;
-        }
-    },
-    SaveCurrentBrowseFilters: function (filters, KEY) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem(KEY, JSON.stringify(filters));
-        }
-    },
-    SaveCurrentCheckoutdata: function (filters, KEY) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem(KEY, JSON.stringify(filters));
-        }
-    },
-    /*GetStorageUser: function () {
-     if (typeof (Storage) !== "undefined") {
-     var username = helper.getStorageData("LOCALDATA");
-     username = sjcl.decrypt(config.encryptionKey, username);
-     return username.split(SPLIT_VARIABLE)[0];
-     }
-     },
-     SetStorageUser: function (username) {
-     if (typeof (Storage) !== "undefined") {
-     helper.setStorageData("USERNAME", sjcl.encrypt(config.encryptionKey, username));
-     }
-     },*/
-    /*setLocalData: function (username, password) {
-     var localData = username + SPLIT_VARIABLE + password + SPLIT_VARIABLE + Utility.DeviceID();
-     if (typeof (Storage) !== "undefined") {
-     helper.setStorageData("LOCALDATA", sjcl.encrypt(config.encryptionKey, localData));
-     }
-     },*/
-
-    /*getLocalData: function (value) {
-     if (typeof (Storage) !== "undefined") {
-     if (value == USER_DATA.FIRST_ELEMENT) {
-     var username = helper.getStorageData("LOCALDATA");
-     username = sjcl.decrypt(config.encryptionKey, username);
-     return username.split(SPLIT_VARIABLE)[0];
-     }
-     else if (value == USER_DATA.SECOND_ELEMENT) {
-     var password = helper.getStorageData("LOCALDATA");
-     password = sjcl.decrypt(config.encryptionKey, password);
-     return password.split(SPLIT_VARIABLE)[1];
-     }
-     }
-     },*/
-    /*GetStoragePassword: function () {
-        if (typeof (Storage) !== "undefined") {
-            var password = helper.getStorageData("LOCALDATA");
-            password = sjcl.decrypt(config.encryptionKey, password);
-            return password.split(SPLIT_VARIABLE)[1];
-        }
-    },
-    SetStoragePassword: function (password) {
-        if (typeof (Storage) !== "undefined") {
-            helper.setStorageData("PASSWORD", sjcl.encrypt(config.encryptionKey, password));
-        }
-    },*/
-    SaveCurrentSearchFilters: function (filters, KEY) {
-        if (typeof (Storage) !== "undefined") {
-            sessionStorage.setItem(KEY, JSON.stringify(filters));
-        }
-    },
-    SaveAddCardDetails: function (filters, KEY) {
-        if (typeof (Storage) !== "undefined") {
-            sessionStorage.setItem(KEY, JSON.stringify(filters));
-        }
-    },
-    //Returns current search for a searchkey from session storage if it is supported
-    getStoredSearchFilters: function (KEY) {
-        if (typeof (Storage) !== "undefined") {
-            var search = sessionStorage.getItem(KEY);
-            if (isDefined(search))
-                return JSON.parse(search);
-            else {
-                return null;
-            }
-        }
-    },
-    getAddCardDetails: function (KEY) {
-        if (typeof (Storage) !== "undefined") {
-            var cardDetails = sessionStorage.getItem(KEY);
-            if (isDefined(cardDetails))
-                return JSON.parse(cardDetails);
-            else {
-                return null;
-            }
-        }
-    },
-    //Returns current kioskid for a kioskkey from local storage if it is supported
-    getStoredBrowseFilters: function (KEY) {
-        if (typeof (Storage) !== "undefined") {
-            var kiosk = platformStorage.getItem(KEY);
-            if (isDefined(kiosk))
-                return JSON.parse(kiosk);
-            else {
-                return null;
-            }
-        }
-    },
-    getStoredcheckoutdata: function (KEY) {
-        if (typeof (Storage) !== "undefined") {
-            var kiosk = platformStorage.getItem(KEY);
-            if (isDefined(kiosk))
-                return JSON.parse(kiosk);
-            else {
-                kiosk = '';
-                return kiosk;
-            }
-        }
-    },
-    //set preferences for restricted content
-    SetRestrictContent: function (value) {
-        var userId = helper.GetUserId();
-        if (typeof (Storage) !== "undefined") {
-            helper.debugLog("SetRestrictContent: Platform storage key: PREFERENCES_RESTRICT_CONTENT_KEY_" + userId);
-            platformStorage.setItem('PREFERENCES_RESTRICT_CONTENT_KEY' + "_" + userId, value);
-        }
-    },
-
-    clearLocalStorage: function (key) {
-        platformStorage.removeItem(key);
-    },
-
-    //get preferences for restricted content
-    GetRestrictContent: function () {
-        var userId = helper.GetUserId();
-        if (typeof (Storage) !== "undefined") {
-            helper.debugLog("GetRestrictContent: Platform storage key: PREFERENCES_RESTRICT_CONTENT_KEY_" + userId);
-            var data = platformStorage.getItem('PREFERENCES_RESTRICT_CONTENT_KEY' + "_" + userId);
-            if (isDefined(data)) {
-                data = JSON.parse(data);
-            }
-            return data;
-        }
-    },
-
-    //set preferences for restricted purchase
-    SetRestrictPurchase: function (value) {
-        var userId = helper.GetUserId();
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem("PREFERENCES_RESTRICT_PURCHASE_KEY" + "_" + userId, value);
-        }
-    },
-
-    //get preferences for restricted purchase
-    GetRestrictPurchase: function () {
-        var userId = helper.GetUserId();
-        if (typeof (Storage) !== "undefined") {
-            var data = platformStorage.getItem("PREFERENCES_RESTRICT_PURCHASE_KEY" + "_" + userId);
-            if (isDefined(data)) {
-                data = JSON.parse(data);
-            }
-            return data;
-        }
-    },
-
-    //set preferences complete response
-    SetPreferencesData: function (value) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem("PREFERENCES_DATA_KEY", value);
-        }
-    },
-
-    //get preferences data
-    GetPreferencesData: function () {
-        if (typeof (Storage) !== "undefined") {
-            var data = platformStorage.getItem("PREFERENCES_DATA_KEY");
-            return data;
-        }
-    },
-
-    setStorageData: function (key, value) {
-        if (typeof (Storage) !== "undefined") {
-            platformStorage.setItem(key, value);
-        }
-    },
-
-    getStorageData: function (key) {
-        if (typeof (Storage) !== "undefined") {
-            var data = platformStorage.getItem(key);
-            return isDefined(data)? data:"";
-        }
-    },
-
-
-    isDefined: function (obj) {
-        if (typeof obj != 'undefined' && obj != null && obj != 'null' && obj != '' && obj != undefined) {
-            return true;
-        }
-        return false;
-    },
-
-    hasKioskBadge: function (badges) {
-        for (var i = 0; i < badges.length; i++) {
-            if (badges[i] == RBI.Product.Defines.BADGE_DELIVERY_TYPE_KIOSK) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    hasSubscriptionBadge: function (badges) {
-        for (var i = 0; i < badges.length; i++) {
-            if (badges[i] == RBI.Product.Defines.BADGE_DELIVERY_TYPE_SUBSCRIPTION) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    hasRentBuyBadge: function (badges) {
-        for (var i = 0; i < badges.length; i++) {
-            if (badges[i] == RBI.Product.Defines.BADGE_DELIVERY_TYPE_ONDEMAND) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    getTitleWidth: function (imagePosterWidth, numBadges, badgeWidth) {
-        return imagePosterWidth - numBadges * badgeWidth;
-    },
-
-    // This function is used to determine if scrolling
-    // of a title is needed based on number of badges.
-    needsScroll: function (title, numBadges, isKioskBadge) {
-        var maxLength;
-        if (isKioskBadge && numBadges > 0) numBadges++; // adjust for wider badges at kiosk - treat 1 badge as 2 and 2 badges as 3
-        maxLength = platformInfo.MAX_TITLE_LENGTH[numBadges];
-        return (title.length > maxLength);
-    },
-
-    convertArrayToString: function (array) {
-        var str = '';
-        if (array != null) {
-            if (array.length > 0) {
-                for (var i = 0; i < array.length - 1; i++) {
-                    str += array[i] + ', ';
-                }
-                str += array[array.length - 1];
-            }
-        }
-        return str;
-    },
-
-    truncateString: function (str, maxLength) {
-        if (typeof str !== 'undefined' && str !== null && str != "" && str.length > maxLength) {
-            str = str.substring(0, maxLength - 1) + "...";
-        }
-        return str;
-    },
-
-    showSpinner: function (spinnerFadeoutMs, spinnerPos) {
-        if (typeof vod !== "undefined") {
-            vod.showSpinnerWithoutBackground(spinnerFadeoutMs, spinnerPos);
-        }
-        else {
-            //  Set the spinner visibility and adjust the top coordinate
-            var spinnerPosTop = (spinnerPos.y - 35) +'px';
-            helper.debugLog("spinner pos: " + spinnerPosTop);
-            //$("#spinner").css("visibility", "visible");
-            $("#spinner").show();
-            $("#spinner").css("top", spinnerPosTop);
-        }
-    },
-
-    getLocalDateTimeFormatForPromotions: function () {
-        var d = new Date();
-
-        function pad(n) { return n < 10 ? '0' + n : n; }
-
-        return d.getFullYear() + '-'
-            + pad(d.getMonth() + 1) + '-'
-            + pad(d.getDate()) + 'T'
-            + pad(d.getHours()) + ":"
-            + pad(d.getMinutes()) + ":"
-            + pad(d.getSeconds())+ "."
-            + pad(d.getMilliseconds());
-    },
-    hideSpinner: function () {
-        if (typeof vod !== "undefined") {
-            vod.hideSpinner(0);
-        }
-        else {
-            $("#spinner").hide();
-        }
-    },
-
-    getTitleDetailState: function ($scope) {
-        $scope.parentobj = helper.getStoredcheckoutdata("checkoutdata").titleDetailState;
-        return $scope.parentobj;
-
-    },
-
-    setTitleDetailState: function ($scope, productId, purchaseOption, account, popupToOpen) {
-        $scope.parentobj.titleDetailState = new Object;
-        $scope.parentobj.titleDetailState.ProductId = productId;
-        $scope.parentobj.titleDetailState.PurchaseOption = purchaseOption;
-        $scope.parentobj.titleDetailState.Account = account;
-        $scope.parentobj.titleDetailState.PopupToOpen = popupToOpen;
-
-        helper.SaveCurrentCheckoutdata($scope.parentobj, "checkoutdata");
-    },
-
-    removeTitleDetailState: function ($scope) {
-        if (helper.isDefined($scope.parentobj)) {
-            $scope.parentobj.titleDetailState = null;
-        }
-
-
-        platformStorage.removeItem("checkoutdata");
-
-    },
-
-    isTitleContentResticted: function (productRating) {
-
-        var restrictContent = false;
-        var restrictContentObject = helper.GetRestrictContent();
-        //var productDetail = $scope.product.Rating;
-        //if($scope.product != undefined && restrictContent != undefined){
-        if (isDefined(restrictContentObject) && isDefined(productRating)) {
-            var ratingsAllowed = restrictContentObject.value.RatingsAllowed;
-            if (ratingsAllowed.length > 0) {
-                restrictContent = true;
-                //var productRating = $scope.product.value.Rating;
-
-                for (var index = 0; index < ratingsAllowed.length; index++) {
-                    if (productRating == ratingsAllowed[index]) {
-                        restrictContent = false;
-                        break;
-                    }
-                }
-            }
-        }
-        return restrictContent;
-
-    },
-
-    isOnline: function (funcCallback) {
-        var testUrl = config.urlToVerifyOnline + '?n=' + Math.random();
-        $.ajax(
-            {url: testUrl, timeout: 3000,async :false,
-                success: function (result) {
-                    helper.debugLog("success on " + testUrl);
-                    funcCallback(true);
-                    internetConnected = true;
-                },
-                error: function (result) {
-                    helper.debugLog("fail on " + testUrl);
-                    funcCallback(false);
-                    internetConnected = false;
-                }
-            });
-    },
-
-
-    /* Debug logging */
-    debugLog: function (logData) {
-        try {
-            logData = JSON.stringify(logData);
-        } catch (a) {
-            console.log(logData);
-        }
-
-        if (config.debug > 1) {
-            $('#screenLog').show();
-            screenLog.push(logData);
-            if (screenLog.length > config.debug)
-                screenLog.shift();
-            $('#screenLog').html(screenLog.join('<br>'));
-        }
-
-        if (config.debug)
-            platformLogger.log(logData);
-    },
-    convertBytes : function(bytes){
-
-        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        if (bytes == 0) return 'n/a';
-        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-        if (i == 0) return bytes + ' ' + sizes[i];
-        return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
-
-    }
-    ,
-    LGMemoryInfo : function(){
-        var usedMemorySize;
-        if(window.NetCastGetUsedMemorySize) {
-             usedMemorySize = helper.convertBytes(window.NetCastGetUsedMemorySize());
-             helper.debugLog("Used Memory Size is: "+usedMemorySize);
-         }
-    }
-    ,
-    ReleaseMemory: function () {
-        if (typeof vod !== 'undefined') {
-            // temporary settings
-            //var keyRepeatInterval = 200;
-            //vod.setKeyRepeatInterval(keyRepeatInterval);
-
-            var memoryInfo;
-            memoryInfo = vod.memoryInfo();
-            var memAvail = helper.convertBytes(memoryInfo.Available);
-            var memUsed = helper.convertBytes(memoryInfo.Used);
-            helper.debugLog("MEM Available:" +memAvail+", MEM Used:" + memUsed);
-            vod.releaseMemory();
-        }
-    },
-    getMyRedboxTabName: function (tabIndex) {
-        var tabName;
-        switch (tabIndex) {
-			case 0:
-                tabName = "dashboard";
-                break;
-            case 1:
-                tabName = "watch history";
-                break;
-            case 2:
-                tabName = "bookmarks";
-                break;
-            case 3:
-                tabName = "purchases";
-                break;
-            default:
-                tabName = "my redbox";
-                break;
-        }
-        return tabName;
-    },
-
-    // Show exit application popup
-    showExitPopup: function (keyCode) {
-        if (POP_ALERT_BOX_VISIBLE == false) {
-            var popupKey = "Popup_EXIT_APP";
-            POP_ALERT_BOX_VISIBLE = true;
-            PREFERENCE_POP_UP_VISIBLE = false;
-
-            popupObj_Meta[popupKey].button_2_click = function () {
-                //helper.HidePopupBox();
-                platformInfo.exitApp(keyCode);
-
-            };
-            popupObj_Meta[popupKey].button_1_click = function () {
-                helper.HidePopupBox();
-            };
-           helper.ShowPopupBox(popupKey, $scope);
-        } else if (POP_ALERT_BOX_VISIBLE == true && keyCode != undefined && keyCode == KEY_CODES.CIRCLE) { // Hide if popup if back button is pressed
-            helper.HidePopupBox();
-        }else if (UPGRADE_POP_UP_VISIBLE == true) { 
-        	// redirect user to smartHub
-        	helper.debugLog("Exit App");
-        	platformInfo.exitApp(KEY_CODES.EXIT);
-        }
+    /**
+     * @ngdoc method
+     * @name Helper:setTimer
+     * @methodOf Helper
+     * @param {Number} val - Value
+     * @description Set time out
+     */
+    setTimer: function (val) {
+        setTimeout(function () {
+            config.canCloseL1 = true;
+        }, val);
     },
 
     /**
-     * getMaxDescriptionLength
-     * Find out how many characters will fit into available space based on number of lines and number
-     * of characters per line
      *
-     * @param descr
-     * @param numLines
-     * @param numCharsPerLine
-     * @returns {number}
+     * @ngdoc method
+     * @name rogersWeb.controllers:vodNewCtrl#appendContents
+     * @methodOf rogersWeb.controllers:vodNewCtrl
+     * @description Returns push data one by one need for pagination list
      */
-    getMaxDescriptionLength: function (descr, numLines, numCharsPerLine) {
-        if (!isDefined(descr)) {
-            // ZOE 27475 - title description missing
-            return 0;
+    appendContents: function (oldData, newData) {
+        var i, latest = newData.concat();
+        for (i = 0; i < latest.length; i++) {
+            oldData.push(latest[i]);
         }
-        var words = descr.split(' ');
-        var lineNum = 1;
-        var startIndex = 0;
-        var maxLength = 0;
-        while (lineNum <= numLines) {
-            var lineLength = 0;
-            var index = startIndex;
-            var currentWordLength;
-            while (index < words.length) {
-                currentWordLength = words[index].length + 1;
-                if (lineLength + currentWordLength <= numCharsPerLine + 1) {
-                    lineLength += currentWordLength;
-                    index++;
-                }
-                else {
-                    // move to next line
-                    startIndex = index;
-                    break;
-                }
-            }
-            helper.debugLog("getMaxDescriptionLength: Line number: " + lineNum + ", number of characters: " + lineLength);
-            maxLength += lineLength;
-            lineNum++;
-        }
-        helper.debugLog("getMaxDescriptionLength: maxLength: " + maxLength);
-        return  maxLength;
+        return oldData;
     },
-
-    // Process free trial
-    // For existing customers check if there is a CC on file; if there is one, go to subscription page,
-    // otherwise go to add card page.
-    processFreeTrial: function ($scope, $location, customerService, rbiCommonService, isExistingCustomer) {
-
-        var addCreditCard = function () {
-            rbiCommonService.setSharedItem(SUBSCRIPTION_TYPE, FREE_TRIAL);
-            rbiCommonService.setSharedItem("isFirstCard", true);
-            $location.path("/account/creditCards/cardDetails/add");
-        };
-
-        if (isExistingCustomer) {
-            customerService.getCards(rbiCommonService,
-                function (data) {
-                    if (data.length > 0) {
-                        rbiCommonService.setSharedItem(SUBSCRIPTION_TYPE, FREE_TRIAL);
-                        $location.path("/subscription");
-                    }
-                    else {
-                        addCreditCard();
-                    }
-                },
-                function (data) {
-                    // show error message go back to home page
-                    helper.showErrorMessage(data, $scope);
-                    $location.path("/home");
-                });
-        }
-        else {
-            addCreditCard();
-        }
-    },
-
-    isFreeTrialEntry: function (rbiCommonService) {
-        var isFreeTrialEntry = false;
-        if (rbiCommonService.isSharedItemExist(FREE_TRIAL_ENTRY)) {
-            isFreeTrialEntry = rbiCommonService.getSharedItem(FREE_TRIAL_ENTRY);
-            rbiCommonService.removeSharedItem(FREE_TRIAL_ENTRY);
-        }
-        return isFreeTrialEntry && !helper.isFreeTrialUsed();
-    },
-
-    /// This is function pops the current screen from the stack.
-    //  Used for login to bypass circular navigation issues
-    /// Since it was causing circular navigation issues, also the stack had duplicate paths..
-    removePageFromBackPaths: function (pageUrl) {
-        if (isDefined(backPaths) && backPaths.length > 0) {
-            for (var i = (backPaths.length - 1); i >= 0; i--) {
-                helper.debugLog("i is:" + i);
-                if (backPaths[i].indexOf(pageUrl) != -1) {
-                    backPaths.pop();
-                    helper.debugLog("----POP " + pageUrl + "----" + i);
-                    break;
-                }
-            }
-        }
-    },
-
-    clearSignupFlags: function (rbiCommonService) {
-        if (rbiCommonService.isSharedItemExist(SUBSCRIPTION_TYPE)) {
-            rbiCommonService.removeSharedItem(SUBSCRIPTION_TYPE);
-        }
-        if (rbiCommonService.isSharedItemExist("HD_ASSET")) {
-            rbiCommonService.removeSharedItem("HD_ASSET");
-        }
-        if (rbiCommonService.isSharedItemExist(PLAYBACK_TITLE_URL)) {
-            rbiCommonService.removeSharedItem(PLAYBACK_TITLE_URL);
-        }
-        if (rbiCommonService.isSharedItemExist(RATING)) {
-            rbiCommonService.removeSharedItem(RATING);
-        }
-    },
-
-    // Returns true if there is no subscription
-    checkSubscription: function (rbiCommonService) {
-        var hasNoSubscription = false;
-        if (rbiCommonService.isSharedItemExist("SUBSCRIPTION")) {
-            var subscription = rbiCommonService.getSharedItem("SUBSCRIPTION");
-            if (!isDefined(subscription)) {
-                hasNoSubscription= true;
-            }
-        }
-        return hasNoSubscription;
-    },
-
-    // ZOE 30155
-    // Process existing customer by checking if the billing info is complete and prompt for missing
-    // billing address
-    processCustomerData: function (customerData, customerService, rbiCommonService, $scope, $location) {
-        // Check for the expired subscription first
-        if (customerData.getNotifyOfSubscriptionFail()) {
-            // ZOE-30490: Notification of Expired Subscription
-            var popupKey = "Popup_NOTIFY_OF_SUBSCRIPTION_FAIL";
-
-            // Go to credit card update page
-            var okCallback = function () {
-                $scope.updateRequiredPopupVisible = false;
-                customerService.getCards(rbiCommonService, function (data) {
-                    var subscriptionCard = customerService.getSubscriptionCard(data);
-                    if (subscriptionCard != null) {
-                        rbiCommonService.setSharedItem(SUBSCRIPTION_CARD_EXPIRED, subscriptionCard.isExpired);
-                        $scope.returnUrl = "account/creditCards/cardDetails/modify/" + subscriptionCard.getAccountNumber();
-                    }
-                    else {
-                        $scope.returnUrl = "account/creditCards/cardDetails/add/";
-                    }
-
-                    helper.updateNotifyOfSubscriptionFail(customerData, customerService, $scope, $location);
-                }, function (data) {
-                    helper.debugLog("Get Cards error");
-                    helper.showErrorMessage(data, $scope);
-                    helper.redirectFromLoginPage($scope, $location);
-                });
-            };
-
-            // redirect back from login page
-            var cancelCallback = function () {
-                $scope.updateRequiredPopupVisible = false;
-                helper.updateNotifyOfSubscriptionFail(customerData, customerService, $scope, $location);
-            }
-            helper.showUpdateRequiredPopup($scope, popupKey, null, okCallback, cancelCallback);
-        }
-        else if (customerData.getSubscriptionID() != null) {
-            // user has a valid subscription
-            // validate subscription billing CC
-            var formattedBillingDate = helper.formatDate(customerData.getSubscriptionAnniversaryDate());
-            var billingDate = helper.getDateFromFormattedString(formattedBillingDate);
-            helper.debugLog("Valid subscription; subscription ID: " + customerData.getSubscriptionID() + " next billing date: " + formattedBillingDate);
-            customerService.getCards(rbiCommonService, function (data) {
-                var subscriptionCard = customerService.getSubscriptionCard(data);
-                var isExpired = helper.isSubsciptionCardExpired(subscriptionCard, billingDate);
-                helper.debugLog("Subscription card; expired: " + isExpired);
-                //ZOE-30942
-                //PS4: Remove CVVCHECKED and AVSCHECKED during LOGIN flow.
-                // ZOE-31271: Removed 'isValid()' check since this value is set to false if either CVVCHECKED or AVSCHECKED is false
-                if (isExpired || !helper.isCardDataComplete(subscriptionCard)) {
-                    // show update required popup
-                    helper.debugLog("Update required");
-                    var popupKey = "Popup_UPDATE_REQUIRED";
-                    var popupMessage = popupObj_Meta[popupKey].msg_text_template.replace("{cardNumber}", subscriptionCard.getLastFour()).replace("{billingDate}", formattedBillingDate);
-                    var subscriptionReferenceNo = customerData.getSubscriptionBillingAccountReference();
-
-                    // Go to credit card update page
-                    var okCallback = function () {
-                        helper.HidePopupBox();
-                        $scope.updateRequiredPopupVisible = false;
-                        rbiCommonService.setSharedItem(SUBSCRIPTION_CARD_EXPIRED, isExpired);
-                        rbiCommonService.setSharedItem("subscriptionReferenceNo", subscriptionReferenceNo);
-                        $location.path("/account/creditCards/cardDetails/modify/" + subscriptionCard.getAccountNumber());
-                    };
-
-                    // redirect back from login page
-                    var cancelCallback = function () {
-                        helper.HidePopupBox();
-                        $scope.updateRequiredPopupVisible = false;
-                        helper.redirectFromLoginPage($scope, $location);
-                    }
-                    helper.showUpdateRequiredPopup($scope, popupKey, popupMessage, okCallback, cancelCallback);
-                }
-                else {
-                    helper.debugLog("Account up to date");
-                    helper.redirectFromLoginPage($scope, $location);
-                }
-
-            }, function (data) {
-                helper.debugLog("Get Cards error");
-                helper.showErrorMessage(data, $scope);
-                helper.redirectFromLoginPage($scope, $location);
-            });
-
-       }
-       else if (rbiCommonService.isSharedItemExist(PLAYBACK_TITLE_URL)) {
-            // If  PLAYBACK_TITLE_URL is set on login, then we navigated here from title details
-            if (customerData.isFreeTrialUsed()) {
-                // Inline upgrade, no free trial
-                $location.path("/subscribeNoFreeTrial");
-            }
-            else {
-                // Go to FT page
-                $location.path("/freeTrial");
-            }
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-            //$scope.$apply();
-        }
-        else {
-            helper.redirectFromLoginPage($scope, $location);
-        }
-    },
-
-    // Added first name and last name check to the address check
-    isCardDataComplete: function (card) {
-        var fistName = card.getFirstName();
-        var lastName = card.getLastName();
-        var address = card.getAccountBillingAddress();
-        var retValue = false;
-
-        if (isDefined(fistName) && fistName != 'NULL'&&
-            isDefined(lastName) && lastName != 'NULL' &&
-            isDefined(address) &&
-            isDefined(address.StateCd) && address.StateCd != 'NULL'&&
-            isDefined(address.CityName) && address.CityName != 'NULL'&&
-            isDefined(address.StreetAddressLine1) && address.StreetAddressLine1 != 'NULL' &&
-            isDefined(address.ZipPostalCode) && address.ZipPostalCode != 'NULL') {
-            helper.debugLog ('Card data complete');
-            retValue = true;
-        }
-        else {
-            helper.debugLog ('Card data incomplete');
-        }
-        return retValue;
-    },
-
-
-    redirectFromLoginPage : function ($scope, $location) {
-        if ($scope.returnUrl != "") {
-            $location.path('/' + $scope.returnUrl);
-        }
-        else {
-            // if return URL is not specified use back paths
-            goToPreviousPath($scope, KEY_CODES.CIRCLE, $location);
-        }
-        if (!$scope.$$phase) {
-            $scope.$apply();
-        }
-    },
-
     /**
-     * This function is used both for 'update required' popup and notifyOfSubscriptionFail popup
-     *
-     * @param $scope
-     * @param popupKey       - key that specifies the popup metadata
-     * @param popupMessage   - optional (if it is null, the default message is used)
-     * @param okCallback     - callback when user hits 'ok' button
-     * @param cancelCallback - callback when user hits 'cancel' button
-     * @param checkboxId     - optional (if specified the popup has a checkbox that will be highlighted)
+     * @ngdoc method
+     * @name Helper:setSavedNotifications
+     * @methodOf Helper
+     * @param {Number} rootScope - Value
+     * @description Set time out
      */
-    showUpdateRequiredPopup : function ($scope, popupKey, popupMessage, okCallback, cancelCallback) {
-        $scope.updateRequiredPopupVisible = true;
-
-        if (popupMessage != null) {
-            popupObj_Meta[popupKey].msg_text = popupMessage;
-        }
-        popupObj_Meta[popupKey].button_1_click = function () {
-            cancelCallback();
-        };
-
-        popupObj_Meta[popupKey].button_2_click = function () {
-            okCallback();
-        };
-
-        helper.ShowPopupBox(popupKey, $scope);
+    getSavedNotifications: function (rootScope) {
+        return rootScope.rentedNotifications + rootScope.recordingsNotifications;
     },
-
-    // ZOE-30490: Notification of Expired Subscription
-    // check/uncheck checkbox
-        clickCheckbox : function(elementId)  {
-        if (!helper.checkboxHasFocus(elementId)) {
-            helper.setCheckboxFocus(elementId);
+    /**
+     * @ngdoc method
+     * @name Helper:setTimer
+     * @methodOf Helper
+     * @param {Number} rootScope - Value
+     * @description Set time out
+     */
+    setSavedNotifications: function (rootScope, flag, value) {
+        var localStorageKey, localStorageNotificationValue = '';
+        if (flag === 'recordings') {
+            localStorageKey = 'LS_RECORDINGS_NOTIFICATIONS';
+            (!isDefined(value) || value === '') ? rootScope.recordingsNotifications += 1 : rootScope.recordingsNotifications = value;
+            localStorageNotificationValue = rootScope.recordingsNotifications;
+        } else if (flag === 'rented') {
+            localStorageKey = 'LS_RENTED_NOTIFICATIONS';
+            (!isDefined(value) || value === '') ? rootScope.rentedNotifications += 1 : rootScope.rentedNotifications = value;
+            localStorageNotificationValue = rootScope.rentedNotifications;
         }
-        if(helper.isCheckboxChecked(elementId)){
-            $('#' + elementId).removeClass("highlight-selected");
-        }
-        else {
-            $('#' + elementId).addClass("highlight-selected");
-        }
+        helper.setDataToLocal(localStorageKey, localStorageNotificationValue);
+        rootScope.savedNotifications = helper.getSavedNotifications(rootScope) || DEFAULT_INDEX;
     },
-
-    // set checkbox focus
-    setCheckboxFocus: function(elementId) {
-        $('#' + elementId).addClass("highlight");
-        if (helper.isCheckboxChecked(elementId)) {
-            $('#' + elementId).removeClass("checked");
-            $('#' + elementId).addClass("highlight-selected");
-        }
-    },
-
-    // remove checkbox focus
-    removeCheckboxFocus: function(elementId) {
-        $('#' + elementId).removeClass("highlight");
-        if (helper.isCheckboxChecked(elementId)) {
-            $('#' + elementId).removeClass("highlight-selected");
-            $('#' + elementId).addClass("checked");
-        }
-    },
-
-    // check if the checkbox has focus
-    checkboxHasFocus: function(elementId) {
-        if ($('#' + elementId).hasClass("highlight")) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    },
-
-    // check if the checkbox is checked
-    isCheckboxChecked: function (elementId) {
-        if($("#" + elementId).hasClass("checked") || $('#' + elementId).hasClass("highlight-selected")){
-            return true;
-        }
-        else {
-            return false;
-        }
-    },
-
-    // ZOE-30490: Notification of Expired Subscription
-    // if "Do not remind me again checkbox is checked call update customer API with otifyOfSubscriptionFail = false
-    updateNotifyOfSubscriptionFail: function (customerData, customerService, $scope, $location) {
-        var checkboxId = popupObj_Meta['Popup_NOTIFY_OF_SUBSCRIPTION_FAIL'].checkboxId;
-        if(helper.isCheckboxChecked (checkboxId)){
-            helper.debugLog("Do not remind me checkbox checked - calling UpdateCustomer");
-            var updateCustomerData = {
-                firstName: customerData.getFirstName(),
-                lastName: customerData.getLastName(),
-                zipCode: customerData.getZipCode(),
-                notifyOfSubscriptionFail: false
-            };
-            customerService.updateCustomer(updateCustomerData, function (data) {
-                helper.debugLog(data);
-                helper.redirectFromLoginPage($scope, $location);
-            }, function (data) {
-                helper.debugLog("UpdateCustomer call failed!");
-                helper.redirectFromLoginPage($scope, $location);
-            });
-            helper.HidePopupBox();
-        }
-        else {
-            helper.debugLog("Do not remind me checkbox not checked");
-            helper.HidePopupBox();
-            helper.redirectFromLoginPage($scope, $location);
-        }
-    },
-
-
-    // Format date from server format yyyy-mm-ddThh:mm:ss to traditional format: mm/dd/yyyy
-    formatDate: function (dateStr) {
-        var array = dateStr.split("T");
-        var dates = array[0].split("-");
-        var convertedDate = dates[1] + "/" + dates[2] + "/" + dates[0];
-        return convertedDate;
-    },
-
-
-    // mm/dd/yyyy -> Date
-    getDateFromFormattedString: function (formattedDate) {
-        var splitDate = formattedDate.split('/');
-        return new Date(splitDate[2], splitDate[0] - 1, splitDate[1]); // yyyy, mm, dd
-    },
-
-    // Check card expiration date for a subscription card
-    // The expiration date needs to be in next month or later
-    isSubsciptionCardExpired: function (card, billingDate) {
-        var expMonth = parseInt(card.getExpirationMonth());
-        var expYear = parseInt('20' + card.getExpirationYear());
-        var isExpired = false;
-        var billingMonth =  billingDate.getMonth() + 1;   // javascript month starts with 0
-        var billingYear = billingDate.getFullYear();
-
-        if (expYear < billingYear) {
-            isExpired = true;
-        }
-        else if (expYear == billingYear && expMonth < billingMonth) {
-            isExpired = true;
-        }
-
-        return isExpired;
-    },
-
-    // Card validation for checkout transactions:
-    // - AVS/CVV check
-    // - expiration date check
-    // - check if name/address is filled out
-    isValidCheckoutCard: function(card) {
-        isValid = false;
-        if (card != undefined && card != null) {
-            var isCardDataComplete = helper.isCardDataComplete(card);
-            if (isCardDataComplete && card.getAVSChecked() && card.getCVVChecked() && !card.isExpired()) {
-                isValid = true;
+    setProperties: function (systemProperties) {
+        for (var i = 0, len = systemProperties.length; i < len; i++) {
+            var property = systemProperties[i];
+            var localStorageKey;
+            if (property.name === 'rogers.img.vodPosterURLprefix') {
+                localStorageKey = LS_VOD_PREFIX;
+            } else if ((property.name === 'rogers.img.svodPosterURLprefix)') || (property.name === 'ericsson.vod.svodPosterURLprefix')) {
+                localStorageKey = LS_SVOD_PREFIX;
+            } else if ((property.name === 'rogers.img.genrePostersURLprefix') || (property.name === 'ericsson.vod.genre.PostersURLprefix')) {
+                localStorageKey = LS_GENRE_PREFIX;
+            } else if (property.name === 'rogers.img.crewImageURLprefix') {
+                localStorageKey = LS_CREW_PREFIX;
+            } else if ((property.name === 'rogers.img.epgPosterURLprefix') || (property.name === 'ericsson.ltv.epgPosterURLprefix')) {
+                localStorageKey = LS_EPG_PREFIX;
             }
-            helper.debugLog("card.getAVSChecked()==" + card.getAVSChecked());
-            helper.debugLog("card.getCVVChecked()==" + card.getCVVChecked());
-            helper.debugLog("card.isExipred()==" + card.isExpired());
-            helper.debugLog("card data complete" + isCardDataComplete);
+
+            if ((isDefined(localStorageKey) && localStorageKey !== '') && ((property.value).substr(-1) !== '/')) {
+                helper.setDataToLocal(localStorageKey, (property.value + '/'));
+            } else {
+                helper.setDataToLocal(localStorageKey, property.value);
+            }
+            localStorageKey = '';
         }
-
-        return isValid;
-    },
-
-    // Pad a decimal number with zeroes up to max length determined by size
-    padWithZeroes: function (num, size) {
-        var pad = '';
-        var max = Math.pow(10, size-1);
-        while (max > 1 && num < max) {
-            pad += '0';
-            max /= 10;
-        }
-
-        return pad + num;
-    },
-
-
-    getThumbnailPosition: function (index, numItemsInRow) {
-        var row = Math.ceil(index / numItemsInRow);
-        var col = index % numItemsInRow;
-        var thumbnailPosition = "rw" + helper.padWithZeroes(row,2) + "|c" + helper.padWithZeroes(col,2) + "|p" + helper.padWithZeroes(index,3);
-        return thumbnailPosition;
-    },
-
-    // Get app version from local storage (if stored there); otherwise get it from platform configuration
-    getAppVersion: function() {
-       var appVersion = getParameterByName("ver");
-       return appVersion;
-    },
-
-    // Set current app version in platform storage
-    setAppVersion: function (appVersion) {
-        if ((typeof (Storage) !== "undefined")) {
-            helper.debugLog("appVersion set to: " + appVersion);
-            platformStorage.setItem(APP_VERSION, appVersion);
-        }
-    },
-
-    copyArray: function (src) {
-        var dest = src.slice(0);
-        return dest;
     }
-
 };
-
-function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
+/**
+ *
+ * @param dname
+ * @param callback -callback
+ */
+function loadXMLDoc(dname, callback) {
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    } else {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.onreadystatechange = callback;
+    xhttp.open("GET", dname, false);
+    xhttp.send();
 }
-
-// the dialog is injected in the specified controller
-function DialogController($scope, $dialog) {
-    $scope.close = function (result) {
-        $dialog.close(result);
-    };
-}
-
+/**
+ * @ngdoc method
+ * @name Helper:isDefined
+ * @methodOf Helper
+ * @param {Object} obj - object to be validated
+ * @returns {Boolean} TO check Overlay div for Sub-Menu Click
+ * @description To display Overlay div for Sub-Menu Click.
+ */
 function isDefined(obj) {
-    if (typeof obj != 'undefined' && obj != null && obj != 'null' && obj != '') {
-        return true;
-    }
-    return false;
+    return (typeof obj !== 'undefined' && obj !== null && obj !== 'null' && obj !== '' &&
+        obj !== undefined && obj !== 'undefined');
 }
-
-// Returns time difference in minutes
-function geTimeDiff(expireDate) {
-    var timeDiff = 0;
-    if (expireDate != null || expireDate != "") {
-        var currentDate = new Date();
-        if (null == expireDate) return timeDiff;
-        var newdate = helper.ParseUTCDateToLocal(expireDate);
-        helper.debugLog("Exp date: " + expireDate);
-        helper.debugLog("Local date: " + newdate);
-        timeDiff = Math.floor((newdate.getTime() - currentDate.getTime()) / 60000);
-    }
-    return timeDiff;
+/**
+ * @ngdoc method
+ * @name Helper:verifyPin
+ * @methodOf Helper
+ * @param {string} pin - pin to be verified
+ * @returns {Boolean}  To verify Pin length
+ * @description Checks if object is defined and its length in four digits
+ */
+function verifyPin(pin) {
+    return (isDefined(pin) && (pin.length === 4));
 }
-
-function showBlackoutRibbon(BlackoutWindowEnd) {
-    var currentDate = new Date();
-    var currentDateInMilli = currentDate.getTime();
-    if (( BlackoutWindowEnd  ) < currentDateInMilli)
-        return 'hidden';
-    else
-        return 'visible';
-}
-
-
-function getUnavailabeRibbonFlag(BlackoutWindowStart, BlackoutWindowEnd) {
-    var flag = false;
-    if (BlackoutWindowStart && BlackoutWindowEnd) {
-        var strStartDate = BlackoutWindowStart;
-        if (BlackoutWindowStart != null || BlackoutWindowStart != "") {
-
-            helper.debugLog(strStartDate);
-
-            if (strStartDate.indexOf("T") != -1) {
-                strStartDate = helper.ParseUTCDateToLocal(strStartDate);
+/**
+ * @ngdoc method
+ * @name Helper:removeElement
+ * @methodOf Helper
+ * @param {Object} item - Element to be removed.
+ * @returns {Integer} represents number of elements removed from Array
+ * @description This method is used to remove element from an Array and compatible for Internet Explorer 9+, Firefox 4+, Chrome 5+, Safari 5+, and Opera 12+.
+ */
+Object.defineProperty(Array.prototype, "removeElement", {
+    enumerable: false,
+    value: function (item) {
+        var removeCounter = 0;
+        for (var index = 0; index < this.length; index++) {
+            if (this[index] === item) {
+                this.splice(index, 1);
+                removeCounter++;
+                index--;
             }
         }
-        var todayDate = new Date();
-        var secBalckoutStart = (strStartDate.getTime() - todayDate.getTime()) / 1000;
-
-        var strEndDate = BlackoutWindowEnd;
-        if (BlackoutWindowEnd != null || BlackoutWindowEnd != "") {
-            if (strEndDate.indexOf("T") != -1) {
-                strEndDate = helper.ParseUTCDateToLocal(strEndDate);
-            }
-        }
-        var secBalckoutEnd = (strEndDate.getTime() - todayDate.getTime()) / 1000;
-        if (secBalckoutStart < 0 && secBalckoutEnd > 0) {
-            flag = true;
-        }
-
+        return removeCounter;
     }
-    return flag;
-
-}
-
-function getReminderExpiry(reminderDate) {
-    var reminderArray = reminderDate.split("T");
-    var expiryDate = reminderArray[0];
-    var expiryTime = reminderArray[1].split(".")[0];
-    return "EXPIRES : " + expiryDate + ", " + expiryTime;
-}
-
-String.prototype.format = function (args) {
-    var str = this;
-    return str.replace(String.prototype.format.regex, function (item) {
-        var intVal = parseInt(item.substring(1, item.length - 1));
-        var replace;
-        if (intVal >= 0) {
-            replace = args[intVal];
-        } else if (intVal === -1) {
-            replace = "{";
-        } else if (intVal === -2) {
-            replace = "}";
-        } else {
-            replace = "";
-        }
-        return replace;
-    });
-};
-String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
-
-//Retriving query string from url
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results == null ? false : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-/**
- * Displays the 
- * @param errorObject
- */
-function showRemoteErrors(errorObject, $scope){
-    var RBIErrorObject = {
-    		title:errorObject.Title,
-    		publicErrorCode:errorObject.PublicErrorCode,
-    		msgText:"",
-    		buttonText:errorObject.Type,
-    		yesButtonText:"Yes"
-    };
-
-    if (isDefined(errorObject.Description) && errorObject.Description != "") {
-        RBIErrorObject.msgText = errorObject.Description;
-    } else if (isDefined(errorObject.ResultMessage)) {
-        RBIErrorObject.msgText = errorObject.ResultMessage;
-    }
-    
-    // create error pop up using error object
-    createErrorPopUp(RBIErrorObject, $scope);
-}
-
-/**
- * Create error pop up from error object
- */
-function createErrorPopUp(errorObject, $scope) {
-
-    //Omniture
-    if (RBI.PlatformConfig.OmnitureEnabled && internetConnected) {
-        Omniture.Clear();
-        Omniture.Variables.eVar63 = "+1";
-        Omniture.Variables.prop24 = Omniture.pageName + "|" + errorObject.publicErrorCode;
-        Omniture.InvokeOmniture(Omniture.InvokeType.load);
-    }
-    //Omniture
-
-    //Check for server errors without title
-    if (isDefined(errorObject.title)) {
-        var popUpKey = "Error_PopUp_Services";
-
-        popupObj_Meta[popUpKey] = {};
-        popupObj_Meta[popUpKey].title_text = errorObject.title;
-        popupObj_Meta[popUpKey].msg_text = errorObject.msgText + "<br><br><br>" + "In the Help Center (RedboxInstant.com/Help), you can get more information by searching for error number " + errorObject.publicErrorCode + ". Please make note of the number.";
-
-        //for the button 1 text which should be mapped to OK or Yes button
-        popupObj_Meta[popUpKey].button_1_text = ""; //isDefined(errorObject.ok_button_text) ? errorObject.ok_button_text: errorObject.yes_button_text;
-        //for the button 1 text which should be mapped to Cancel or No button
-        popupObj_Meta[popUpKey].button_2_text = isDefined(errorObject.buttonText) ? errorObject.buttonText : errorObject.yesButtonText;
-        popupObj_Meta[popUpKey].seperator = true;
-        popupObj_Meta[popUpKey].button_1_click = function () {
-            helper.HidePopupBox();
-        };
-
-        popupObj_Meta[popUpKey].button_2_click = function () {
-            helper.HidePopupBox();
-        };
-        // show error pop up
-        PopupBox.Show(popUpKey, $scope);
-    }
-    else {
-        PopupBox.Show("Error_PopUp", $scope);
-    }
-}
+});

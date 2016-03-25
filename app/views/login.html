@@ -1,130 +1,38 @@
-<div id="login-page" rbikeyevent="">
-    <div id='login'>
-        <div class="inner-container">
-            <div class="left-clm half">
-                <div class="title1">Sign In.</div>
-                <p>Already have a Redbox or Redbox Instant account? <br/>
-                    Enter your Email address and password to sign in. </p>
+<div id="login-screen" class="main-welcome-screen">
+    <div class="login-outer" id="login-container">
+        <div ng-click="showPopUp()" ng-if="$root.autologinPopup" class="auto-login-popup" id="autoLoginPopup"></div>
+        <div class="welcome-container">
+            <div class="login-wlc-msg">{{"COLDSTART_AUTH_LABEL_WELCOME" | i18n}} {{productName}}</div>
+            <div class="LoginNew-msg">{{"COLDSTART_MANAUTH_LABEL_LOGIN_INSTRUCTIONS" | i18n}}</div>
+            <div class="login-formContainer" id="formLogin">
 
-                <div class="form-content">
-                    <form novalidate class="row form-horizontal">
-                        <div class="input-wrapper">
-                            <div class="control-group">
-                                <label class="control-label" for="emailAddress">Email</label>
-
-                                <div class="controls">
-                                    <input type="text" id='emailAddress' placeholder="Email"
-                                        ng-model='user.emailAddress' autofocus required
-                                        onFocus="invokeOSK(this);"
-                                        ng-class="{'focused':0==focusIndex}"
-                                       ng-click="eventHandler.handleMouseClick('emailAddress');"
-                                       ng-mouseover="eventHandler.handleMouseOver('emailAddress',0);">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class='input-wrapper'>
-                            <label>Password</label>
-
-                            <div class="controls">
-                                <input ng-model='user.password' required type="password"
-                                       id='password' placeholder="Password" rbikeyboard="doSomething()"
-                                       onFocus="invokeOSK(this, true);"
-                                       ng-class="{'focused':1==focusIndex}"
-                                       ng-click="eventHandler.handleMouseClick('password');"
-                                       ng-mouseover="eventHandler.handleMouseOver('password',1);">
-
-                            </div>
-                        </div>
-                        <div class="button-container align-left">
-                            <div id='login-button' ng-class="{'red':2==focusIndex , 'gr':2!=focusIndex}"  class="lrg-button"
-                                 ng-click="loginUser()" ng-mouseover="eventHandler.handleMouseOver('login-button',2);">
-                                 SIGN IN
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="right-clm half">
-                <div class="title1">New Around Here?</div>
-				<p>Sign up is super easy and free! Click New Account or go to www.redboxinstant.com/<span ng-show="PlayStationType=='LG'">lg</span><span ng-show="PlayStationType=='Samsung'">samsung</span><span ng-show="PlayStationType=='PS3'">ps3</span><span ng-show="PlayStationType=='PS4'">ps4</span>. You can also text <span ng-show="PlayStationType=='LG'"><b>LG</b></span>
-				<span ng-show="PlayStationType=='Samsung'"><b>Samsung</b></span><span ng-show="PlayStationType=='PS3'"><b>PS3</b></span><span ng-show="PlayStationType=='PS4'"><b>PS4</b></span> to 484848 to learn more.</p>
-                
-                <div class="accnt-img"><img src="images/multi-booth.png"/></div>
-                <div class="button-container align-center">
-                    <button type="submit" id='new-account-button'  ng-class="{'red':3==focusIndex , 'gr':3!=focusIndex}"  class="lrg-button"
-                            ng-click="newAccount()"
-                            ng-mouseover="eventHandler.handleMouseOver('new-account-button',3);">NEW ACCOUNT
-                    </button>
-                </div>
-                <div id='newaccount'></div>
-
-            </div>
-            <div class="clearAll">&nbsp;</div>
-            <div class="login-bottom-text">
-                <p>Msg & data rates may apply. Reply STOP to Cancel, or HELP for help. By submitting my phone number, I hereby consent to receive autodialed and/or pre-recorded telemarketing calls/messages from or on behalf of Redbox Instant by Verizon at the phone number provided. I understand that consent is not a condition of purchase of<br><strong>Redbox Instant by Verizon. Terms & Privacy at www.redboxinstant.com/mobileterms</strong></p>
-            </div>
-        </div>
-        <div id="spinner">
-            <img id="loading-bar" class="spinner"
-                 src="images/spinner.gif"/>
-        </div>
-        <div id="login-page-menu">
-
-        </div>
-        <div id="imp-notice-page-menu">
-            <div class="right-div">
-                <div class="rbi-pp-button" ng-class="{'loginbutton-highlight':4==focusIndex}" ng-mouseover="eventHandler.handleMouseOver('rbi-pp-button', 4);" ng-click="currentFocusEl.blur(); isRedboxPolicyOpen = true; startpos = 0;" >Redbox Instant Privacy Policy<span class="icons control-triangle"></span></div>
-                <div class="vz-pp-button"  ng-class="{'loginbutton-highlight':5==focusIndex}" ng-mouseover="eventHandler.handleMouseOver('vz-pp-button', 5);" ng-click="currentFocusEl.blur(); isVerizonPolicyOpen = true; startpos = 0;">Redbox Privacy Policy<span class="icons control-square"></span></div>
-            </div>
-        </div>
-        <div class="verizon-policy pop-up" ng-show="isVerizonPolicyOpen">
-            <div class="pop-up-content-ctn">
-                <div class="pop-up-content-bg">
-                    <!-- Creating a separate common html template for Redbox Privacy Policy -->
-                    <ng-include src="'views/rbPrivacyPolicy.html'"></ng-include>
-                    <!-- -->
-                    <div class='action-buttons'>
-                        <div class="pop-up-btn-container">
-                            <div class="btn-accept-ctn inline-block" ng-class="{'loginbutton-highlight':6==focusIndex}" ng-click="eventHandler.handleMouseClick('rbi-pp-button');" ng-mouseover="eventHandler.handleMouseOver('privacyAccept inline-block', 6);" >
-                                <div class="btn-label inline-block">OK</div>
-                                <button class="btn-accept inline-block" id="0_1" type="submit" name="btnAccept" value="Accept">
-                                    <div class="btn-accept-img"></div>
-                                </button>
-                            </div>
-                            <div class="scroll-div">
-                                <span>Scroll</span>
-
-                                <div class="icons l-icon"></div>
-                            </div>
-                        </div>
+                <form id="login-wrapper" name="coldLogin" novalidate ng-submit="coldLogin.$valid && login()">
+                    <div id="user-field" class="input-wrapper">
+                        <span class="textBoxLabel">{{"COLDSTART_MANAUTH_LABEL_USERNAME" | i18n}}</span>
+                        <input class = "textBoxActive"id="username" type="email" placeholder="e.g. janesmith@rogers.com" name="emailAddress"
+                               ng-model='user.username' ng-minlength="5" ng-maxlength="105"
+                               ng-pattern="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i"
+                               required>
+                        <span ng-show="coldLogin.emailAddress.$error.pattern || (coldLogin.emailAddress.$error.required && coldLogin.emailAddress.$dirty)"
+                              class="invalid"></span>
+                        <span ng-show="coldLogin.emailAddress.$valid" class="valid"></span>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="verizon-policy pop-up" ng-show="isRedboxPolicyOpen">
-            <div class="pop-up-content-ctn">
-                <div class="pop-up-content-bg">
-                <!-- Creating a separate common html template for Redbox Instant Privacy Policy -->
-                <ng-include src="'views/rbInstantPrivacyPolicy.html'"></ng-include>
-                <!-- -->
-                <div class='action-buttons'>
-                    <div class="pop-up-btn-container">
-                        <div class="btn-accept-ctn inline-block" ng-class="{'loginbutton-highlight':7==focusIndex}" ng-mouseover="eventHandler.handleMouseOver('instantAccept inline-block', 7);" ng-click="eventHandler.handleMouseClick('vz-pp-button');">
-                            <div class="btn-label inline-block">OK</div>
-                            <button class="btn-accept inline-block" id="0_1" type="submit" name="btnAccept" value="Accept">
-                                <div class="btn-accept-img"></div>
-                            </button>
-                        </div>
-                        <div class="scroll-div">
-                            <span>Scroll</span>
-
-                            <div class="icons l-icon"></div>
-                        </div>
+                    <div id="password-field" class="input-wrapper">
+                        <span class="textBoxLabel">{{"COLDSTART_MANAUTH_LABEL_PASSWORD" | i18n}}</span>
+                        <span class="forget-password textBoxLabel">{{"COLDSTART_MANAUTH_LINK_FORGOT_PASSWORD" | i18n}}</span>
+                        <input class="textBoxActive" id="password" type="password" placeholder="**********" name="password" ng-minlength="4"
+                               ng-maxlength="16" ng-model='user.password' required>
                     </div>
+                    <div class="error-msg" ng-if="errorMsg">{{errorMsg}}</div>
+                    <div class="input-wrapper">
+                        <input id="login-Submit" type="submit" class="loginButton" value="{{'COLDSTART_MANAUTH_BUTTON_SIGN_IN' | i18n}}"/>
+                    </div>
+                </form>
+
+                <div class="register">{{"FREEVIEW_LOG_IN_LABEL_DONT_HAVE_ACCOUNT" | i18n}}
+                    <input id="join" type="submit" class="joinButton" value="{{'COLDSTART_MANAUTH_BUTTON_JOIN' | i18n}}"/>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </div>

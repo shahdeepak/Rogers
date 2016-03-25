@@ -1,16 +1,48 @@
+<div id="mixLanding"   ng-repeat="data in phones" >
+    <div id="home-recommend{{$index}}" class=" wow "  style="background-color: green;margin-top: 20px;" ng-click="getVodTitleDetail(recommendation,$index)" ng-repeat="recommendation in data | limitTo: 4 " on-finish-render="" ng-class="getClass($index,recommendation)" >
+        <div id="title-homeDetail-{{$index}}">
+            <div class="mergerIcon">
+                <img ng-src="{{recommendation.getImageUrl('p',getClass($index,recommendation))}}" onerror="this.src='';" class="contentImg bgPattern" no-image onerror="this.src=''" ng-class="{bgPattern : items[$index].imageUrl == undefined}" />
+                <span ng-show = "isError" class="imgNotAvailable">{{'_IMAGE_NOT_AVAILABLE_'}}</span>
+                <!--<img id="watchAdd-Asset{{$index}}" ng-if="recommendation.isType == 'asset'" class="add-to-watch" src="images/Lt_watchlater_onwatch_later.png" ng-click="addToWatchList(recommendation);" />-->
+                <img ng-if="recommendation.inWatchlist === true" class="add-to-watch" src="images/Lt_dont_watch_later_offdont_watch_later.png" ng-click="removeFromWatchList(recommendation)">
+                <img ng-if="recommendation.isType === 'asset' && (recommendation.inWatchlist === false || recommendation.inWatchlist === undefined)" class="add-to-watch" src="images/Lt_watchlater_onwatch_later.png" ng-click="addToWatchList(recommendation)">
+            </div>
+        </div>
+        <div class="blockTitle">
+            <div class="innerContent" ng-init="recommendation.isType == 'schedule' ? live = getLiveBadges(recommendation.entity.startDateTime,recommendation.entity.endDateTime,recommendation.entity.duration) : ''">
+                <div class="float-left-wd100">
+                    <div ng-if="recommendation.isType == 'asset' && !recommendation.isEntitledTitle" class="badge" ng-class="{'badge-small':$index != 0,'badge-large':$index == 0}">
+                     <span class="badge-rent" data-ng-if="recommendation.isVod == 'vod'">{{"_LABEL_RENT_" }}</span>
+                     <span class="badge-subscribe" data-ng-if="recommendation.isVod == 'svod'">{{"_LABEL_SUBSCRIBE_" }}</span>
+                    </div>
+                    <div data-ng-if="recommendation.isType == 'schedule'" class="badge {{live.class}}"  ng-class="{liveClass:true,'badge-small':$index != 0,'badge-large':$index == 0}">
+                        {{live.label}} {{live.day || live.time | uppercase}}
+                    </div>
+                    <div class="titleDiv">{{::recommendation.titleName}}</div>
+                    <div class="descDiv rentVodMins">
+                        <span class="runtime-class">{{::(recommendation.titleRunTime)}}</span>
+                        <span data-ng-if="recommendation.isType == 'asset'">{{'_LABEL_MINS_' }}</span>
+                        <div class="homeTomatoRating"  ng-if="recommendation.isType == 'asset' && recommendation.tomatoRating">
+                            <img class="homeTamato verticalAlign" src="images/tomato.png">
+                            <span class="rateHome verticalAlign"> {{::recommendation.tomatoRating}}%</span>
+                        </div>
+                    </div>
 
-<div id="promotions" rbikeyevent>
-    <div id="top-bar-text" class="title2">Now Playing</div>
-    <div id="0_0"></div>
-    <div id="poster-holder">
-        <div id="poster-outer-div">
+                    <div ng-if="recommendation.isType == 'schedule'" class="float-left-wd100 channel-icon-width4" >
+                        <img class="channelIcon" ng-src="{{recommendation.entity.image}}" alt="{{recommendation.entity.channelName.substring(0,6)}}">
+                    </div>
+                </div>
+                <progressbar class="progress-OnBar" value="live.percent" max="100" data-ng-if="live.percentHide"></progressbar>
+            </div>
+            <span class="topIndicator"></span>
         </div>
     </div>
-    <div id="right-nav-bar"></div>
-    <div id="page-notations"></div>
-    <div id="separator"></div>
-    <!-- <div id="loading">
-        <img id="loading-bar" class="spinner" src="images/spinner.gif"/>
-    </div> -->
 </div>
-
+<div ng-if="recommendations.length==0 || popularRecommendations.length==0" id="noData">
+    <div class="noMenuData">
+        <span>
+             {{noData}}
+        </span>
+    </div>
+</div>
