@@ -1,36 +1,81 @@
-<div id="login-screen" class="main-welcome-screen">
-    <div class="login-outer" id="login-container">
-        <div ng-click="showPopUp()" ng-if="$root.autologinPopup" class="auto-login-popup" id="autoLoginPopup"></div>
-        <div class="welcome-container">
-            <div class="login-wlc-msg">{{"COLDSTART_AUTH_LABEL_WELCOME" | i18n}} {{productName}}</div>
-            <div class="LoginNew-msg">{{"COLDSTART_MANAUTH_LABEL_LOGIN_INSTRUCTIONS" | i18n}}</div>
-            <div class="login-formContainer" id="formLogin">
-
-                <form id="login-wrapper" name="coldLogin" novalidate ng-submit="coldLogin.$valid && login()">
-                    <div id="user-field" class="input-wrapper">
-                        <span class="textBoxLabel">{{"COLDSTART_MANAUTH_LABEL_USERNAME" | i18n}}</span>
-                        <input class = "textBoxActive"id="username" type="email" placeholder="e.g. janesmith@rogers.com" name="emailAddress"
-                               ng-model='user.username' ng-minlength="5" ng-maxlength="105"
-                               ng-pattern="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i"
-                               required>
-                        <span ng-show="coldLogin.emailAddress.$error.pattern || (coldLogin.emailAddress.$error.required && coldLogin.emailAddress.$dirty)"
-                              class="invalid"></span>
-                        <span ng-show="coldLogin.emailAddress.$valid" class="valid"></span>
-                    </div>
-                    <div id="password-field" class="input-wrapper">
-                        <span class="textBoxLabel">{{"COLDSTART_MANAUTH_LABEL_PASSWORD" | i18n}}</span>
-                        <span class="forget-password textBoxLabel">{{"COLDSTART_MANAUTH_LINK_FORGOT_PASSWORD" | i18n}}</span>
-                        <input class="textBoxActive" id="password" type="password" placeholder="**********" name="password" ng-minlength="4"
-                               ng-maxlength="16" ng-model='user.password' required>
-                    </div>
-                    <div class="error-msg" ng-if="errorMsg">{{errorMsg}}</div>
-                    <div class="input-wrapper">
-                        <input id="login-Submit" type="submit" class="loginButton" value="{{'COLDSTART_MANAUTH_BUTTON_SIGN_IN' | i18n}}"/>
-                    </div>
+<div class="container-fluid row-container main-container">
+	<div class="row">
+        <div class="col-sm-push-2 col-md-push-2 col-sm-10 col-md-10  col-lg-push-2 col-lg-8">
+            <p class="form-control-static message">{{message}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-10 col-md-10 col-lg-10">
+            <p class="form-control-static">(<span class="red">*</span>){{ 'LOGIN_REQUIRED' | translate }}</p>
+            <h3>{{ 'LOGIN_SIGNTOROGERS' | translate }}</h3> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-offset-2 col-lg-4" >
+                <form class="form-horizontal" ng-submit="login(user)" autocomplete="off">
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-4 control-label">
+                                {{ 'LOGIN_EMAIL' | translate }}<span class="red">*</span>
+                        </label>
+                        <div class="col-sm-10 col-md-10 col-lg-8">
+                            <input type="email" 
+                                   class="form-control"
+                                   placeholder="e.g. janesmith@rogers.com"
+                                   ng-model='user.username'
+                                   minlength="5" maxlength="105" required/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-4 control-label">
+                                {{ 'LOGIN_PASSWORD' | translate }}<span class="red">*</span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-8">
+                          <input type="password" 
+                                 class="form-control"  
+                                 placeholder="*********"
+                                 name="password" 
+                                 minlength="8"
+                                 maxlength="16"
+                                 pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                                 title="Minimum 8 characters at least 1 Alphabet and 1 Number"
+                                 ng-model='user.password' 
+                                 required  />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 col-md-10 col-lg-offset-4 col-lg-6">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox"> {{ 'LOGIN_REMEMBER' | translate}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 col-lg-offset-4 col-lg-4">
+                            <input type="submit" class="btn btn-danger form-control" value="Submit"/>
+                        </div>
+                      </div>
                 </form>
-
-                <div class="register">{{"FREEVIEW_LOG_IN_LABEL_DONT_HAVE_ACCOUNT" | i18n}}
-                    <input id="join" type="submit" class="joinButton" value="{{'COLDSTART_MANAUTH_BUTTON_JOIN' | i18n}}"/>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4" >
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <span class="red">{{ 'LOGIN_NEWUSER' | translate:dynamic }}</span>
+                </div>
+                <div class = "panel-body">
+                  <p>{{ 'LOGIN_SIGNUP' | translate }}</p>
+                    <ul>
+                        <li>{{ 'LOGIN_CHECKBAL' | translate }}</li>
+                        <li>{{ 'LOGIN_PAYBILL' | translate }}</li>
+                        <li>{{ 'LOGIN_MONITORS' | translate }}</li>
+                    </ul>
+                </div>
+                <div class="panel-heading">
+                   <input type="submit" 
+                          class="btn btn-danger " 
+                          value="Register"
+                          ng-click="redirectToRegPage()" />
                 </div>
             </div>
         </div>
