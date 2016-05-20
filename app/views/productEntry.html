@@ -1,0 +1,197 @@
+<div class="container-fluid row-container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-offset-2 col-lg-10" >
+            <form class="form-horizontal" ng-submit="submitProductDetails()">
+              <div class="form-group">
+                  <div class="col-sm-push-2 col-md-push-2
+                              col-lg-push-2 col-sm-10 col-md-10 col-lg-5" >
+                      <span class="message">{{message}}</span>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div class="col-sm-push-2 col-md-push-2 col-lg-push-2 col-sm-10 col-md-10 col-lg-5">
+                      <p class="form-control-static">
+                          (<span class="red">*</span>)These fields are required
+                      </p>
+                      <h3>Details Information</h3>
+                  </div>
+                </div>
+                <fieldset>
+                    <legend><b>Product Details</b></legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Product Name<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter product name" 
+                                   ng-model="pName" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Product Price<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter product price" 
+                                   ng-model="pPrice" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Product Type<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter product type" 
+                                   ng-model="pType" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Image Path
+                            <span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter image path" 
+                                   ng-model="pImgPath" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Product Details<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <textarea ng-model="pDetails" class="form-control"  required></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend><b>Features</b></legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Camera<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter camera name" 
+                                   ng-model="fCamera" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Details<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <textarea ng-model="fCameraDetails" class="form-control"  required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Primery Memory<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter Primery Memory name" 
+                                   ng-model="fPrimeryMemory" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Details<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <textarea ng-model="fPMemoryDetails" class="form-control"  required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Internal Memory<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter Primery Memory name" 
+                                   ng-model="fInternalMemory" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Details<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <textarea ng-model="fIMemoryDetails" class="form-control"  required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Battery<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter Primery Memory name" 
+                                   ng-model="fBattery" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Details<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <textarea ng-model="fBatteryDetails" class="form-control"  required></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend><b>Images</b></legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Img1<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter img1" 
+                                   ng-model="fImg1" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Img2<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter img2" 
+                                   ng-model="fImg2" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Img3<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter img3" 
+                                   ng-model="fImg3" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Img4<span class="red">*</span></label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                            <input type="text" class="form-control" 
+                                   placeholder="Enter img4" 
+                                   ng-model="fImg4" required/>
+                        </div>
+                    </div>
+                </fieldset>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-2">
+                        <input type="submit" class="btn btn-danger form-control" value="SUBMIT"/>
+                    </div>
+                  </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Type</th>
+                <th>Product Description</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </thead>
+            <tbody ng-repeat="data in productDetails">
+                <tr>
+                    <td>{{data.productName}}</td>
+                    <td>{{data.productPrice}}</td>
+                    <td>{{data.productType}}</td>
+                    <td>{{data.productDetails}}</td>
+                    <td style="cursor:pointer"><img src="images/editIcon.png" ng-click="editItem(data)"/></td>
+                    <td style="cursor:pointer"><img src="images/removeIcon.png" ng-click="removeItem(data.id)"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

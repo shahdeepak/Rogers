@@ -1,0 +1,166 @@
+<div>
+    <div id="globalHeaderNav" class="global-header-back" ng-if="!$root.search">
+        <div class="headerNav-outer">
+            <div id="headerNavMenu" class="headerNav-inner">
+                <span id="selectNavMenu" class="global-Logo"
+                      ng-click="($root.enableNavSetting)||routeUrl('/Home')"></span>
+
+                <div>
+                    <div id="navEpgMenu" class="EpgMenu" ng-cloak="MenuBar" ng-if="!$root.enableNavMenu">
+                        <div id="mainMenu" class="main-menu-list">
+                            <ul id="menuList">
+                                <li id="itemMenu-List{{$index}}" ng-click="routeUrl(item.url,'menu');" class="menu-item"
+                                    ng-repeat="item in mainMenuItems"
+                                    ng-if="!((isGuestUser && $last) || (isGuestUser && $index == 0))"
+                                    ng-class="{'menu-item_active' : id==$index}">
+                                    <span>{{item.name | i18n}}</span>
+
+                                    <div ng-if="item.name == 'NAVIGATION_PRIMARY_SECTION_LABEL_SAVED' && (savedNotifications !=0)"
+                                         class="bubble1">{{savedNotifications}}
+                                    </div>
+                                    <!--This should be hidden when submenu is viewied and sount should be the total count of all submenu is shown in red baloon-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="fixedTopmenu" ng-if="!$root.enableNavSetting">
+                        <div class="search-container">
+                            <div id="contentSearch" class="search-content">
+                                <form ng-submit="$root.search=true;">
+                                    <button id="searchSubmit" type="submit" class="global-searchIcon"></button>
+                                </form>
+                            </div>
+                        </div>
+                        <!--Now Watching Directive and Functionality-->
+                        <nowwatching></nowwatching>
+                        <span id="settingLayoutBack" ng-click="hideSettingLayout()"></span>
+
+                        <div class="setting-container">
+                            <div id="setting-toolbar" class="small-toolbar" ng-if="!isGuestUser"
+                                 ng-click="toggleSetting()"
+                                 ng-class="{'small-toolbar-on':showSettings}"></div>
+                            <div class="settingInfo" ng-if="showSettings">
+                                <div class="settingsDropDown">
+                                    <ul>
+                                        <li ng-click="changeParentLock()" class="setting-span" id="parent-lock">
+                                            <span ng-show="!$root.isParentalLockOn" class="icon-settings">
+                                                <img src="images/Lt_settings_pc_unlock.png"/></span>
+
+                                            <div ng-show="!$root.isParentalLockOn"><span class="title-setting-subline">{{'NAVIGATION_SETTINGS_SECTION_LABEL_PARENTAL_CONTROLS' | i18n}}</span></div>
+                                            <span ng-show="$root.isParentalLockOn" class="icon-settings">
+                                                <img src="images/Lt_settings_pc_active.png"/></span>
+
+                                            <div ng-show="$root.isParentalLockOn"><span class="title-setting-subline">{{'NAVIGATION_SETTINGS_SECTION_LABEL_PARENTAL_CONTROLS' | i18n}}</span></div>
+                                        </li>
+                                        <li id="settings-banner" class="setting-span" ng-click="goToSettings();">
+                                            <span class="icon-settings"><img src="images/Lt_settings_options.png"/></span>
+
+                                            <div><span class="title-setting-subline">{{'NAVIGATION_SETTINGS_SECTION_LABEL_SETTINGS' | i18n}}</span>
+                                            </div>
+                                        </li>
+                                        <li id="iconHelp" class="setting-span" ng-click="goToHelp()">
+                                            <span class="icon-settings"><img src="images/Lt_settings_help.png"/></span>
+
+                                            <div><span class="title-setting-subline">{{'NAVIGATION_SETTINGS_SECTION_LABEL_HELP' | i18n}}</span>
+                                            </div>
+                                        </li>
+                                        <li ng-class="{'is-disabled' : $root.isInHouse}" id="logout" class="setting-span" ng-click="$root.logOut()">
+                                            <span class="icon-logout"><img src="images/Lt_settings_logout.png"/></span>
+                                            <div><span class="title-setting-subline">{{'NAVIGATION_SETTINGS_SECTION_LABEL_LOGOUT' | i18n}}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div id="showProfile">
+                                        <div ng-if="profileControl" class="settingOverlayBack"
+                                             ng-click="removePanelOverlay()"></div>
+                                        <div class="title-setting-subline">{{'SETTINGS_PANEL_LABEL_PROFILES' | i18n}}
+                                        </div>
+                                        <div class="profile-list">
+                                            <div class="profile-titles"
+                                                 ng-if="userGroup.getUserProfiles().length <= userGroup.maxMembers">
+                                                <div id="create-profile" ng-click="createProfile();">+</div>
+                                                <div class="profileName">{{'_LABEL_ADD_PROFILE_' | i18n}}</div>
+                                            </div>
+                                            <span ng-repeat="profile in userGroup.getUserProfiles() | orderBy : 'displayName' | filter: { userType : 'RegularUser'}  ">
+                                                <div id="profile-title-{{$index}}" ng-click="togglePanel($index)" class="profile-titles"
+                                                     ng-class="{'current-profile':profile.isActive, 'active-profile':$root.profileIndex === $index}">
+                                                    <div class="profiles">{{getFirstChar(profile.displayName)}}</div>
+                                                    <div class="profileName">{{profile.displayName}}</div>
+                                                    <div ng-class={'profile-top':!$root.enableProfilePin,'switch-top':$root.enableProfilePin,}
+                                                         class="profileControls" ng-if="($root.profileIndex == $index) && profileControl">
+                                                        <avatar-profile data="profile"></avatar-profile>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guest-class" ng-if="isGuestUser">
+                            <div id="guest-joinUser" class="join-button-class" ng-click="joinUser()">
+                                {{"COLDSTART_MANAUTH_BUTTON_JOIN" | i18n}}
+                            </div>
+                            <div id="sign-userId" class="join-button-class" ng-click="signInUser()">{{"_LABEL_SIGN_UP_" | i18n}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="sub-Menu" class="sub-menu-list" ng-if="menuSub && !$root.enableNavMenu">
+            <div id="subItem-Menu" ng-repeat="subitem in mainMenuItems">
+                <div id="subMenu-Inner" class="inner-sub-menu">
+                    <ul id="subItem-list">
+                        <li id="subMenuItems{{$index}}" class="sub-item" ng-repeat="item in subitem.subMenuItems"
+                            ng-if="id==$parent.$index ">
+                                <span id="prev_sub{{$index}}" ng-if="(prevUrl == item.url)"
+                                      ng-class="{'sub-item_active':true}" ng-click="routeUrl(item.url,item.name);"
+                                      class="sub-item-span ">
+                                   {{item.name | i18n}}
+                                     <span data-ng-class="{'bubbleArrwmark':true}"></span>
+                                    <span ng-class="{'submenu-drop-symbol-select':genreList, 'submenu-drop-symbol':!genreList}"
+                                          ng-show="checkMenuItem(item.name);"></span>
+                                </span>
+                                <span id="sub_{{$index}}" ng-if="(prevUrl!= item.url)"
+                                      ng-class="{'sub-item_active':((item.name== 'NAVIGATION_SECONDARY_SECTION_LABEL_MOVIES_GENRES' || item.name == 'NAVIGATION_SECONDARY_SECTION_LABEL_SPORTS_TYPES_OF_SPORTS' || item.name == 'NAVIGATION_SECONDARY_SECTION_LABEL_TV_SHOWS_GENRES') && booleanValue)}"
+                                      ng-click="routeUrl(item.url,item.name);" class="sub-item-span ">
+                                   {{item.name | i18n}}
+                                    <span ng-class="{'submenu-drop-symbol':true}"
+                                          ng-show="checkMenuItem(item.name);"></span>
+                                </span>
+
+                            <div ng-if="item.name == 'NAVIGATION_SECONDARY_SECTION_LABEL_SAVED_RENTED' && !noRental && (rentedNotifications !=0)"
+                                 class="rentBubble">{{rentedNotifications}}
+                            </div>
+                            <div ng-if="item.name == 'NAVIGATION_SECONDARY_SECTION_LABEL_SAVED_RECORDINGS' && !noRental && (recordingsNotifications !=0)"
+                                 class="recordBubble">{{recordingsNotifications}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="tertiary-subMenu" class="tertiary-menu-list" ng-show="genreList">
+                <div class="noMenuData">{{noMenuData | i18n}}</div>
+                <ul id="genre-items">
+                    <li class="tertiary-item{{$index}}" ng-class="tertiaryActive" ng-repeat="genre in genres"
+                        id="gener_{{$index}}" ng-click="genreList=!genreList">
+                        <div id="genre-ListItem{{$index}}">
+                            <span id="genre-subMenuItem{{$index}}" class="generes-text">
+                                <a ng-click="routeUrl('/'+buildUrl+'/Genres/'+genre.name+'/'+genre.id,genre.name,true);booleanValue = true;" href="" ng-if="(genre.name === 'Adult'  && $root.parentalCtrl === 7) || genre.name !== 'Adult'">{{genre.name.toLowerCase()}}</a>
+                            </span>
+                            <!--Lock icon removed to resolve RTV-3271 -->
+                            <!-- <span class="icons lockSmall" ng-show="genre.name==AdultGenre"></span>-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--genres-->
+    </div>
+    <div id="search">
+        <search ng-if="$root.search"></search>
+    </div>
+</div>

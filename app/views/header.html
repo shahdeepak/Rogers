@@ -1,0 +1,55 @@
+<!--created by priti date:15/4/2016-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header headerShow"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="/#/#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>         
+            </button>
+            <span>
+                <a href="" id="cartCollapse" ng-click="checkout()">
+                <span class="indexPlace">{{qty}}</span>
+                <img src="images/cart-icon.png"/>
+                </a>
+            </span>
+           
+                <a class="navbar-brand displayRogersDiv" ng-click="redirectToHome()" style="color:white;text-allign:center"
+                   ><b>Rogers</b></a>
+            
+        </div>
+        <div class="collapse navbar-collapse row-fluid" id="myNavbar">
+            <div class="nav navbar-nav navbar-right">
+                <li >
+                   <div class="paddingSize">
+                        <a href="" class="cart1 cart_anchor" ng-click="checkout()">
+                            <span class="indexPlace">{{qty}}</span>
+                            <img src="images/cart-icon.png"/>
+                        </a>
+                   </div>
+                </li>
+                <li><a href="" ng-click="toggleLanguage()"> {{lang}}</a></li>
+                <li ng-if="logged_In"><a href="" ng-click="redirectToOtherPage()">{{pagePath}}</a></li>
+                <li ng-if="logged_In"><a href="" ng-click="logout()">Logout</a></li>
+                
+            </div>
+            <div class="nav navbar-nav displayOutList">
+                <li ng-repeat="dataa in mainmenu"  
+                    ng-init="ind = $index" 
+                    ng-mouseover="hoverIn($index)" 
+                    ng-click="hoverIn($index)"
+                    class="dropdown">
+                    <div class="displayDiv" data-toggle="dropdown">{{dataa.name | translate }}</div>
+                    <div class="dropdown-menu">
+                        <div  ng-show="id==ind" ng-class="ind{{ind}}">
+                            <div ng-repeat="data in subMenuItems" class="displayContent">
+                                <a href="" class = "decoration" ng-click="redirect($index, data.name)">
+                                    {{data.name | translate}}</a>
+                            </div> 
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </div>  
+</nav>

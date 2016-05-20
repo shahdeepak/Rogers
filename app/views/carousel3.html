@@ -1,0 +1,206 @@
+<div class="container " style="padding-top:16px; padding-bottom:39px; width:100%">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Top Offers By Rogers:</h3> 
+            </div>
+            <div class="col-md-3">
+                
+                <!-- Controls -->
+                <div class="controls pull-right">
+                    <a class="left fa fa-chevron-left btn btn" href="/#/#carousel-example3"
+                        data-slide="prev">prev</a>
+                    <a class="right fa fa-chevron-right btn" href="/#/#carousel-example3"
+                            data-slide="next">next</a>
+                </div>
+            </div>
+        </div>
+        <div id="carousel-example3" class="carousel slide " data-ride="carousel">
+            
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="row">
+                      <div ng-repeat="item in productlist | limitTo:4">                          
+                        <div class="col-sm-3">
+                            <div class="col-item">
+                                <div class="info">
+                                    <div class="row">
+                                         <div class="price col-md-6" style=" padding-left: 15px;padding-right: 0px;">
+                                            <h5>{{item.productName}}</h5>
+                                            <h5 class="price-text-color">
+                                                {{item.productPrice}}
+                                            </h5>
+                                        </div>
+                                        <div class="rating  col-md-6">
+                                            <i class="price-text-color fa fa-star"></i>
+                                            <i class="price-text-color fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="photo">
+                                    <img src="{{item.imagePath}}" 
+                                         class="img-responsive" alt="a" />
+                                </div>
+                                <div class="info">
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <a href="" class="" ng-click="addProductToCart(product)">Add to cart</a>
+                                        </p>
+                                        <p class="btn-details">
+                                            <i class="fa fa-list"></i>
+                                            <a href="" class=""
+                                               ng-click="redirectToDetail()">
+                                                More details
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="row">
+                   <div ng-repeat="item in productlist" ng-if="$index > 4 && $index < 9">
+                    <div class="col-sm-3">
+                        <div class="col-item">
+                            <div class="info">
+                                <div class="row">
+                                   <div class="price col-md-6" style=" padding-left: 15px;padding-right: 0px;">
+                                        <h5>{{item.productName}}</h5>
+                                        <h5 class="price-text-color">
+                                            {{item.productPrice}}
+                                        </h5>
+                                    </div>
+                                    <div class="rating col-md-6">
+                                        <i class="price-text-color fa fa-star"></i>
+                                        <i class="price-text-color fa fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="photo">
+                                <img src="{{item.imagePath}}" 
+                                     class="img-responsive" alt="a" />
+                            </div>
+                            <div class="info">
+                                <div class="separator clear-left">
+                                    <p class="btn-add">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <a href="" class="" ng-click="addProductToCart(product)">Add to cart</a>
+                                    </p>
+                                    <p class="btn-details">
+                                        <i class="fa fa-list"></i>
+                                        <a href="" class=""
+                                           ng-click="redirectToDetail()">
+                                            More details
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>                     
+            </div>
+        </div>
+         <div class="item">
+            <div class="row">
+               <div ng-repeat="item in productlist" ng-if="$index > 8 && $index < 13">
+                <div class="col-sm-3">
+                    <div class="col-item">
+                        <div class="info">
+                            <div class="row">
+                                <div class="price col-md-6" style=" padding-left: 15px;padding-right: 0px;">
+                                    <h5>{{item.productName}}</h5>
+                                    <h5 class="price-text-color">
+                                        {{item.productPrice}}
+                                    </h5>
+                                </div>
+                                <div class="rating  col-md-6">
+                                    <i class="price-text-color fa fa-star"></i>
+                                    <i class="price-text-color fa fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="photo">
+                            <img src="{{item.imagePath}}" 
+                                 class="img-responsive" alt="a" />
+                        </div>
+                        <div class="info">
+                            <div class="separator clear-left">
+                                <p class="btn-add">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <a href="" class="" ng-click="addProductToCart(product)">Add to cart</a>
+                                </p>
+                                <p class="btn-details">
+                                    <i class="fa fa-list"></i>
+                                    <a href="" class=""
+                                       ng-click="redirectToDetail()">
+                                        More details
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="clearfix">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               </div>                     
+            </div>
+            </div>
+            <div class="item">
+                <div class="row">
+                   <div ng-repeat="item in productlist | limitTo:-(products.length-12)">
+                    <div class="col-sm-3">
+                        <div class="col-item">
+                            <div class="info">
+                                <div class="row">
+                                    <div class="price col-md-6" style=" padding-left: 15px;padding-right: 0px;">
+                                        <h5>{{item.productName}}</h5>
+                                        <h5 class="price-text-color">
+                                            {{item.productPrice}}</h5>
+                                    </div>
+                                    <div class="rating  col-md-6">
+                                        <i class="price-text-color fa fa-star"></i>
+                                        <i class="price-text-color fa fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="photo">
+                                <img src="{{item.imagePath}}" 
+                                     class="img-responsive" alt="a" />
+                            </div>
+                            <div class="info">
+                                <div class="separator clear-left">
+                                    <p class="btn-add">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <a href="" class="" ng-click="addProductToCart(product)">Add to cart</a>
+                                    </p>
+                                    <p class="btn-details">
+                                        <i class="fa fa-list"></i>
+                                        <a href="" class=""
+                                           ng-click="redirectToDetail()">
+                                            More details
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                     </div>                       
+                   </div>                     
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>

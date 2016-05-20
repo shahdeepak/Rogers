@@ -1,0 +1,17 @@
+[
+    {
+       
+        "minValue": "200",
+        "maxValue": "499"
+    },
+    {
+       
+        "minValue": "500",
+        "maxValue": "799"
+    },
+    {
+      
+        "minValue": "800",
+        "maxValue": "999"
+    }
+]

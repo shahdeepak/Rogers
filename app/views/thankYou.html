@@ -1,0 +1,88 @@
+<!--Script to disable back buttton-->
+<!--<script>
+var history_api = typeof history.pushState !== 'undefined';
+// history.pushState must be called out side of AngularJS Code
+if ( history_api ) history.pushState(null, '', '#StayHere');
+</script>-->
+<!--<script type = "text/javascript" >
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>-->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="panel panel-success">
+            <div class="panel panel-heading"><strong>Thank You ! Your order has been placed successfully.</strong></div>
+            <div class="panel panel-body">
+                <p class="form-static">
+                    Your Order number is :&nbsp;&nbsp; <b>{{referenceNumber}}</b>&nbsp;&nbsp;
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row hidden-xs hidden-sm visible-md visible-lg">
+        <div class="panel panel-success">
+            <div class="panel panel-heading">
+                <strong>Order Table</strong>&nbsp;
+                <span style="float:right;">
+                    <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                </span>
+            </div>
+            <div class="panel panel-body">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>#Sl no.</th>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Price(per item)</th>
+                            <th>Cart subtotal(Qty.*Price)</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="data in cartItemList">
+                        <tr>
+                            <th scope="row">{{$index + 1}}</th>
+                            <td>{{data.productDetails.productName}}</td>
+                            <td>{{data.productDetails.Quantity}}</td>
+                            <td>{{data.productDetails.price | currency}}</td>
+                            <td>{{data.productDetails.Quantity * data.productDetails.price | currency}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="table-lable">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row" class="table-td">Sum Total Price:</th>
+                        <th scope="row" >{{sumTotal | currency}}</th>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row visible-xs visible-sm hidden-md hidden-lg">
+        <div class="panel panel-success">
+            <div class="panel panel-heading">
+                <strong>Cart Items</strong>&nbsp;({{totalCart}})
+                <div>
+                    <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                </div>
+            </div>
+            <div class="panel panel-body">
+                <div class="col-xs-12 col-sm-12 col-md-12 panel panel-primary"
+                     ng-repeat="data in cartItemList" >
+                    <dl class="dl-horizontal">
+                        <dt>Item Name</dt>
+                        <dd>{{data.productDetails.productName}}</dd>
+                        <dt>Quantity</dt>
+                        <dd>{{data.productDetails.Quantity}}</dd>
+                        <dt>Price</dt>
+                        <dd>{{data.productDetails.Quantity * data.productDetails.price | currency}}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

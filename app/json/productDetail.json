@@ -1,0 +1,36 @@
+[
+    {
+        "productName": "Iphone:",
+        "productPrice": "$160",
+        "productType": "Handset",
+        "productDetails": " IPhone provies best calling facility",
+        "imgs": [
+            {
+                "url": "images/front_image.jpg"
+            },
+            {
+                "url": "images/side-left.jpg"
+            },
+            {
+                "url": "images/side-right.jpeg"
+            },
+            {
+                "url": "images/back-view.jpeg"
+            } ],
+        "phoneDetails": [
+            {
+                "name": "Phone Details",
+                "details": "camera : Primary(13MP)/Secondary(5MP), warrenty:repair,"
+            },
+            {
+                "name": "offer Details",
+                "details": "15% off on buy more than 15000"
+            },
+            {
+                "name": "Seller",
+                "details": "seller:mobile Bazar"
+            }
+            
+        ]
+    }
+]

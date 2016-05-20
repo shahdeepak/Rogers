@@ -1,0 +1,178 @@
+<div class="container-fluid bgcolor">
+    <div class="row">
+        <div class="hidden-xs hidden-sm absolute-wrapper-pro m50">
+            <div class="big-wrapper-pro">
+                <div class="bigContainer-pro">
+                    <div class="img-display-con">
+                        <ul class="">
+                            <div class="fixed-height">
+                                <li ng-repeat="data in imgs">
+                                    <a href="" ng-click="showImage(data.url)">
+                                    <img class="other-img" 
+                                         src="{{data.url}}">
+                                    </a>
+                                </li> 
+                            </div>
+                                <div class="upDownArr"></div>
+                            </ul>
+                            <ul class="img-dis">
+                                <center>
+                                    <li><img alt="samsung note" src="{{imagesrc}}"></li>
+                                </center>
+                            </ul>
+                        </div>
+                        <div class="img-description">
+                            <h1 class="itemName dotted-border">
+                                {{product.productName}}
+                            </h1>
+                            <div class="writeReview dotted-border">
+                                <div class="desc dotted-border">
+                                    <ul>
+                                        <li><span>{{product.productType}}</span></li>
+                                        <li><span>{{product.productDetails}}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="size dotted-border">
+                                    <span class="red">Only 1 left in stock</span>
+                                </div>
+                                <div class="buyBar">
+                                  <div>  <a href="" 
+                                        class="btn btn-success" 
+                                            ng-click="addProductToCart(product)">
+                                          <span><b >Add to cart</b>
+                                                <img src="images/shop.png" class="img-circle">
+                                        </span>
+                                                
+                                    </a>
+                                      </div>
+                                    <div class="effPric fl">
+                                        Effective Price
+                                        <span>
+                                            {{product.productPrice|currency}}
+                                        </span>
+                                        <span class="cash">
+                                            after cashback
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="offer-available dotted-border">
+                                    <h2>Offers Available
+                                        <span class="promoApplied">
+                                            (Promo code can be applied from the Cart )
+                                        </span>
+                                    </h2>
+                                    <div class="offer-cont">
+                                        <!--<span>OFFER ONE</span>
+                                        <span>OFFER TWO</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="bigContainer-pro">
+                        <h3>Also available from 1 more Sellers</h3>
+                        <div class="dotted-border">
+                            <span class="height-200 height-100">
+                                <ul class="dotted-border">
+                                    <li class="sellCont inlineAllign">Mobile Bazar</li>
+                                    <li class="inlineAllign">
+                                        <ul class="rela">
+                                            
+                                                <!--<uib-rating ng-model="rate" max="max" 
+                                                            read-only="isReadonly" 
+                                                            on-hover="hoveringOver(value)" 
+                                                            on-leave="overStar = null" 
+                                                            titles="['one', 'two', 'three']" 
+                                                            aria-labelledby="default-rating">
+                                                <i ng-repeat-end="" ng-mouseenter="enter($index + 1)" 
+                                               ng-click="rate($index + 1)" 
+                                               class="glyphicon ng-scope glyphicon-star-empty" 
+                                               ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')" 
+                                               ng-attr-title="{{r.title}}" 
+                                               title="10">
+                                                </i>
+                                                </uib-rating>
+                                            
+                                                 <span class="label" 
+                                                       ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" 
+                                                       ng-show="overStar && !isReadonly">
+                                                     {{percent}}%
+                                                </span>-->
+                                            
+                                            <span class="inlineAllign">3.4 /5 (34 ratings)</span>
+                                        </ul>
+                                    </li>
+                                    <li class="price inlineAllign">31000/-</li>
+                                    <div class="inlineAllign allignRight buttonView">
+                                        <a href="">View more</a>
+                                    </div>
+                                </ul>
+                                <ul class="dotted-border">
+                                    <li class="sellCont inlineAllign">Mobile Bazar</li>
+                                    <li class="inlineAllign">
+                                        <ul class="rela">                                        
+                                            <li class="inlineAllign">
+                                                <a href="">
+                                                    <img src="images/high_rating.png">
+                                                </a>
+                                            </li>
+                                            <li class="inlineAllign">
+                                                <a href="">
+                                                    <img src="images/high_rating.png">
+                                                </a>
+                                            </li>
+                                            <li class="inlineAllign">
+                                                <a href="">
+                                                    <img src="images/high_rating.png">
+                                                </a>
+                                            </li>
+                                            <li class="inlineAllign">
+                                                <a href="">
+                                                    <img src="images/Medium_rating.png">
+                                                </a>
+                                            </li>
+                                            <li class="inlineAllign">
+                                                <a href="">
+                                                    <img src="images/Low_rating.png">
+                                                </a>
+                                            </li>
+                                            <span class="inlineAllign"> 3.4 /5 (34 ratings)</span>
+                                        </ul>
+                                    </li>
+                                    <li class="price inlineAllign">31000/-</li>
+                                    <div class="inlineAllign allignRight buttonView">
+                                        <a href="">View more</a>
+                                    </div>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                <div class="bigContainer-pro"><h3>Details</h3>
+                        <dl class="dotted-border" ng-repeat="data in features">
+                            <dt>{{data.name}}</dt>
+                            <dd class="dotted-border inlineAllign">{{data.details}}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="small-wrapper-pro">
+                    <div class="smallContainer-pro">
+                         <p class="bg-warning" style="padding:3px;">
+                             <strong>Apple iPhone 7 and iPhone 7 Plus</strong></p>
+                         <img src="images/iphone_7.jpg" alt="iphone" class="img-rounded">
+                    </div>
+                    <div class="smallContainer-pro">
+                       <p class="bg-warning" style="padding:3px;">
+                           <strong>Sony Xperia X</strong></p>
+                        <img src="images/sony_xperia.jpg" alt="sony" class="img-rounded">
+                    </div>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="visible-xs visible-sm">
+                <div data-ng-include="'./views/productMobileView.html'"></div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="panel panel-success">
+            <div class="panel panel-heading"><strong>Customer Feedback Form</strong></div>
+            <div class="panel panel-body">
+                    <form class="form-horizontal" ng-submit="customerFeedback(feedbackDetails)">
+                      <div class="form-group">
+                          <div class="col-sm-push-2 col-md-push-2
+                                      col-lg-push-2 col-sm-10 col-md-10 col-lg-5" >
+                              <span class="message"><b><i>{{message}}</i></b></span>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-sm-push-2 col-md-push-2 col-lg-push-2 col-sm-10 col-md-10 col-lg-5">
+                              <p class="form-control-static">
+                                  (<span class="red">*</span>)These fields are required
+                              </p>
+                              <h4>Your Feedback</h4>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Your Name<span class="red"></span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                          <input type="text" 
+                                 class="form-control" 
+                                 placeholder="Enter name" 
+                                 ng-model="feedbackDetails.name" required/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Your Email
+                            <span class="red"></span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                          <input type="email" 
+                                 class="form-control" 
+                                 placeholder="Enter email" 
+                                 ng-model="feedbackDetails.email" required/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Your Feedback<span class="red">*</span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                          <textarea class="form-control" rows="3" ng-model="feedbackDetails.feedback" required></textarea>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-2">
+                            <input type="submit" class="btn btn-danger form-control" value="SUBMIT"/>
+                        </div>
+                      </div>
+                </form>
+            </div>
+        </div>
+        
+        <!--<div class = "panel-group" id = "accordion">
+           <div class = "panel panel-default" ng-repeat="x in data">
+              <div class = "panel-heading">
+                 <h4 class = "panel-title">
+                    <a data-toggle = "collapse" data-parent = "#accordion" href = "{{ '/#/#collapseOne' + $index }}">
+                       Click me to expand. Click me again to collapse.Section 1
+                    </a>
+                 </h4>
+              </div>
+              <div id = "{{ 'collapseOne' + $index }}" class = "panel-collapse collapse in">
+                 <div class = "panel-body">
+                    {{x.Description}}
+                 </div>
+              </div>
+
+           </div>
+        </div>-->
+        <accordian data='list'></accordian>
+        <!--<div accordian data='list'></div>-->
+    </div>
+</div>

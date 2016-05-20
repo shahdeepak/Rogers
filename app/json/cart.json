@@ -1,0 +1,118 @@
+[
+    {
+		"pid":1,
+		"Brand":"Nokia",
+		"ProductDetail":[
+                {
+                    "id":1,
+                    "productName": "Lumia 730",
+                    "productPrice":"200",
+                    "productType":"Handset",
+                    "imagePath":"images/Phone-Imges/nokia-lumia-730.jpg", 
+                    "productDetails":" Lumia 730 provies best calling facility"
+                },
+                {
+                    "id":2,
+                    "productName": "Lumia 735",
+                    "productPrice":"500",
+                    "productType":"Handset",
+                    "imagePath":"images/Phone-Imges/nokia-lumia-735.jpg", 
+                    "productDetails":" Lumia 735 provies best calling facility"
+                },
+                {
+                    "id":3,
+                    "productName": "Lumia 520",
+                    "productPrice":"800",
+                    "productType":"Handset",
+                    "imagePath":"images/Phone-Imges/nokia-lumia-520.jpg", 
+                    "productDetails":" Lumia 520 provies best calling facility"
+                },
+                {
+                    "id":4,
+                    "productName": "nokia-lumia-928-black",
+                    "productPrice":"700",
+                    "productType":"Handset",
+                    "imagePath":"images/Phone-Imges/nokia-lumia-928-black.jpg", 
+                    "productDetails":" nokia-lumia-928-black provies best calling facility"
+                }
+		]
+	},
+	{
+		"pid":2,
+		"Brand":"Samsung",
+		"ProductDetail":[
+                    {
+                        "id":1,
+                        "productName": "samsung-galaxy-a9",
+                        "productPrice":"400",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/samsung-galaxy-a9.jpg", 
+                        "productDetails":"samsung-galaxy-a9 provies best calling facility"
+                    },
+                    {
+                        "id":2,
+                        "productName": "samsung-galaxy-a5",
+                        "productPrice":"500",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/samsung-galaxy-a5.jpg", 
+                        "productDetails":" samsung-galaxy-a5 provies best calling facility"
+                    },
+                    {
+                        "id":3,
+                        "productName": "samsung-galaxy-a7",
+                        "productPrice":"800",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/samsung-galaxy-a7.jpg", 
+                        "productDetails":"samsung-galaxy-a7 provies best calling facility"
+                    },
+                    {
+                        "id":4,
+                        "productName": "samsung-galaxy-s6-edge-plus",
+                        "productPrice":"600",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/samsung-galaxy-s6-edge-plus.jpg", 
+                        "productDetails":"samsung-galaxy-a7 provies best calling facility"
+                    }
+		      ]
+	},
+    {
+		"pid":3,
+		"Brand":"Micromax",
+		"ProductDetail":[
+                    {
+                        "id":1,
+                        "productName": "micromax-canvas-6",
+                        "productPrice":"400",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/micromax-canvas-6.jpg", 
+                        "productDetails":"micromax-canvas-6 provies best calling facility"
+                    },
+                    {
+                        "id":2,
+                        "productName": "micromax-canvas-juice-3",
+                        "productPrice":"200",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/micromax-canvas-juice-3.jpg", 
+                        "productDetails":"micromax-canvas-juice-3 provies best calling facility"
+                    },
+                    {
+                        "id":3,
+                        "productName": "micromax-canvas-play-4g",
+                        "productPrice":"900",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/micromax-canvas-play-4g.jpg", 
+                        "productDetails":"micromax-canvas-play-4g provies best calling facility"
+                    },
+                    {
+                        "id":4,
+                        "productName": "micromax-canvas-knight-2",
+                        "productPrice":"600",
+                        "productType":"Handset",
+                        "imagePath":"images/Phone-Imges/micromax-canvas-knight-2.jpg", 
+                        "productDetails":"micromax-canvas-knight-2 provies best calling facility"
+                    }
+		      ]
+	   }
+	
+
+ ]

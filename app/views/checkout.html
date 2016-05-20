@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="hidden-xs hidden-sm col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-success">
+                <div class="panel panel-heading">
+                    <strong>Cart Items</strong>&nbsp;({{totalCart}})
+                    <span style="float:right;">
+                        <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                    </span>
+                </div>
+                <div class="panel panel-body">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>#Sl no.</th>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Price(per item)</th>
+                                <th>Cart subtotal(Qty.*Price)</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="data in cartItemList">
+                            <tr>
+                                <th scope="row">{{$index + 1}}</th>
+                                <td>{{data.productDetails.productName}}</td>
+                                <td>{{data.productDetails.Quantity}}</td>
+                                <td>{{data.productDetails.price | currency}}</td>
+                                <td>{{data.productDetails.Quantity * data.productDetails.price | currency}}</td>
+                                <td style="cursor:pointer;">
+                                    <img src="images/blk_Trash.png" ng-click="removeItem(data)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="table-lable">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th scope="row" class="table-td">Sum Total Price:</th>
+                            <th scope="row" >{{sumTotal | currency}}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="hidden-md hidden-lg">
+            <div class="panel panel-success">
+                <div class="panel panel-heading">
+                    <strong>Cart Items</strong>&nbsp;({{totalCart}})
+                    <div>
+                        <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                    </div>
+                </div>
+                <div class="panel panel-body">
+                    <div class="col-xs-12 col-sm-12 col-md-12 panel panel-primary" ng-repeat="data in cartItemList" >
+                        <dl class="dl-horizontal">
+                            <dt>Item Name</dt>
+                            <dd>{{data.productDetails.productName}}</dd>
+                            <dt>Quantity</dt>
+                            <!--<dd><input type="text" 
+                                       value="{{data.productDetails.Quantity}}" 
+                                       ng-blur="addCart(data)"/>
+                            </dd>-->
+                            <dd>{{data.productDetails.Quantity}}</dd>
+                            <dt>Price</dt>
+                            <dd>{{data.productDetails.Quantity * data.productDetails.price | currency}}</dd>
+                        </dl>
+                        <hr>
+                        <dl class="dl-horizontal" style="text-align:center;cursor:pointer;">
+                            <img src="images/blk_Trash.png" ng-click="removeItem(data)"/>
+                        </dl>
+                    </div>
+                </div>
+                <hr>
+                <input type="button" class="btn btn-danger btn-block active" 
+                   role="button" ng-click="confirmOrder()"
+                   ng-disabled="disable" value="CHECKOUT" />
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="hidden-xs hidden-sm visible-md visible-lg col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <input type="button" class="btn btn-danger btn-sm active" 
+               role="button" ng-click="confirmOrder()"
+               ng-disabled="disable"
+               style="float:right;"
+               value="CHECKOUT"/>
+        </div>
+    </div>
+</div>

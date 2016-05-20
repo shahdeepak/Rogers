@@ -1,0 +1,47 @@
+<!--Created by Anurati:16/5/2016 -->
+<!--Button control for pagination-->
+<div style="float:right;"> <button type="button" 
+                         class="btn btn-success" 
+                         ng-disabled="curPage == 0"
+                        ng-click="curPage=curPage-1"
+                        style= "padding-top:0px;
+                                padding-bottom:0px"> &lt; PREV
+                    </button>
+                    <button type="button" class="btn btn-success"
+                     ng-disabled="curPage >= productItem.length/pageSize - 1"
+                     ng-click="curPage = curPage+1"
+                      style= "padding-top:0px;
+                                padding-bottom:0px">NEXT &gt;
+                    </button>
+                    </div>
+<!--Calling Value from backend-->
+<div class="panel panel-body">
+    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>PRODUCT NAME</th>
+                                <th>QUANTITY</th>
+                                <th>PRICE</th>
+                                <th>TOTAL</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="data in detailOfPurchaseTable | pagination: 
+               curPage * pageSize | limitTo: pageSize">
+                            <tr>
+                                <td>{{data.productDetails.productName}}</td>
+                                <td>{{data.productDetails.Quantity}}</td>
+                                <td>{{data.productDetails.price | currency}}</td>
+                                <td>{{data.productDetails.Quantity * data.productDetails.price | currency}}</td>
+                                <td> <!--<p style="color:green;"> SUBMITTED</p>-->
+                                  <select>
+                                     <option value="submitted">SUBMITTED</option>
+                                     <option value="complete">COMPLETE</option>
+                                     <option value="onhold">DISPATCHED</option>
+                                     <option value="inprogress">IN-PROGRESS</option>
+                                  </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>

@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <!-- Modal -->
+  
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel panel-heading"><strong>Give your card details</strong></div>
+            <div class="panel panel-body">
+                <form class="form-horizontal" ng-submit="submitCardDetails(card)">
+                      <div class="form-group">
+                          <div class="col-sm-push-2 col-md-push-2
+                                      col-lg-push-2 col-sm-10 col-md-10 col-lg-5" >
+                              <span class="message" style="color:red;"><strong>{{message}}</strong></span>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-sm-push-2 col-md-push-2 col-lg-push-2 col-sm-10 col-md-10 col-lg-5">
+                              <p class="form-control-static">
+                                  (<span class="red">*</span>)These fields are required
+                              </p>
+                             <!-- <h4>Card Information</h4>-->
+                              <img src="images/visa-card.png"/>
+                              <img src="images/master-card.png"/>
+                              <img src="images/amex-card.png"/>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Name on Card
+                            <span class="red">*</span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                          <input type="text" 
+                                 class="form-control" 
+                                 placeholder="Enter name"
+                                 ng-model="card.name"
+                                 only-alphabets required/>
+                                 
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Card Number<span class="red">*</span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                          <input type="text" 
+                                 class="form-control" 
+                                 placeholder="Enter number" 
+                                 minlength="16"
+                                 maxlength="16"
+                                 title="CVV should be 16 digit"
+                                 is-number
+                                 ng-model="card.number" required/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            CVV Number<span class="red">*</span>
+                          </label>
+                        <div class="col-sm-10 col-md-10 col-lg-5">
+                          <input type="text" 
+                                 class="form-control" 
+                                 placeholder="Enter cvv" 
+                                 minlength="3"
+                                 maxlength="3"
+                                 title="CVV should be 3 digit"
+                                 is-number
+                                 ng-model="card.cvv" required/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">
+                            Expiry Date<span class="red">*</span>
+                          </label>
+                        <div class="col-sm-5 col-md-5 col-lg-2">
+                            <select ng-model="card.month" ng-options="opt.value for opt in monthList">
+                                <option value="">Month</option>
+                            </select>
+                            <select ng-model="card.year" ng-options="item.value for item in yearList">
+                                <option value="">Year</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-2">
+                            <input type="submit" 
+                                   class="btn btn-success form-control" 
+                                   value="Pay Now"/>
+                        </div>
+                      </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

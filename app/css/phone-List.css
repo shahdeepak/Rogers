@@ -1,0 +1,34 @@
+#iFrame {
+    background-color: yellow !important;
+        
+width:"599" !important;
+height:"280" !important;
+}
+.carouselImg1 {
+   /*width: 1300px;*/
+    height: 400px !important; 
+}
+.carouselImg2 {
+   /*width: 1300px;*/
+    height: 400px !important; 
+}
+.carouselImg3 {
+   /*width: 1300px;*/
+    height: 400px !important; 
+}
+.carousel2Img1 {
+    width:600px;
+    height: 280px !important
+}
+.carousel2Img2 {
+    width:600px;
+    height: 280px !important
+}
+.carousel2Img3 {
+    width:600px;
+    height: 280px !important
+}
+.carousel2Img4 {
+    width:600px;
+    height: 280px !important
+}

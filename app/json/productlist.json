@@ -1,0 +1,114 @@
+ [
+            {
+                "productName": "Dell Printer:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" IPhone provies best calling facility"
+            },
+            {
+                "productName": "Inspiron Printer:",
+                 "productPrice":"$120",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" IPhone6S provies best vCall facility"
+            },
+            {
+                "productName": "HP Printer:",
+               "productPrice":"$250",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Iphone6s+ provies best camera quality"
+            },
+            {
+                "productName": "Asus Printer:",
+                 "productPrice":"$100",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Micromax provies best texting"
+            },
+            {
+                "productName": "Sony Printer:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" IPhone provies best phones"
+            },
+            {
+                "productName": "Intel Printer:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":"Sony C5 provies best calling facility"
+            },
+            {
+                "productName": "Dell New Printer:",
+                "productPrice":"$16",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Sony C5 Ultra provies best calling facility"
+            },
+            {
+                "productName": "HP +Printer :",
+                "productPrice":"$167",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Geomi provies best calling facility"
+            },
+            {
+                "productName": "LG Printer:",
+                "productPrice":"$75",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Samsung provies best calling facility"
+            },
+            {
+                "productName": "LG New Printer:",
+                 "productPrice":"$34",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Samsung Gold provies best calling facility"
+            },
+            {
+                "productName": "Sony ++ Printer:",
+                "productPrice":"$77",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Samsung Querty provies best calling facility"
+            },
+            {
+                "productName": "Asus New Printer:",
+                "productPrice":"$70",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Hp Slate 7 provies best calling facility"
+            },
+            {
+                "productName": "Asus I+ Printer:",
+                "productPrice":"$25",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Geomi I+ provies best calling facility"
+            },
+            {
+                "productName": "Geomi Laptops Printer:",
+                "productPrice":"$34",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Motorola Stone provies best sling feature"
+            },
+            {
+                "productName": "Xperia Laptops Printer:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Sony Xperia provies best chatting facility"
+            },
+            {
+                "productName": "Xperia Laptops++ Printer:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/printers.jpg", 
+                "productDetails":" Sony Xperia provies best chatting facility"
+            }
+        ]

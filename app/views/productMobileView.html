@@ -1,0 +1,40 @@
+<div class="mainContainer">
+    <center>
+        <div class="boxImage">
+            <img src="images/front_image.jpg" class="imageBox">
+            <div class="name">
+               {{product.productName}}
+            </div>
+            <a href="" 
+               class="btn btn-success"
+               ng-click="addProductToCart(product)">
+                <span><b >Add to cart</b>
+                    <img src="images/shop.png" class="img-circle">
+                </span>
+            </a>
+        </div>
+    </center>
+    <div class="panel panel-info">
+        <div class="panel-heading" data-toggle="collapse" 
+                 data-target="#collapse1" style="cursor:pointer"
+                 ng-click="showBar()">
+                <h4 style="display:inline-block">
+                    Features Details                   
+                </h4>
+                <span>
+                    <img src="{{imagesource}}" alt="icon" 
+                         style="display:inline-block;float:right;margin-top: 12px;">
+                </span>
+            </div>
+        <div id="collapse1" class="panel-collapse collapse">
+                <div>
+                <li ng-repeat="dataa in features"  
+                ng-init="ind = $index" 
+                ng-click="showDiv($index)">
+                <span data-toggle="tab" class="active"><b>{{dataa.name}}-</b>  {{dataa.details}}</span>
+                <hr>
+            </li>
+            </div>
+        </div>
+    </div>
+</div>

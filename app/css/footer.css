@@ -1,0 +1,16 @@
+.list{
+    background-image: url('../images/Full_background.jpg');
+    border: none;
+}
+.footer-font{
+    color: black;
+}
+.mT10{
+    margin-top: 13px;
+}
+.pL14{
+    padding-left: 14px;
+}
+.background{
+    background-image: url('../images/Full_background.jpg');
+}

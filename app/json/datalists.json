@@ -1,0 +1,114 @@
+ [
+            {
+                "productName": "Dell :",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" IPhone provies best calling facility"
+            },
+            {
+                "productName": "Inspiron:",
+                 "productPrice":"$120",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" IPhone6S provies best vCall facility"
+            },
+            {
+                "productName": "HP:",
+               "productPrice":"$250",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Iphone6s+ provies best camera quality"
+            },
+            {
+                "productName": "Asus:",
+                 "productPrice":"$100",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Micromax provies best texting"
+            },
+            {
+                "productName": "Sony:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" IPhone provies best phones"
+            },
+            {
+                "productName": "Intel:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":"Sony C5 provies best calling facility"
+            },
+            {
+                "productName": "Dell New:",
+                "productPrice":"$16",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Sony C5 Ultra provies best calling facility"
+            },
+            {
+                "productName": "HP +:",
+                "productPrice":"$167",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Geomi provies best calling facility"
+            },
+            {
+                "productName": "LG:",
+                "productPrice":"$75",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Samsung provies best calling facility"
+            },
+            {
+                "productName": "LG New:",
+                 "productPrice":"$34",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Samsung Gold provies best calling facility"
+            },
+            {
+                "productName": "Sony ++:",
+                "productPrice":"$77",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Samsung Querty provies best calling facility"
+            },
+            {
+                "productName": "Asus New:",
+                "productPrice":"$70",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Hp Slate 7 provies best calling facility"
+            },
+            {
+                "productName": "Asus I+:",
+                "productPrice":"$25",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Geomi I+ provies best calling facility"
+            },
+            {
+                "productName": "Geomi Laptops:",
+                "productPrice":"$34",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Motorola Stone provies best sling feature"
+            },
+            {
+                "productName": "Xperia Laptops:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Sony Xperia provies best chatting facility"
+            },
+            {
+                "productName": "Xperia Laptops++:",
+                "productPrice":"$160",
+                "productType":"Handset",
+                "imagePath":"images/lappy.png", 
+                "productDetails":" Sony Xperia provies best chatting facility"
+            }
+        ]

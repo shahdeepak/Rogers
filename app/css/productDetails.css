@@ -1,0 +1,213 @@
+.bgcolor{
+    background-color: #eee;
+    font-family: serif;
+}
+a{
+    text-decoration: none;
+}
+.absolute-wrapper-pro{
+    margin:auto -54px auto auto;
+    display:inline-block;
+}
+.big-wrapper-pro{
+    
+    float: left !important;
+}
+.small-wrapper-pro{
+    width: 214px;
+    height:539px;
+    float: right !important;
+}
+.bigContainer-pro{
+    border: 1px solid #DEEAEE;
+    background: none repeat scroll 0% 0% #FFF;
+    border-radius: 4px;
+    padding: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.img-display-con{
+        width: 460px;
+        float: left !important;
+        display: inline-block;
+}
+.img-description{
+    width: 480px;
+    float: right !important;
+}
+.img-display-con ul{
+    width: 53px;
+    list-style: none outside none;
+    padding-left: 0px;
+}
+.fixed-height {
+    height: 512px;
+    float: left !important;
+}
+.fixed-height li{
+    border: 1px solid #DEDEDE;
+    margin-bottom: 5px;
+}
+.fixed-height li:hover{
+    border: 1px solid #80bfff;
+}
+.upDownArr {
+    float: left !important;
+    width: 53px;
+    overflow: hidden;
+    text-align: center;
+}
+.img-dis{    
+    width: 380px !important;
+    display: block;
+    float: left !important;
+    margin-left: 60px;
+    margin-top: -500px;
+}
+.img-dis li{
+    cursor: crosshair;
+    max-height: 550px;
+    opacity: 1;
+    border: 1px solid #DEDEDE;
+    width: 370px;
+}
+.other-img{
+    width: 52px;
+    height: 92px;
+}
+.dotted-border{
+   border-bottom: 1px dotted #DEDEDE; 
+   padding-bottom: 5px;
+}
+.itemName{
+    color: #000;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0px 0px 10px;
+    margin-bottom: 10px;
+}
+.red{
+    color: #D0021B !important;
+}
+.size{
+    width: 480;
+    height: 22px;
+    padding: 3px;
+}
+.buyBar{
+    float: left !important;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    
+}
+.font{
+    font-size: 18px;
+}
+.md-button {
+    background: none repeat scroll 0% 0% #FF4200;
+    box-shadow: none !important;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 16px;
+    width: 265px;
+    padding: 7px 10px 0px 20px;
+    text-align: left;
+    text-transform: none;
+    margin-left: 0px !important;
+    line-height: 1.6 !important;
+    box-sizing: border-box;
+    -moz-user-select: none;
+    position: relative;
+    outline: 0px none;
+    border: 0px none;
+    display: inline-block;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-style: inherit;
+    font-variant: inherit;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s, background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+}
+.fl {
+    float: left !important;
+}
+.md-button:hover {
+   background: none repeat scroll 0% 0% #cc2900;
+}
+.effPric {
+    color: #828282;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: left;
+    padding: 13px 0px 17px 6px;
+}
+.effPric span {
+    font-weight: 800;
+    padding: 0px 0px 0px 7px;
+}
+.cash {
+    display: block;
+    padding-left: 0px !important;
+    font-weight: 400;
+}
+.strike{
+    text-decoration: line-through;
+}
+.smallContainer-pro{
+    background-color: white;
+    height: 400px;
+    width: 300px;
+    margin-left: 3px;
+    margin-top: 5px;
+    padding: 10px;
+    position: relative;
+    float: left;
+}
+.offer-cont {
+    overflow: hidden;
+    border: 1px solid #F5A623;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.height-100 {
+    height: 100px;
+}
+.width-100{
+    width: 100px;
+}
+.sellCont {
+    width: 180px;
+    float: left !important;
+    margin: 0px 10px 0px 0px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.rela{
+    padding-top: 2px;
+}
+.inlineAllign{
+    display: inline-block;
+}
+.price{
+    padding-left: 100px;
+}
+.allignRight{
+    float: right;
+}
+.buttonView{
+    border: 1px solid lightblue;
+    border-radius: 5px;
+    color: lightblue;
+    padding: 3px;
+    
+}
+.m50{
+    margin-left: 50px;
+}
+

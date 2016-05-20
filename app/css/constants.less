@@ -1,0 +1,454 @@
+/**
+ *	constants.less
+ *  Contains all the constants which are used throughout.
+ */
+
+/* FONTS  */
+@font-face {
+  font-family: "Lato-Regular";
+  src: url('../font/Lato-Regular.ttf');
+  src: local('../font/Lato-Regular.ttf'), url('../font/Lato-Regular.ttf') format("truetype")
+}
+@font-face {
+  font-family: "Lato-Bold";
+  src: url('../font/Lato-Bold.ttf');
+  src: local('../font/Lato-Bold.ttf'), url('../font/Lato-Bold.ttf') format("truetype")
+}
+@font-face {
+  font-family: "Lato-Semibold";
+  src: url('../font/Lato-Semibold.ttf');
+  src: local('../font/Lato-Semibold.ttf'), url('../font/Lato-Semibold.ttf') format("truetype")
+}
+
+/*  Positions */
+@bg-left-top-pos: top left;
+@bg-cen-cen-pos: center center;
+
+/*  Fonts */
+@font: "Lato-Regular";
+@font-semibold: "Lato-Semibold";
+@font-bold: "Lato-Bold";
+
+@ft-head: 54px;
+//54pt;
+@ft-med: 34px;
+//34pt;
+@ft-sma: 30px;
+//30pt;
+@ft-subl: 18px;
+//18pt;
+@ft-body: 14px;
+//14pt;
+@ft-sma-body: 12px;
+//12pt;
+@ft-heading: 24px;
+//font weight bold
+@font-setting-channelfont: 15px;
+
+/* Global Colors */
+@global-app-background: @background-image no-repeat fixed;
+@color-base: #B6C5CF;
+@global-font-color: #000;
+@spinner-font-color: #fff;
+// text color
+@color-blue-hover: #58AABD;
+@color-link: #01838c;
+// Link color
+@color-link-hover: #4ED8F3;
+@color-font-hover: #ECECEC;
+@color-font-grey: #B8B8B8;
+@color-font-darkGrey : #7C7B7B;
+@color-transparent: transparent;
+// Used for font Size greater than 18
+@color-background-gradient-start: #656262;
+@color-background-gradient-end: #575454;
+@color-background-hover: #3F3B3D;
+/** Badges **/
+@color-badge: #23839A;
+@color-badge-positive: #70A000; // positive badge
+@color-badge-negative: #FCCE55; // positive badge
+@background-color-ff9: #ff9;
+@profile-error-code-color:#F00;
+
+@cursor : pointer;
+
+/*z-index*/
+@z-index-10: 10;
+@z-index-20: 20;
+@z-index-30: 30;
+@z-index-1000: 1000 !important;
+@z-index-999: 999;
+
+/*width*/
+@epg-container: 1125px;
+
+/*list style*/
+@list-style: none;
+
+/*text decoration*/
+@text-transform: uppercase;
+
+/* Gradient */
+.gradient (@origin: left, @start: #fff, @stop: #000) {
+  background-color: @start;
+  background-image: -webkit-linear-gradient(@origin, @start, @stop);
+  background-image: -moz-linear-gradient(@origin, @start, @stop);
+  background-image: -o-linear-gradient(@origin, @start, @stop);
+  background-image: -ms-linear-gradient(@origin, @start, @stop);
+  background-image: linear-gradient(@origin, @start, @stop);
+}
+
+/* Box Shadow */
+.box-shadow (@x: 2px, @y: 2px, @blur: 4px, @alpha: 1) {
+  -webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  -moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  -ms-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  -o-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
+//animation
+/** Loading animation **/
+.loading-mix(@agent:-webkit,@start:0deg,@end:360deg) {
+  from {
+    @agent-transform: rotate(@start);
+    transform: rotate(@start);
+  }
+  to {
+    @agent-transform: rotate(@end);
+    transform: rotate(@end);
+  }
+}
+
+/***** animation mixin *****/
+.animate-mix(@key:'',@time:1s,@loop) {
+  -webkit-animation: @key @time @loop;
+  -moz-animation: @key @time @loop;
+  -o-animation: @key @time @loop;
+  -ms-animation: @key @time @loop;
+  animation: @key @time @loop;
+}
+
+.transition-mix(@key:'',@time:1s,@loop) {
+  -webkit-transition: @key @time @loop;
+  -moz-transition: @key @time @loop;
+  -o-transition: @key @time @loop;
+  transition: @key @time @loop;
+}
+
+.border-radius(@ele:0) {
+  -webkit-border-radius: @ele;
+  -moz-border-radius: @ele;
+  -o-border-radius: @ele;
+  -ms-border-radius: @ele;
+  border-radius: @ele;
+}
+
+//box sizing
+.box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+//height and width 100%
+.wdth-ht-100 {
+  width: 100%;
+  height: 100%;
+}
+
+//height and width 0
+.wdth-ht-0 {
+  width: 0;
+  height: 0;
+}
+
+//overflow x and y common
+.overflow-Com {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/***************************************Popup Constants*******************************************************************/
+
+/*emrgency popup*/
+
+/*block channel popup*/
+@color-edit-lock-chnl: @modal-alert-bg;
+@color-block-chnl-container: @modal-alert-bg;
+@color-show-blk-cont : #fff;
+@clr-block-btn-color:#fff;
+@color-block-btn-color: @modal-alert-font-color;
+@color-block-btn-bg: @Popup-active-button-state;
+@color-block-btn-margin-active: @Popup-active-button-state;
+@color-block-input-type-btn: #abb5b7;
+@color-block-btn-margin-clr: @color-transparent;
+@color-block-chnl-container: rgba(0, 0, 0, 0.7);
+@color-block-btn-bg: @Popup-active-button-state;
+@color-block-btn-margin-active: @Popup-active-button-state;
+@color-block-btn-margin-clr: #9c989d;
+@profile-save-color: #fff;
+@profile-cancel-btn-bg: #fff;
+@font-size-btn: @ft-body;
+@ft-block-channel-popup-header:1.18rem;
+
+/*popupParentalCtrl*/
+@popup-parental-bgclr: rgba(179, 179, 179, 0.08);
+@popup-parental-options-bg: #fffce7;
+@modal-alert-bg: #D0EAF0;
+@modal-alert-header-bg: #D0EAF0;
+@modal-alert-font-color: #5B6770;
+@modal-alert-body-font-color: @modal-alert-font-color;
+@modal-pin-bg: @modal-alert-bg;
+@modal-secodary-button-font-color: @modal-alert-body-font-color;
+@Popup-secondary-button-bg: #fff;
+@modal-primary-button-font-color: #fff;
+
+/*Globally usedBlue color used for showing active state of popup button*/
+@Popup-active-button-state: #01838C;
+@primary-button-hover: #66CDCC;
+
+/*High emrgency popup constants*/
+@popup-high-emergency-bg :#B70B0B;
+@modal-high-emergency-button-font-color: #5A6670;
+
+/*Transitory popups L3 level*/
+@popup-transitory-bg : #5b6770;
+@popup-transitory-font-color: #fff;
+@popup-transitory-btn-hover: #fff;
+@popup-transitory-font-hove-color: #4ab9d6;
+@popup-transitory-border-color: #fff;
+@popup-transitory-bg: #5b6770;
+@purchase-popup-btn-font-color: #fff;
+
+/*pin popup*/
+@popup-border-color : #fff;
+@password-pin-input: @Popup-active-button-state;
+@Popup-pin-digit-border: @modal-alert-body-font-color;
+
+/*Purchase popup*/
+@Purchase-popup-view-bg: @modal-alert-bg;
+@font-purchase-popup-title:28px;
+@purchase-popup-title-color:#5b6770;
+@purchase-popup-border-color:#fff;
+@font-purchase-popup-data:16px;
+@purchase-poup-btn-bg:#01838c;
+@purchase-popup-btn-color:#fff;
+
+/*Profile popup*/
+@ft-add-profile-header:1.55rem;
+@profile-bg-color: @modal-alert-bg;
+@para-font-color: @modal-alert-font-color;
+@profile-input-bg: @color-transparent;
+@profile-input-font-color: @modal-alert-font-color;
+@popup-create-pinbtn-bg: #fff;
+@popup-create-pinbtn-color: @modal-alert-font-color;
+@popup-profile-footer-bg: @modal-alert-bg;
+@popup-profile-header-bg: @modal-alert-bg;
+@popupFooter-bg: @modal-alert-bg;
+@profile-line-break: #9c989d;
+
+@ft-alert-header:1.1rem;
+
+//---------------landing page constants------------------------
+@color-badge-live: #127d0a;
+@color-badge-on-now: #21db13;
+@color-badge-on-soon: #00d4ff;
+@color-badge-rent: #ff5b0a;
+@color-badge-subscribe: #ff1cb2;
+@color-global-title: #fff;
+@color-global-title-2x1: #5b6770;
+@color-global-desc: #a4a9ab;
+@color-undo-delete: #3cb7d7;
+@color-global-background: rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5);
+@font-global-desc: 14px;
+@font-badge: 15px;
+@color-bg-2x2tile: #FFFCE7;
+
+//---------------header/footer page constants------------------------
+@color-header-font: @global-font-color;
+@color-bg-header-primary-menu :#FFE600;
+@font-header-size: 16px;
+@color-bg-footer: #fff;
+@color-footer-font: #5B6770;
+@opacity-header: 0.9;
+@opacity-footer: 0.8;
+@font-footer-size: 12px;
+@color-bg-globalHeaderLogo: #444040;
+@color-bg-subMenu: #5b6770;
+@color-subMenu-font: @global-font-color;
+@font-subMenu: 12px;
+@color-menuItem-active: #5b6770;
+@color-subMenu-activeBorder: #cf1034;
+@ft-color-footer-copyright: @global-font-color;
+@save-Bubblecolor: #00AAA1;
+@global-header-Logo: @icon-Fido-logo;
+@global-logWidth: 110px;
+@rentBub_left: 104px;
+@recordBub_left: 130px;
+
+//---------------Item Details page constants------------------------
+@color-bg-itm-lfContainer: #fff;
+@color-topBar-itm-subscribe: #ff7200;
+@color-topBar-itm-live: #ffe600;
+@color-itm-playerBg: #000;
+@color-itm-badge: #ff7200;
+@color-itm-title: @global-font-color;
+@color-itm-relYear: #5b6770;
+@color-itm-desc: @global-font-color;
+@color-itm-castcrewTitle: #5b6770;
+@color-itm-castName-bg: #FDFBE6;     //constant for cast and crew box
+@color-itm-castName: #efefed;     //constant for cast and crew box
+@font-itm-castName: 16px;       //constant for cast and crew box
+@color-itm-moreLike-title: #6e7a83;  //constant for more like this title tile ie name of movie
+@color-itm-btnBorder: #E5F2F8;
+@color-itm-btnHover: #66CDCC;//rgb(102,205,204);
+@color-itm-font-onHover: #01838C;
+@color-bg-btn--itemDeatil-hover:rgba(255, 255, 255, 100%);
+@color-itm-btnBorderHover: #E5F2F8;
+@color-itm-alsoAvaiTitle: #000;
+@font-itm-alsoAvaiTitle: 19px;
+@font-itm-alsoAvai-innerTitle: 17px;
+@font-itm-alsoAvai-innerSub: 13px;
+@color-itm-alsAvai-bg: #D2ECF1;
+@color-bg-itemDetail: #D2ECF1;
+
+//---------------ltv Item Details page constants------------------------
+@color-ltvitm-badge: #FFC600;
+
+//setting section
+@bg-setting-section: rgba(154, 189, 203, 0.3);
+@bg-setting-section-selected: rgba(152, 216, 256, 0.6);
+@bg-setting-block: #263035;
+@color-setting-font: @modal-alert-font-color;
+@bg-setting-overlay: rgba(0, 0, 0, 0.3);
+@setting-list-font-color: @modal-alert-font-color;
+@setting-btn-font-color: #fff;
+@setting-btn-bg: #000;
+@setting-max-text-font-color: #58626B;
+@setting-font-color: #5B6770;
+@ft-color-active-profile: #fff;
+
+//Search Section
+@bg-searchHeader: #1B1D1D;
+@bg-search-header: #F1F9FB;//#fff;
+@bg-search-contents: @background-image;//search contents bg
+@bg-search-title: @color-footer-font;//search title bg
+@search-content-font: normal  @ft-subl @font;//serach content font
+@bg-search-focus-hover: #98D8EC;//serach focus hover
+@font-color-search-text: #5b6770;//font color search text
+@font-color-search-heading: #fff;//font color search heading
+@ft-size-search-heading: 24px;//font size search heading
+@color-bg-searchIcon: #ffe600;   // for search module
+@color-search-text: #fff;    //for text put in search bar
+@color-closeButton: #7F8488;
+@color-borderDivider: @color-footer-font;
+@color-hover-close: @color-footer-font;
+
+//EPG section
+@font-color-epg-title: @global-font-color;//epg-on now  channel heading
+@font-color-epg-info: #5b6770;//epg channel info
+@font-color-epg-subTitle: #5b6770;//epg-on now sub heading
+@bg-epg-onNow: #edf8fa;//background for epg on now section
+@bg-epg-onNow-hover: #97D8EC;//hover for epg on now section
+@bg-epg-channel-info: rgba(255, 255, 255, 0.45);//bg for epg channel info
+@bg-epg-channel-info-hover: rgba(152, 216, 236, 1);//hover for epg channel info
+@bg-dateSelector: #fffce7;//bg for dateSelector selected
+@bg-dateSelector-selected: #0c2735;//bg for dateSelector not  selected
+@bg-dateSelector-hover: rgba(12, 39, 53, 0.2);//hover for dateSelector not  selected
+@bg-epg-channelID: #001C2A;//channel id background
+@bg-onNow-heading: none;
+@ft-color-onNow-heading: #5b6770;
+@ft-size-onNow-heading: 48px;
+@ft-alert-high-header: 24px;
+@ft-popup-pin-header:1.5rem;
+@ft-edit-profile-header:1.5rem;
+@epg-bubble: rgb(12, 39, 53);
+@font-size-epg-time: 28px;
+@font-color-epg-time: #fff;
+@color-ft-flyOut-text: #fff;
+@bg-epg-blockedChannel: rgba(45, 67, 75, 0.4);
+@bg-epg-unSubscribedChannel: rgba(90, 123, 144, 0.4);
+@bg-epg-unavailableChannel: rgba(87, 120, 132, 0.23);
+@bg-epg-channelLogoOuter: #0B2734;
+@color-ft-epgTime: #5b6770;
+@bg-epg-progressBar: #ffb436;
+@color-epg-toolbar: #fffce7;
+@bg-epg-toolbar: #fffce7;
+@color-epg-toolbar-hover: @toolbar-bg;
+@color-epg-onNowBtn: #fff;
+@bg-epg-onNowBtn-hover: rgba(88, 146, 176, 0.2);
+@font-size-epg-selector-time: 22px;
+@toolbar-bg: #fff;
+@border-color-grid: rgba(232, 232, 232, 0.4);
+@color-timer-font: #5B6770;
+@epg-cell-height: 74px; // represents the cell height for epg blocks
+
+//coldstart
+@ft-color-cold-start: #5B6770;
+@bg-coldstart-welcome-button: #00838B;//coldstart welcome button color
+@bg-coldstart-purchase-btn: @Popup-active-button-state;//coldstart purchase button bg
+@ft-color-cldstrt-prchse-heading: @ft-color-cold-start;//coldstart purchase heading color
+@ft-color-cldstrt-prchse-desc: @ft-color-cold-start;//coldstart purchase description color
+@ft-color-cldstrt-prchse-stp-hdng: @ft-color-cold-start;//coldstart purchase step heading color
+@ft-color-prntl-ctrl-subhdng: @ft-color-cold-start;//coldstart parental control heading color
+@ft-color-prfle-desc: @ft-color-cold-start;//coldstart profile description color
+@ft-color-prfle-name: @ft-color-cold-start;//coldstart profile Name font color
+@ft-size-prfle-name: 20px;//coldstart profile Name font size
+@bg-prfle-btn: @Popup-active-button-state;//coldstart profile button bg
+@brder-prfle: #fff;//coldstart border profile
+@ft-size-cldstrt-success-msg: 50px;//colstart success msg ft size
+@ft-color-cldstrt-success-msg: @ft-color-cold-start;//colstart success msg ft color
+@bg-coldstart-footer: #fff;
+@color-btn-coldstart: #fff;
+
+/* Global constants */
+@color-bg-btn: rgba(255, 255, 255, 0.6);
+@color-bg-btn-hover: #fff;
+@color-bg-actionbtn: rgba(255, 255, 255, 0.6);
+
+@bg-btn-pluginBlock: #00838B;
+@bg-btn-instalBlock: #00838B;
+@btn-pluginBlock-color: #fff;
+
+@bg-saved-undo: #BCD4DE;
+@back-font-color: #3cb7d7;
+@player-time-remain: #f7fbd2;
+
+@bg-tooltip: #fff;
+@ft-color-tooltip: #000;
+
+/**********Saved Rented**********/
+@saved-rented-blockdetails-bg: @modal-alert-bg;
+@saved-rented-deleteblock-div-bg: #94BDC5;
+@ft-color-desc-blockdetals-rented: #c44100;
+@ft-color-title-blockdetals-rented: @setting-font-color;
+
+/*plugin player*/
+@ftColorCastmsg: #fff;
+
+/*chrome cast constant*/
+@chrome-bg-header: #57616A;
+@chrome-bg-nowWatching: #000;
+@chrome-ft-color: #000;
+@chrome-bg-onNowCont: #DBF0F3;
+@recorded-item-bg-color: #c0dde5;
+@recorded-item-bg-highlight: #b4e2ef;
+@chrome-btn-ft-color: #5b6770;
+
+//playback info color
+@color-info-title: #ffffff;
+@color-info-time-and-onnow: #d7d7d7;
+@color-scrubber: #fff;
+@bg-volume-bar: #333744;
+@bg-progressBar: #ffb436;
+/*save-Rent Undo*/
+@bd-ColorRent:  #50707F ;
