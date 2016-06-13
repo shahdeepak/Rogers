@@ -1,0 +1,15 @@
+ [{
+        "name": "Profile",
+        "index": 0,
+        "subMenuItems": [{
+            "option": "History",
+            "functionAdd": "searchHistory()"
+        },{
+            "option": "Your Adds",
+            "functionAdd": "UserHobbyList()"
+        },{
+            "option": "chat",
+            "functionAdd": "getChat()"
+        }]
+
+}]

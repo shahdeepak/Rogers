@@ -1,0 +1,37 @@
+body{
+ background-color:#404040;
+}
+h1{
+ color:white;
+ font-size:40px;
+ text-align:center;
+}
+p{
+ padding-left:100px;
+ color: white;
+}
+span{
+ padding-left:150px;
+}
+a:link
+{
+  color: lightgreen;
+}
+
+.inner-addon { 
+    position: relative; 
+}
+
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+
+.left-addon .glyphicon  { left:  0px;}
+
+
+
+.left-addon input  { padding-left:  30px; }

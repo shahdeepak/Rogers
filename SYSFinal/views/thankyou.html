@@ -1,0 +1,59 @@
+<div class="table-responsive">
+    <div style="height: 100px ">
+        <center>
+            <h1>Your Order Summary</h1></center><br>
+        <div class="container">
+            <h3 style="color: #00ff00;margin-top: 00px;">Thankyou for using our Service your Order Id is:&nbsp; {{thankyouid}}</h3></div>
+    </div>
+    <table class="table">
+        <col width="20%">
+        <col width="40%">
+        <col width="20%">
+        <col width="20%">
+        <thead style="background-color: #808080">
+            <th>Image</th>
+            <th>Details</th>
+            <th>Charges Per Session</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="user in  $root.foundThankyouData">
+                <td><img src="images/user.jpeg"></td>
+                <td>
+                    <div>
+                        <b>Contact details</b>: {{user.totalBuy.email}}<br>
+                        <b>About the person</b>: {{user.totalBuy.description}}<br>
+                        <b>Availability</b> : {{user.totalBuy.availableDays}}<br>
+                    </div>
+                </td>
+                <td>{{user.totalBuy.charge | currency}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <div>
+                        Subtotal : {{amount | currency}}
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-78063699-1', 'auto');
+    ga('send', 'pageview');
+</script>

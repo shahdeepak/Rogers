@@ -1,0 +1,126 @@
+<div class="container">
+    <h1>Let us know you Better</h1>
+    <form name="submitAdForm" ng-controller="submitCtrl" role="form" ng-submit="submitAdd(newUser)">
+        <!--Message for unregistered users-->
+        <p class="form-control-static message">{{message}}</p>
+        <!--Input field for Email Address starts-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+                <input type="text" class="form-control" name="email" ng-model="newUser.email" placeholder="Enter your registered email" required>
+                <span class="red" ng-show="submitAdForm.email.$dirty && submitAdForm.email.$invalid">
+      <span ng-show="submitAdForm.email.$error.required">
+          Email is required.
+      </span>
+                <span ng-show="submitAdForm.email.$error.email">
+          Invalid email address.
+      </span>
+                </span>
+            </div>
+        </div>
+        <!--Input field for Email Address ends-->
+        <!--Input field for contact details starts-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-phone-alt"></i>
+                <input type="text" class="form-control" name="phone" ng-model="newUser.phone" placeholder="Enter your registered contact number" minlength="10" maxlength="10" pattern="^\d{3}\d{3}\d{4}$" title="Mobile Number should be 10 digit" required>
+                <span class="red" ng-show="submitAdForm.phone.$dirty && submitAdForm.phone.$invalid">
+        <span ng-show="submitAdForm.phone.$error.required">
+            Your contact number is required.
+        </span>
+                </span>
+            </div>
+        </div>
+        <!--Input field for contact details ends-->
+        <!--Input field for the type of service provided starts-->
+        <div class="form-group">
+            <button class="btn btn-default form-control p0" type="button" data-toggle="dropdown">
+            What would you like to advertise for?
+        <select ng-options="category.name for category in categories"
+                name="category"
+                ng-model="newUser.query" 
+                 class="black"
+                 required>
+         <option value="" selected="selected">
+             Choose Catagory
+         </option>
+         </select>              
+        </button>
+        </div>
+        <!--Input field for the type of service provided ends-->
+        <br>
+        <!--Input field for the expertise details starts-->
+        <div class="form-group">
+            <textarea rows="2" cols="50" name="comment" class="form-control" ng-model="newUser.description" placeholder="Tell us about your expertise" required>
+          </textarea>
+            <span class="red" ng-show="submitAdForm.comment.$dirty && submitAdForm.comment.$invalid">
+          <span ng-show="submitAdForm.comment.$error.required">
+             You must specify your experience
+          </span>
+            </span>
+        </div>
+        <!--Input field for expertise details ends-->
+        <!--Input field for locality preference starts-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-road"></i>
+                <input type="text" name="location" class="form-control" ng-model="newUser.location" placeholder="Which locality would you like to work from?" required>
+            </div>
+            <span class="red" ng-show="submitAdForm.location.$dirty && submitAdForm.location.$invalid">
+          <span ng-show="submitAdForm.location.$error.required">
+              You must specify your location preference
+          </span>
+            </span>
+        </div>
+        <!--Input field for locality preference ends-->
+        <!--Input field for day preference starts-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+                <input type="text" name="days" class="form-control" ng-model="newUser.availableDays" placeholder="Which days are you willing to work?" required>
+            </div>
+            <span class="red" ng-show="submitAdForm.days.$dirty && submitAdForm.days.$invalid">
+            <span ng-show="submitAdForm.days.$error.required">
+                You must specify the days you are available
+            </span>
+            </span>
+        </div>
+        <!--Input field for the type of service provided ends-->
+        <!--Input field for remuneration starts-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-usd"></i>
+                <input type="text" name="charge" class="form-control" ng-model="newUser.charge" placeholder="What remuneration would you like per session?" required>
+            </div>
+            <span class="red" ng-show="submitAdForm.charge.$dirty && submitAdForm.charge.$invalid">
+            <span ng-show="submitAdForm.charge.$error.required">
+                You must specify your remuneration
+            </span>
+            </span>
+        </div>
+        <!--Input field for remuneration ends-->
+        <!--Button to submit ad in database. ng-disabled used to enable form to be submitted only after all the fields are filled-->
+        <button ng-disabled="submitAdForm.$invalid" type="submit" class="btn btn-success"> 
+            Submit my Ad
+        </button>
+        <!--Button to skip submitting ad-->
+        <a href="#home" class="btn btn-danger" role="button">Maybe Later</a>
+        <!--Registration button-->
+        <p>Not a member? <a href="#registration" class="black">Sign Up</a></p>
+    </form>
+</div>
+<script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-78063699-1', 'auto');
+    ga('send', 'pageview');
+</script>

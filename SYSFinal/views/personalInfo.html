@@ -1,0 +1,81 @@
+<center>
+    <h3><u>Service Address</u></h3></center>
+<div class="container">
+    <div class="row">
+        <form role="form" name="personalInfoForm">
+            <div class="col-lg-6">
+                <div class="well well-sm">
+                    <strong style="color:black">
+                The required fields are marked with the <span class="asterisk"> * </span> sign.
+                </strong>
+                </div>
+                <!--Name field -->
+                <div class="form-group">
+                    <label for="InputName">Name:</label>
+                    <div class="input-group">
+                        <input type="text" name="name" class="form-control" name="InputName" ng-model="userDetails.firstName" ng-disabled="condition" required>
+                        <span class="black" ng-show="personalInfoForm.name.$dirty &&personalInfoForm.name.$invalid">
+                 <span ng-show="personalInfoForm.name.$error.required">
+                  You must enter a valid name
+                 </span>
+                    </div>
+                </div>
+                <!--Email address field-->
+                <div class="form-group">
+                    <label for="InputEmail">Email:</label>
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control" name="InputEmail" ng-model="userDetails.email" disabled>
+                    </div>
+                </div>
+                <!--Contact number field-->
+                <div class="form-group">
+                    <label for="InputEmail">Contact:</label>
+                    <div class="input-group">
+                        <input type="tel" minlength="10" maxlength="10" class="form-control" name="contact" ng-model="userDetails.contact" ng-disabled="condition" required>
+                        <span class="black" ng-show="personalInfoForm.contact.$dirty && personalInfoForm.contact.$invalid">
+                <span ng-show="personalInfoForm.contact.$error.required">
+                    Contact number is required
+                </span>
+                    </div>
+                </div>
+                <!--Postal Address field-->
+                <div class="form-group">
+                    <label for="ServiceAddess">
+                   Service Address:
+                <span class="asterisk"> * </span>
+                </label>
+                    <div class="input-group">
+                        <textarea row="1" cols="100" class="form-control" name="address" placeholder="Service Address" ng-model="userDetails.Address" ng-disabled="condition" required>
+                </textarea>
+                        <span class="black" ng-show="personalInfoForm.address.$dirty && personalInfoForm.address.$invalid">
+                 <span ng-show="personalInfoForm.address.$error.required">
+                    You must enter your name
+                 </span>
+                        </span>
+                    </div>
+                </div>
+                <a type="button" class="btn btn-success" href="#card" ng-disabled="personalInfoForm.$invalid" ng-click="update(userDetails)">
+						Checkout with PayPal
+                </a>
+                <button type="button" class="btn btn-danger" ng-click="editable()">
+                 Edit Details
+                 </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-78063699-1', 'auto');
+    ga('send', 'pageview');
+</script>

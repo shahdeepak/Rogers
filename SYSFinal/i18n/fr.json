@@ -1,0 +1,160 @@
+[ {
+        "key": "HOME",
+        "value": "connecter",
+        "description":"Label for loading"
+    },
+	{
+        "key": "CONTACT",
+        "value": "Ces",
+        "description":"Label for userId"
+    },
+	{
+        "key": "LOGIN_EMAIL",
+        "value": "Email",
+        "description":"Login button title text"
+    },
+	{
+        "key": "LOGIN_PASSWORD",
+        "value": "Mot de passe",
+        "description":"Error msg"
+    },{
+        "key": "LOGIN_REMEMBER",
+        "value": "Souviens-toi de moi",
+		"description":"Success msg"
+    },
+	{
+        "key": "LOGIN_NEWUSER",
+        "value": "Nouvel utilisateur? Inscrivez-vous pour un compte",
+        "description":"label for close"
+    },
+	{
+        "key": "LOGIN_SIGNUP",
+        "value": "Inscrivez-vous est rapide et facile! De plus, vous pouvez:",
+        "description":"label for ok"
+    },
+	{
+        "key": "LOGIN_CHECKBAL",
+        "value": "Verifiez votre solde 24/7",
+        "description":"Label for name"
+    },
+	{
+        "key": "LOGIN_PAYBILL",
+        "value": "Payez vos factures a -the-go",
+        "description":"Label for user status"
+    },
+	{
+        "key": "LOGIN_MONITORS",
+        "value": "Surveille youe utilisation partout , a tout moment",
+        "description":"Label for save"
+    },
+	{
+        "key": "LOGIN_SUBMOT",
+        "value": "Soumettre",
+        "description":""
+    },
+	{
+        "key": "LOGIN_REGISTER",
+        "value": "registre",
+        "description":"Label for alert"
+    },
+	{
+        "key": "FOOTER_ROGERSCOMM",
+        "value": "1995 – 2016 Rogers Communications",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "SHOP",
+        "value": "MAGANISER",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "SUPPORT",
+        "value": "SOUTIEN",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "MyROGGERS",
+        "value": "MonROGGERS",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "REWARDS",
+        "value": "RÉCOMPENSE",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "MORE",
+        "value": "PLUS",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "PROMOTIONS",
+        "value": "PROMOTIONS",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "BUSINESS",
+        "value": "AFFAIRES",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "WIRELESS",
+        "value": "SANS FIL",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "BUNDLES",
+        "value": "Liasses",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "TV",
+        "value": "la télé",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "INTERNET",
+        "value": "INTERNET",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "HOME PHONE",
+        "value": "Téléphone domicile",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "WIRELESS HOME PHONE",
+        "value": "Téléphone sans fil à domicile",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "HOME MONITORING",
+        "value": "Accueil Surveillance",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "BILLING AND ACCOUNT",
+        "value": "Facturation et compte",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "ADDITIONAL SERVICES",
+        "value": "SERVICES SUPPLÉMENTAIRES",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "BROWSER",
+        "value": "Navigateur",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "WISHLIST",
+        "value": "Liste de souhaits",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "MEMBERSHIP",
+        "value": "Adhésion",
+        "description":"Label for alert msg"
+    }
+]

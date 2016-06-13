@@ -1,0 +1,100 @@
+[ {
+        "key": "HOME",
+        "value": "Home",
+        "description":"Label for loading"
+    },
+	{
+        "key": "CONTACT",
+        "value": "Contact Us",
+        "description":"Label for userId"
+    },
+	{
+        "key": "LOGIN_EMAIL",
+        "value": "Email",
+        "description":"Login button title text"
+    },
+	{
+        "key": "LOGIN_PASSWORD",
+        "value": "Password",
+        "description":"Error msg"
+    },{
+        "key": "LOGIN_REMEMBER",
+        "value": "Remember me",
+		"description":"Success msg"
+    },
+	{
+        "key": "LOGIN_NEWUSER",
+        "value": "New User? Register for an account",
+        "description":"label for close"
+    },
+	{
+        "key": "LOGIN_SIGNUP",
+        "value": "Sign up is fast and easy! Plus you can:",
+        "description":"label for ok"
+    },
+	{
+        "key": "LOGIN_CHECKBAL",
+        "value": "Check your balance 24/7",
+        "description":"Label for name"
+    },
+	{
+        "key": "LOGIN_PAYBILL",
+        "value": "Pay your bills on-the-go",
+        "description":"Label for user status"
+    },
+	{
+        "key": "LOGIN_MONITORS",
+        "value": "Monitors youe usage anywhere, anytime",
+        "description":"Label for save"
+    },
+	{
+        "key": "LOGIN_SUBMOT",
+        "value": "Submit",
+        "description":""
+    },
+	{
+        "key": "LOGIN_REGISTER",
+        "value": "Register",
+        "description":"Label for alert"
+    },
+	{
+        "key": "FOOTER_ROGERSCOMM",
+        "value": "1995 – 2016 Rogers Communications",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "SHOP",
+        "value": "SHOP",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "SUPPORT",
+        "value": "SUPPORT",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "MyROGGERS",
+        "value": "MyROGGERS",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "REWARDS",
+        "value": "REWARDS",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "MORE",
+        "value": "MORE",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "PROMOTIONS",
+        "value": "PROMOTIONS",
+        "description":"Label for alert msg"
+    },
+	{
+        "key": "BUSINESS",
+        "value": "BUSINESS",
+        "description":"Label for alert msg"
+    }	
+]

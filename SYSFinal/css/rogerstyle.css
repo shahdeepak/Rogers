@@ -1,0 +1,264 @@
+.ind0{
+left: 0px;
+background-color: red;
+
+}
+
+.ind1{
+left: 20px;
+background-color: pink;
+
+}
+
+.ind2{
+left: 40px;
+background-color: orange;
+
+}
+
+i{
+color: black;
+}
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+  /*.row{
+
+      overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  }*/
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  overflow-x:hidden;
+  }
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 7rem;
+  min-height: 100%;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+ font-style: normal;
+    font-size: 14px;
+}
+/**
+ * Footer Styles
+ */
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.5rem;
+  background-color: #002266;
+  text-align: center;
+}
+.headerStyle{
+background-color:#d9d9d9;
+}
+
+/*for registration page*/
+body{
+background: linear-gradient(#003399,#80aaff,#003399) repeat-y;
+color: white;
+}
+h1{
+color:white;
+font-size:40px;
+text-align:center;
+margin-top: 10px;  
+margin-bottom: 5px;
+}
+.navbar-default{
+ 
+}
+a:link
+{
+color: white;
+}
+
+/*CSS for glyphicons*/
+.inner-addon { 
+position: relative; 
+}
+.inner-addon .glyphicon {
+position: absolute;
+padding: 10px;
+pointer-events: none;
+}
+.left-addon .glyphicon  { left:  0px;}
+.left-addon input  { padding-left:  30px; }
+.left1-addon .glyphicon  { left:  -10px;}
+.left1-addon input  { padding-left:  40px; }
+/*CSS for glyphicons end*/
+
+/*Ad submission modal */
+.modal-header, h4, .close {
+  background-color: blue;
+  color:white !important;
+  text-align: center;
+  font-size: 30px;
+}
+.modal-footer {
+  background-color:  #d9d9d9;
+}
+
+/* for submitAd.html*/
+.red{
+color:red;
+}
+.white{
+ color:white;
+}
+.black{
+ color:black;
+}
+.pointer{
+ cursor: pointer;
+}
+.contactModal{
+ text-decoration:none;
+ margin-top:10px;
+}
+.left{
+ float: left;
+}
+.right{
+ float: right;
+}
+.loginClass{
+padding:5px;
+}
+.close{
+ color:red;
+}
+.nav ul li{
+list-style-type: none;
+text-decoration:none;display:inline;
+}
+.nav ul li:hover{
+    background-color:#6699ff;
+    font-size: 17px;
+    color:white;
+    cursor:pointer;
+    transition-delay: 0.2s;
+} 
+#footer ul li{
+text-decoration:none;display:inline;
+}
+#footer ul li:hover{
+    background-color:#6699ff;
+    font-size: 17px;
+    color:white;
+    cursor:pointer;
+    transition-delay: 0.2s;
+} 
+.imgStyle{
+ width:83.82px; 
+ height: 79.81px;
+}
+.mT10{
+ margin-top: 10px;
+}
+.mB5{
+ margin-bottom: 5px;
+}
+.userDisplay{
+   border-style: ridge;
+    border-radius: 15px; 
+    padding: 5px;
+    margin: 10px;
+}
+.userImage{
+   height:100px; 
+    width:120px; 
+    border-radius:20px
+}
+.p125{
+ padding:125px;
+}
+.orange{
+ background-color: orange;
+}
+.p0{
+ padding: 0px;
+}
+.p20{
+ padding:20px;
+}
+.p10{
+padding:10px;
+}
+.mT10{
+ margin-top: 10px;
+}
+.green{
+ color: #00cc66;
+}
+.headingClass{
+background-color:#002266;
+width: 100%;
+}
+
+
+.requiredField{
+background-color:#404040;
+}
+.asterisk{
+    color:red;
+    width:50%;
+}
+/* credit card */
+   .demo-container {
+            width: 100%;
+            max-width: 350px;
+            margin: 50px auto;
+        }
+
+        .demo-container form {
+            margin: 30px;
+        }
+        .demo-container input {
+            width: 200px;
+            margin: 10px auto;
+           /* display: block;*/
+        }
+
+/*spinner*/
+.spinner {
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 35%;
+    opacity: 1.6; /* Some subtle opacity to help blend with variable background colors */
+}
+
+.spinner.medium {
+   position: absolute;
+    top: 45%;
+    left:45%;
+    height: 42px;
+    width: 40px;
+    background: url(../images/spinner.gif);
+}
+/*modal background*/
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5);
+}

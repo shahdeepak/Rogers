@@ -1,0 +1,74 @@
+<div class="container">
+    <h1>Create an Account</h1>
+    <form role="form" name="sysform" ng-submit=register(newUser)>
+        <!--Name field-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-user"></i>
+                <input type="text" name="name" class="form-control" ng-model="newUser.name" placeholder="Enter name" required/>
+                <span class="black" ng-show="sysform.name.$dirty && sysform.name.$invalid">
+            <span ng-show="sysform.name.$error.required">
+              You must enter your name
+            </span>
+                </span>
+            </div>
+        </div>
+        <!--Contact number field-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-phone-alt"></i>
+                <input type="tel" class="form-control" name="phone" ng-model="newUser.phone" placeholder="Enter contact number" pattern="^\d{3}\d{3}\d{4}$" minlength="10" maxlength="10" title="Mobile Number should be 10 digit" required>
+                <span class="black" ng-show="sysform.phone.$dirty && sysform.phone.$invalid">
+            <span ng-show="sysform.phone.$error.required">
+                Contact number is required
+            </span>
+                </span>
+            </div>
+        </div>
+        <!--Email address field-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+                <input type="email" class="form-control" name="email" ng-model="newUser.email" placeholder="Enter email" required>
+                <span class="black" ng-show="sysform.email.$dirty && sysform.email.$invalid">
+            <span ng-show="sysform.email.$error.required">
+                Email is required.
+            </span>
+                </span>
+            </div>
+        </div>
+        <!--Password field-->
+        <div class="form-group">
+            <div class="inner-addon left-addon">
+                <i class="glyphicon glyphicon-alert"></i>
+                <input type="password" class="form-control" name="pwd" ng-model="newUser.password" placeholder="Enter password (Minimum 8 characters at least 1 Alphabet and 1 Number)" minlength="8" maxlength="16" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimum 8 characters at least 1 Alphabet and 1 Number" required>
+                <span class="black" ng-show="sysform.pwd.$dirty && sysform.pwd.$invalid">
+            <span ng-show="sysform.pwd.$error.required">
+              Please provide a password
+            </span>
+                </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success" ng-disabled="sysform.$invalid">
+         Create account
+	    </button>
+        <a href="#home" class="btn btn-danger" role="button">
+         Maybe Later
+        </a>
+    </form>
+</div>
+<script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-78063699-1', 'auto');
+    ga('send', 'pageview');
+</script>
