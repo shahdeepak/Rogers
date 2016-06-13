@@ -5,7 +5,7 @@
  * @requires $scope
  * @description Controller for product details page.
  */
-rogersWeb.controller('productDetailCtrl', function($scope, $http, registrationService, $location) {
+rogersWeb.controller('productDetailCtrl', function($scope, $http, registrationService) {
     "use strict";
     var email = sessionStorage.getItem('loggedInUser');
     $scope.imgs = [];
@@ -61,9 +61,13 @@ rogersWeb.controller('productDetailCtrl', function($scope, $http, registrationSe
         }, function(error) {
             $scope.errorMessage = "error message" + error;
         });
-        $location.path('/shipping');
     };
-    /*show imageIcon in icon bar*/
+    /**
+     * @ngdoc method
+     * @name rogersWeb.controllers:cartCtrl#show imageIcon
+     * @methodOf rogersWeb.controllers:productDetailCtrl
+     * @description show imageIcon in icon bar
+     */
     $scope.showBar = function() {
         $scope.imgIcon = !$scope.imgIcon;
         if ($scope.imgIcon)
@@ -71,16 +75,15 @@ rogersWeb.controller('productDetailCtrl', function($scope, $http, registrationSe
         else
             $scope.imagesource = "./images/minus.png";
     };
-   $scope.rate = 7;
-  $scope.max = 10;
-  $scope.isReadonly = false;
-
-  $scope.hoveringOver = function(value) {
-    $scope.overStar = value;
-    $scope.percent = 100 * (value / $scope.max);
-  };
-
-  $scope.ratingStates = [
-    {stateOn: './images/high_rating.png', stateOff: './images/Low_rating.png'}    
-  ];
+    $scope.rate = 7;
+    $scope.max = 10;
+    $scope.isReadonly = false;
+    $scope.hoveringOver = function(value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / $scope.max);
+    };
+    $scope.ratingStates = [{
+        stateOn: './images/high_rating.png',
+        stateOff: './images/Low_rating.png'
+    }];
 });

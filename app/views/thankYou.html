@@ -1,39 +1,38 @@
-<!--Script to disable back buttton-->
-<!--<script>
-var history_api = typeof history.pushState !== 'undefined';
-// history.pushState must be called out side of AngularJS Code
-if ( history_api ) history.pushState(null, '', '#StayHere');
-</script>-->
-<!--<script type = "text/javascript" >
-    function preventBack(){window.history.forward();}
-    setTimeout("preventBack()", 0);
-    window.onunload=function(){null};
-</script>-->
-
 <div class="container-fluid">
     <div class="row">
         <div class="panel panel-success">
-            <div class="panel panel-heading"><strong>Thank You ! Your order has been placed successfully.</strong></div>
+            <div class="panel panel-heading"><strong>{{ 'THANK_YOU' |  translate}}</strong></div>
+           
             <div class="panel panel-body">
                 <p class="form-static">
-                    Your Order number is :&nbsp;&nbsp; <b>{{referenceNumber}}</b>&nbsp;&nbsp;
+                    {{'Order_number' | translate}} :&nbsp;&nbsp; <b>{{referenceNumber}}</b>&nbsp;&nbsp;
                 </p>
+                 <p>
+                       <qr text="qrcodeString" 
+                           type-number="typeNumber" 
+                           correction-level="correctionLevel" 
+                           size="size" 
+                           input-mode="inputMode" 
+                           image="image">
+                     </qr>
+                </p>
+    
             </div>
         </div>
     </div>
     <div class="row hidden-xs hidden-sm visible-md visible-lg">
         <div class="panel panel-success">
             <div class="panel panel-heading">
-                <strong>Order Table</strong>&nbsp;
+                <strong>{{'Order_Table' | translate}}</strong>&nbsp;
                 <span style="float:right;">
-                    <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                    <b>{{'Sum_Total_Price' | translate}} : </b>&nbsp;{{sumTotal | currency}}
                 </span>
             </div>
             <div class="panel panel-body">
                 <table class="table ">
                     <thead>
                         <tr>
-                            <th>#Sl no.</th>
+                            <th>#SL No.</th>
                             <th>Item Name</th>
                             <th>Quantity</th>
                             <th>Price(per item)</th>
@@ -42,7 +41,7 @@ if ( history_api ) history.pushState(null, '', '#StayHere');
                     </thead>
                     <tbody ng-repeat="data in cartItemList">
                         <tr>
-                            <th scope="row">{{$index + 1}}</th>
+                            <td>{{data.productDetails.id}}</td>
                             <td>{{data.productDetails.productName}}</td>
                             <td>{{data.productDetails.Quantity}}</td>
                             <td>{{data.productDetails.price | currency}}</td>
@@ -54,7 +53,7 @@ if ( history_api ) history.pushState(null, '', '#StayHere');
                         <td></td>
                         <td></td>
                         <td></td>
-                        <th scope="row" class="table-td">Sum Total Price:</th>
+                        <th scope="row" class="table-td">{{'Sum_Total_Price' | translate}} : </th>
                         <th scope="row" >{{sumTotal | currency}}</th>
                     </tr>
                   </tbody>
@@ -67,7 +66,7 @@ if ( history_api ) history.pushState(null, '', '#StayHere');
             <div class="panel panel-heading">
                 <strong>Cart Items</strong>&nbsp;({{totalCart}})
                 <div>
-                    <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                    <b>{{'Sum_Total_Price' | translate}} : </b>&nbsp;{{sumTotal | currency}}
                 </div>
             </div>
             <div class="panel panel-body">

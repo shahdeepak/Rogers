@@ -8,7 +8,7 @@
  * @requires isLoggedIn
  * @description Controller for login screen.
  */
-rogersWeb.controller('loginCtrl', function($scope, $location, registrationService, encryption) {
+rogersWeb.controller('loginCtrl', function($scope, $location, registrationService) {
     "use strict";
     /**
      * @ngdoc method
@@ -22,13 +22,11 @@ rogersWeb.controller('loginCtrl', function($scope, $location, registrationServic
         registrationService.getLoginDetails(loginCred.username,
             function(loginData) {
                 if (loginData) {
-                    /*if (loginCred.username === loginData.email && loginCred.password === loginData.password) {*/
-                    if (loginCred.username === loginData.email && loginCred.password === encryption.fromEncodedString(loginData.password)) {
+                    if (loginCred.password === loginData.password) {
                         $scope.username = loginCred.username;
                         sessionStorage.setItem('loggedInUser', loginCred.username);
                         $scope.loggedIn();
                         $location.path('/home');
-                        /*$location.path('/admin');*/
                     } else {
                         $scope.message = 'Invalid Username/Password or Not a register user';
                     }

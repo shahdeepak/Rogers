@@ -1,14 +1,14 @@
 <div class="mainContainer">
     <center>
         <div class="boxImage">
-            <img src="images/front_image.jpg" class="imageBox">
+            <img src="{{imagesrc}}" class="imageBox">
             <div class="name">
                {{product.productName}}
             </div>
             <a href="" 
                class="btn btn-success"
                ng-click="addProductToCart(product)">
-                <span><b >Add to cart</b>
+                <span><b >{{ 'Add_to_cart' | translate }}</b>
                     <img src="images/shop.png" class="img-circle">
                 </span>
             </a>

@@ -1,6 +1,67 @@
-<!--Created by Anurati:16/5/2016 -->
-<!--Button control for pagination-->
-<div style="float:right;"> <button type="button" 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-6">
+        <form class="form-horizontal" ng-submit="submit(user)">
+            <div class="form-group">
+                <label class="col-sm-2 col-md-2 col-lg-4 control-label">Email</label>
+                <div class="col-sm-10 col-md-10 col-lg-8">
+                    <input type="email" 
+                           class="form-controll" 
+                           ng-model="user.email"
+                           placeholder="e.g. janesmith@rogers.com" required/>
+                </div>
+            </div>
+            <!--<button type="submit" class="btn btn-primary">SUBMIT</button>-->
+        </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel panel-heading">Supplier</div>
+            <div class="panel panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>PRODUCT NAME</th>
+                            <th>EMAIL</th>
+                            <th>ORDER ID</th>
+                            <th>QUANTITY</th>
+                            <th>PRICE</th>
+                            <th>TOTAL</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="data in detailOfPurchaseTable">
+                        <tr>
+                            <td>{{data.productDetails.productName}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{data.referenceNumber}}</td>
+                            <td>{{data.productDetails.Quantity}}</td>
+                            <td>{{data.productDetails.price | currency}}</td>
+                            <td>{{data.productDetails.Quantity * data.productDetails.price | currency}}</td>
+                            <td>
+                              <select  ng-model="setStatus" ng-change="" >
+                                  <option value="0">{{data.status}}</option>
+                                  <option ng-repeat="item in status" 
+                                          value="{{item.name}}" ng-selected={{item.name}} >
+                                          {{item.name}}
+                                  </option>
+                              </select>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" 
+                                        ng-click="submitStatus(setStatus, data.referenceNumber)">submit</button>
+                            </td>    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div style="float:right;"> <button type="button" 
                          class="btn btn-success" 
                          ng-disabled="curPage == 0"
                         ng-click="curPage=curPage-1"
@@ -13,35 +74,38 @@
                       style= "padding-top:0px;
                                 padding-bottom:0px">NEXT &gt;
                     </button>
-                    </div>
+                    </div>-->
 <!--Calling Value from backend-->
-<div class="panel panel-body">
+<!--<div class="panel panel-body">
     <table class="table">
                         <thead>
                             <tr>
                                 <th>PRODUCT NAME</th>
+                                <th>EMAIL</th>
+                                <th>ORDER ID</th>
                                 <th>QUANTITY</th>
                                 <th>PRICE</th>
                                 <th>TOTAL</th>
                                 <th>STATUS</th>
                             </tr>
                         </thead>
-                        <tbody ng-repeat="data in detailOfPurchaseTable | pagination: 
-               curPage * pageSize | limitTo: pageSize">
+                        <tbody ng-repeat="data in detailOfPurchaseTable"  >
                             <tr>
                                 <td>{{data.productDetails.productName}}</td>
+                                <td>{{data.email}}</td>
+                                <td>{{data.referenceNumber}}</td>
+                                
                                 <td>{{data.productDetails.Quantity}}</td>
                                 <td>{{data.productDetails.price | currency}}</td>
                                 <td>{{data.productDetails.Quantity * data.productDetails.price | currency}}</td>
-                                <td> <!--<p style="color:green;"> SUBMITTED</p>-->
-                                  <select>
-                                     <option value="submitted">SUBMITTED</option>
-                                     <option value="complete">COMPLETE</option>
-                                     <option value="onhold">DISPATCHED</option>
-                                     <option value="inprogress">IN-PROGRESS</option>
+                                <td>
+                                  <select ng-options="item.name for item in status"
+                                          ng-model="setStatus">
                                   </select>
                                 </td>
+                                <td><button ng-click="submitStatus(setStatus, data._id)">click</button></td>
+                                
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>-->

@@ -18,19 +18,19 @@ rogersWeb.controller('homeCtrl', function($scope, $http, $location, homeService,
      * @description send message to other controller communication between controller This function is a sender function
      */
     $scope.$emit("showHide", {
-        "pagelink": "profile"
+        "pagelink": "Profile"
     });
     $scope.RPath = function() {
-            if ($scope.isLoggedIn()) {
-                $location.path('/cart');
-            };
+        if ($scope.isLoggedIn()) {
+            $location.path('/cart');
         };
-        /**
-         * @ngdoc method
-         * @name rogersWeb.controllers:homeCtrl#getProductCount
-         * @methodOf rogersWeb.controllers:homeCtrl
-         * @description getProductCount from database
-         */
+    };
+    /**
+     * @ngdoc method
+     * @name rogersWeb.controllers:homeCtrl#getProductCount
+     * @methodOf rogersWeb.controllers:homeCtrl
+     * @description getProductCount from database
+     */
     $scope.getProductCount = function() {
         registrationService.getProductCount(email, function(data) {
             $scope.qty = 0;
@@ -51,25 +51,22 @@ rogersWeb.controller('homeCtrl', function($scope, $http, $location, homeService,
     };
     /**
      * @ngdoc method
-     * @name rogersWeb.controllers:cartCtrl#$http
-     * @service $http
+     * @name rogersWeb.controllers:cartCtrl
+     * @service registrationService
      * @description get product list from database.
      */
-    registrationService.getProduct(successFun, failureFun);
+    $scope.getProducts = function() {
+        registrationService.getProduct(successFun, failureFun);
 
-    function successFun(result) {
-        $scope.products = result;
-    };
+        function successFun(result) {
+            $scope.products = result;
+        };
 
-    function failureFun() {
-        $scope.message = "Error";
+        function failureFun() {
+            $scope.message = "Error";
+        };
     };
-    $http.get('json/datalists.json').success(function(data) {
-        $scope.datalists = data;
-    });
-    $http.get('json/productlist.json').success(function(data) {
-        $scope.productlist = data;
-    });
+    $scope.getProducts();
     /**
      * @ngdoc method
      * @name rogersWeb.controllers:cartCtrl#addProductToCart
@@ -80,6 +77,9 @@ rogersWeb.controller('homeCtrl', function($scope, $http, $location, homeService,
      * @description Add product to cart(basket).
      */
     $scope.addProductToCart = function(value) {
+        $scope.$emit("spinner", {
+            "flag": true
+        });
         var productData = {
             'email': email,
             'productDetails': {
@@ -96,14 +96,53 @@ rogersWeb.controller('homeCtrl', function($scope, $http, $location, homeService,
                 };
                 registrationService.updateProductToCart(data, function() {
                     $scope.getProductCount();
+                    $scope.$emit("spinner", {
+                        "flag": false
+                    });
                 }, function(error) {
                     $scope.errorMessage = "error message" + error;
+                    $scope.$emit("spinner", {
+                        "flag": false
+                    });
                 });
             } else {
                 $scope.getProductCount();
+                $scope.$emit("spinner", {
+                    "flag": false
+                });
             }
         }, function(error) {
             $scope.errorMessage = "error message" + error;
+            $scope.$emit("spinner", {
+                "flag": false
+            });
         });
+    };
+    /*   click function for aboutus */
+    $scope.aboutUsClicked = function() {
+        $location.path('/aboutUs');
+    };
+    /**
+     * @ngdoc method
+     * @name rogersWeb.controllers:cartCtrl#setCurrentSlideIndex, isCurrentSlideIndex, prevSlide, nextSlide
+     * @methodOf rogersWeb.controllers:cartCtrl
+     * @description used for swiping image on mobile view.
+     */
+    $scope.direction = 'left';
+    $scope.currentIndex = 0;
+    $scope.setCurrentSlideIndex = function(index) {
+        $scope.direction = (index > $scope.currentIndex) ? 'left' : 'right';
+        $scope.currentIndex = index;
+    };
+    $scope.isCurrentSlideIndex = function(index) {
+        return $scope.currentIndex === index;
+    };
+    $scope.prevSlide = function() {
+        $scope.direction = 'left';
+        $scope.currentIndex = ($scope.currentIndex < $scope.products.length - 1) ? ++$scope.currentIndex : 0;
+    };
+    $scope.nextSlide = function() {
+        $scope.direction = 'right';
+        $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.products.length - 1;
     };
 });

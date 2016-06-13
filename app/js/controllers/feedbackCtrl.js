@@ -6,7 +6,7 @@
  * @requires randomString
  * @description Controller.
  */
-rogersWeb.controller('feedbackCtrl', function($scope, encryption) {
+rogersWeb.controller('feedbackCtrl', function($scope) {
     "use strict";
     $scope.message = "If you request assistance and would like a response from us , please include your name and email address.";
     /**
@@ -17,24 +17,16 @@ rogersWeb.controller('feedbackCtrl', function($scope, encryption) {
      * @description Save customer feedback to database.
      */
     $scope.customerFeedback = function(feedbackDetails) {
-        /*var encrypt = encryption.toEncodeString("testuserdata");
-        console.log(result);
-        var decrypt = encryption.fromEncodedString(result);
-        console.log(decrypt);*/
         var data = {
             'name': feedbackDetails.name,
             'email': feedbackDetails.email,
             'feedback': feedbackDetails.feedback
         };
-        registrationService.saveRegistrationDetails(data, success, error);
-    };
-
-    function success() {
-        $scope.message = "Thank you for taking time to send us your feedback regarding our service!";
-    };
-
-    function error() {
-        $scope.message = "error";
+        registrationService.saveRegistrationDetails(data, function() {
+            $scope.message = "Thank you for taking time to send us your feedback regarding our service!";
+        }, function() {
+            $scope.message = "error";
+        });
     };
     $scope.list = [{
         "Description": "Hello Tab1",
@@ -51,5 +43,18 @@ rogersWeb.controller('feedbackCtrl', function($scope, encryption) {
     }, {
         "Description": "Hello Tab5",
         "header": "Tab5"
+    }];
+    $scope.dataImg = [{
+        "img": "http://placekitten.com/960/600"
+    }, {
+        "img": "http://lorempixel.com/960/600"
+    }, {
+        "img": "http://lorempixel.com/960/600"
+    }, {
+        "img": "http://placekitten.com/960/600"
+    }, {
+        "img": "http://lorempixel.com/960/600"
+    }, {
+        "img": "http://placekitten.com/960/600"
     }];
 });

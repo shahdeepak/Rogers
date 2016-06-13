@@ -5,8 +5,10 @@
  * @requires $scope
  * @description Controller for registration screen.
  */
-rogersWeb.controller('registerCtrl', function($scope, registrationService, $location, encryption) {
+rogersWeb.controller('registerCtrl', function($scope, registrationService, $location) {
     "use strict";
+    $scope.email='';$scope.password='';
+    $scope.dateOfBirth='';$scope.password='';$scope.confirmpassword='';
     /**
      * @ngdoc method
      * @name rogersWeb.controllers:registerCtrl#register
@@ -14,17 +16,17 @@ rogersWeb.controller('registerCtrl', function($scope, registrationService, $loca
      * @param {object} newUser  - newUser
      * @description Insert/save user(new user) details into local storage.
      */
-    $scope.register = function(newUser) {
-        registrationService.getLoginDetails(newUser.email, function(result) {
-            if (result) {
+    $scope.register = function() {
+        registrationService.getLoginDetails($scope.email, function(result) {
+            if (result.password !== undefined && result.password.length > 1) {
                 $scope.message = 'User already exist';
             } else {
-                sessionStorage.setItem('loggedInUser', newUser.email);
+                sessionStorage.setItem('loggedInUser', $scope.email);
                 var userRegDetails = {
-                    "email": newUser.email,
-                    "password":encryption.toEncodeString(newUser.password),
-                    "dateOfBirth":newUser.dateOfBirth,
-                    "contact":newUser.contact
+                    "email": $scope.email,
+                    "password": $scope.password,
+                    "dateOfBirth": $scope.dateOfBirth,
+                    "contact": $scope.contact
                 };
                 registrationService.saveRegistrationDetails(userRegDetails, success, error);
             }
@@ -39,7 +41,7 @@ rogersWeb.controller('registerCtrl', function($scope, registrationService, $loca
      * @description callback function:Success
      */
     function success() {
-        $location.path('/login');
+        $location.path('/home');
         return;
     };
     /**
@@ -50,11 +52,14 @@ rogersWeb.controller('registerCtrl', function($scope, registrationService, $loca
      */
     function error() {
         $scope.errorMessage = "error in function";
-    }
+    };
     $scope.dt = new Date();
-    
-    $scope.logingin=function(){
+    $scope.logingin = function() {
         $location.path('/login');
-    }
-        
+    };
+    $scope.matchPassword=function(){
+        if($scope.password !== $scope.confirmpassword){
+             $scope.message = "Password field not matched with confirm password";
+        }
+    };
 });

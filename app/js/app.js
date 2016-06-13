@@ -2,7 +2,7 @@
  * Created by Deepak.Shah on 17-03-2016.
  * @description routing html page
  */
-var rogersWeb = angular.module('rogersWeb', ['ngRoute', 'ngSanitize','720kb.datepicker', 'pascalprecht.translate', 'localization']);
+var rogersWeb = angular.module('rogersWeb', ['ngRoute', 'ngSanitize','720kb.datepicker', 'pascalprecht.translate', 'localization','ngAnimate', 'ngTouch']);
 var user = [];
 rogersWeb.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/login', {
@@ -11,7 +11,7 @@ rogersWeb.config(['$routeProvider', function($routeProvider) {
     }).when('/registration', {
         templateUrl: './views/register.html',
         controller: 'registerCtrl'
-    }).when('/profile', {
+    }).when('/Profile', {
         templateUrl: './views/profile.html',
         controller: 'userProfileCtrl'
     }).when('/home', {
@@ -44,6 +44,15 @@ rogersWeb.config(['$routeProvider', function($routeProvider) {
     }).when('/admin', {
         templateUrl: './views/productEntry.html',
         controller: 'productEntryCtrl'
+    }).when('/feedback', {
+        templateUrl: './views/feedback.html',
+        controller: 'feedbackCtrl'
+    }).when('/adminEntry',{
+        templateUrl: './views/adminEntry.html',
+        controller: 'adminEntryCtrl'
+    }).when('/aboutUs',{
+        templateUrl: './views/aboutUs.html'
+        /*controller: 'adminEntryCtrl'*/
     }).otherwise({
         redirectTo: '/login'
     });

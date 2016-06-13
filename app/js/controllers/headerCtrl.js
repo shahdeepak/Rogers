@@ -6,7 +6,7 @@
  * @requires $location
  * @description Controller for header part.
  */
-rogersWeb.controller('headerCtrl', function($scope,$location, $translate, registrationService, localize, isLoggedIn, $http) {
+rogersWeb.controller('headerCtrl', function($scope, $location, $translate, registrationService, localize, isLoggedIn, $http) {
     "use strict";
     $scope.qty = 0;
     $scope.lang = "FRENCH";
@@ -127,18 +127,36 @@ rogersWeb.controller('headerCtrl', function($scope,$location, $translate, regist
             localize.setLanguage("en");
         }
     };
-    /*Redirects when clicking to wireless to cart page*/
+    /*Redirects to cart page while clicking on wireless link on header menu */
     $scope.redirect = function(id, menuName) {
         if (sessionStorage.getItem('loggedInUser') !== null && (id === 0 && menuName === "WIRELESS")) {
             $location.path("/cart");
         };
     };
+    /**
+     * @ngdoc method
+     * @name rogersWeb.controllers:headerCtrl#redirectToHome
+     * @methodOf rogersWeb.controllers:headerCtrl
+     * @description Redirects to home page
+     */
     $scope.redirectToHome = function() {
         if (sessionStorage.getItem('loggedInUser') !== null) {
             $location.path('/home');
         };
     };
-    $scope.$on("spinner", function(event, arg){
+    /**
+     * @ngdoc method
+     * @name rogersWeb.controllers:headerCtrl#spinner
+     * @methodOf rogersWeb.controllers:headerCtrl
+     * @description spinner start rotating while "on" method call.
+     */
+    $scope.index = true;
+    $scope.$on("spinner", function(event, arg) {
         $scope.flag = arg.flag;
+        if (arg.flag === true) {
+            $scope.index = false;
+        } else {
+            $scope.index = true;
+        }
     });
 });

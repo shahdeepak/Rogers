@@ -15,7 +15,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description Insert data into data base
          */
         saveRegistrationDetails: function(newUserDetail, successCallback, cacheUpdateService) {
-            var promise = backendFactory.postHttpCall(ADD_USER, newUserDetail, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(ADD_USER, newUserDetail, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -28,7 +28,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description Insert data into data base
          */
         saveShippingDetails: function(shippingDetail, successCallback, cacheUpdateService) {
-            var promise = backendFactory.postHttpCall(ADD_SHIPPING, shippingDetail, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(ADD_SHIPPING, shippingDetail, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -40,8 +40,8 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @methodOf rogersWeb.service:registrationService
          * @description Update data into data base
          */
-        updateShippingDetails: function(shippingDetail, successCallback, cacheUpdateService) {
-            var promise = backendFactory.postHttpCall(UPDATE_SHIPPING, shippingDetail, CONFIG).then(function(obj) {
+        updateShippingDetails: function(shippingDetail, successCallback) {
+            backendFactory.postHttpCall(UPDATE_SHIPPING, shippingDetail, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -54,7 +54,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description Insert data into data base
          */
         getShippingDetails: function(email, successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(GET_SHIPPING + email).then(function(obj) {
+            backendFactory.getHttpCall(GET_SHIPPING + email).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -66,8 +66,21 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @methodOf rogersWeb.service:registrationService
          * @description delete cart details
          */
-        deleteCartDetail: function(email, successCallback, cacheUpdateService) {
-            var promise = backendFactory.postHttpCall(REMOVE_CART, email, CONFIG).then(function(obj) {
+        deleteCartDetail: function(email, successCallback) {
+            backendFactory.postHttpCall(REMOVE_CART, email, CONFIG).then(function(obj) {
+                successCallback(obj);
+            }, function(obj) {
+                errorCallback(obj);
+            });
+        },
+        /**
+         * @ngdoc method
+         * @name rogersWeb.service:registrationService#deleteCartDetail
+         * @methodOf rogersWeb.service:registrationService
+         * @description delete cart details
+         */
+        sendEmail: function(data, successCallback, errorCallback) {
+            backendFactory.postHttpCall(SEND_EMAIL, data, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -80,7 +93,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description delete cart details
          */
         removeItem: function(id, successCallback, errorCallback) {
-            var promise = backendFactory.postHttpCall(REMOVE_ITEM, id, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(REMOVE_SINGLE_CART, id, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -93,7 +106,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description get login details from data base
          */
         getLoginDetails: function(email, successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(GET_SINGLE_USER + email).then(function(obj) {
+           backendFactory.getHttpCall(GET_SINGLE_USER + email).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -106,7 +119,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description add product/item into data base
          */
         addProductToCart: function(userDetail, successCallback, errorCallback) {
-            var promise = backendFactory.postHttpCall(ADD_CART, userDetail, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(ADD_CART, userDetail, CONFIG).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -119,7 +132,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description update product into database
          */
         updateProductToCart: function(id, successCallback, errorCallback) {
-            var promise = backendFactory.postHttpCall(UPDATE_CART, id, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(UPDATE_CART, id, CONFIG).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -132,7 +145,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description get Product list from data base
          */
         getProduct: function(successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(PHONE_JSON_PATH).then(function(obj) {
+            backendFactory.getHttpCall(GET_PRODUCTS).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -145,7 +158,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description inser Product list into data base
          */
         addProduct: function(productDetails, successCallback, errorCallback) {
-            var promise = backendFactory.postHttpCall(ADD_PRODUCT, productDetails, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(ADD_PRODUCT, productDetails, CONFIG).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -158,7 +171,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description update product into database
          */
         updateProduct: function(productDetails, successCallback, errorCallback) {
-            var promise = backendFactory.postHttpCall(UPDATE_PRODUCT, productDetails, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(UPDATE_PRODUCT, productDetails, CONFIG).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -171,7 +184,20 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description delete remove Product details
          */
         removeProduct: function(id, successCallback, errorCallback) {
-            var promise = backendFactory.postHttpCall(REMOVE_ITEM, id, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(REMOVE_ITEM, id, CONFIG).then(function(obj) {
+                successCallback(obj);
+            }, function(obj) {
+                errorCallback(obj);
+            });
+        },
+        /**
+         * @ngdoc method
+         * @name rogersWeb.service:registrationService#statusUpdate
+         * @methodOf rogersWeb.service:registrationService
+         * @description update status of order into database
+         */
+        statusUpdate: function(status, successCallback, errorCallback) {
+            backendFactory.postHttpCall(STATUS_UPDATE, status, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -184,20 +210,46 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description get data from data base
          */
         getProductCount: function(email, successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(GET_CART + email).then(function(obj) {
+            backendFactory.getHttpCall(GET_CART + email).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
             });
         },
-         /**
+        /**
+         * @ngdoc method
+         * @name rogersWeb.service:registrationService#store user details into local storage
+         * @methodOf rogersWeb.service:registrationService
+         * @description get data from data base
+         */
+        getProductData: function(refNumber, successCallback, errorCallback) {
+            backendFactory.getHttpCall(GET_PURCHASE_REF + refNumber).then(function(obj) {
+                successCallback(obj.data);
+            }, function(obj) {
+                errorCallback(obj);
+            });
+        },
+        /**
          * @ngdoc method
          * @name rogersWeb.service:registrationService#store user details into local storage
          * @methodOf rogersWeb.service:registrationService
          * @description Insert data into data base
          */
-        getPurchase: function(email, successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(GET_PURCHASE+ email).then(function(obj) {
+        getPurchase: function(successCallback, errorCallback) {
+           backendFactory.getHttpCall(GET_PURCHASE).then(function(obj) {
+                successCallback(obj.data);
+            }, function(obj) {
+                errorCallback(obj);
+            });
+        },
+        /**
+         * @ngdoc method
+         * @name rogersWeb.service:registrationService#store user details into local storage
+         * @methodOf rogersWeb.service:registrationService
+         * @description Insert data into data base
+         */
+        getPurchaseDetail: function(email, successCallback, errorCallback) {
+            backendFactory.getHttpCall(GET_PURCHASE_DETAIL + email).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);
@@ -210,7 +262,7 @@ rogersWeb.service('registrationService', function(backendFactory) {
          * @description get data from data base
          */
         getHistory: function(email, successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(GET_HISTORY + email).then(function(obj) {
+            backendFactory.getHttpCall(GET_HISTORY + email).then(function(obj) {
                 successCallback(obj.data);
             }, function(obj) {
                 errorCallback(obj);

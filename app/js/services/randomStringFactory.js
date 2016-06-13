@@ -25,29 +25,26 @@ rogersWeb.factory("randomString", function($window) {
         }
     };
 });
-
-rogersWeb.factory("encryption", function($window) {
+rogersWeb.factory("encryption", function() {
     'use strict';
     return {
-        toEncodeString: function(password){
-            var ostr = password.toString().replace(/\s+/g,'');
-                        var x,nstr='',len=ostr.length;
-                        for(x=0;x<len;++x)
-                        {
-                            nstr+=(255-ostr.charCodeAt(x)).toString(36).toUpperCase();
-                        };
-                            return nstr;
+        toEncodeString: function(password) {
+            var ostr = password.toString().replace(/\s+/g, '');
+            var x, nstr = '',
+                len = ostr.length;
+            for (x = 0; x < len; ++x) {
+                nstr += (255 - ostr.charCodeAt(x)).toString(36).toUpperCase();
+            };
+            return nstr;
         },
-        fromEncodedString: function(password){
-                var ostr=password.toString();
-                var x,nstr='',len=ostr.length;
-                for(x=0;x<len;x+=2){
-                    nstr+=String.fromCharCode(255-parseInt(ostr.substr(x,2),36));
-                };
-                return nstr;
+        fromEncodedString: function(password) {
+            var ostr = password.toString();
+            var x, nstr = '',
+                len = ostr.length;
+            for (x = 0; x < len; x += 2) {
+                nstr += String.fromCharCode(255 - parseInt(ostr.substr(x, 2), 36));
+            };
+            return nstr;
         }
-        
-      };
-    
+    };
 });
-

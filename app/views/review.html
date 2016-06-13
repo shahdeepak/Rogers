@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-            <p class="bg-success"><b>Your shipping address</b></p>
+    <div class="row"><p class="bg-success"><b>Your shipping address</b></p>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" >
+            
             <address>
               <b>Email:</b>&nbsp;<a href="javascript:void(0);">{{email}}</a><br>
               <b>Street Address:</b>&nbsp;{{userDetails.address}}<br>
@@ -10,16 +10,20 @@
               <b>City:</b>&nbsp;{{userDetails.city}}<br>
               <b>Mobile Number:</b>&nbsp;{{userDetails.contact}}
             </address>
-            <hr>
+            
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+            <a href="" ng-click="BackToShipping()">Back To Shipping Details</a>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="hidden-xs hidden-sm col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-success">
                 <div class="panel panel-heading">
                     <strong>Cart Items</strong>&nbsp;({{totalCart}})
                     <span style="float:right;">
-                        <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                        <b>{{'Sum_Total_Price' | translate}} : </b>&nbsp;{{sumTotal | currency}}
                     </span>
                 </div>
                 <div class="panel panel-body">
@@ -43,9 +47,8 @@
                         <tbody class="table-lable">
                         <tr>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <th scope="row" class="table-td">Sum Total Price:</th>
+                            <th scope="row" ></th>
+                            <th scope="row" class="table-td">{{'Sum_Total_Price' | translate}} : </th>
                             <th scope="row" >{{sumTotal | currency}}</th>
                         </tr>
                       </tbody>
@@ -58,7 +61,7 @@
                 <div class="panel panel-heading">
                     <strong>Cart Items</strong>&nbsp;({{totalCart}})
                     <div>
-                        <b>Sum Total Price:</b>&nbsp;{{sumTotal | currency}}
+                        <b>{{'Sum_Total_Price' | translate}} : </b>&nbsp;{{sumTotal | currency}}
                     </div>
                 </div>
                 <div class="panel panel-body">

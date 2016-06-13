@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="panel panel-success">
-            <div class="panel panel-heading"><strong>Customer Feedback Form</strong></div>
+            <div class="panel panel-heading"><strong>{{'Cust_feedback' | translate}}</strong></div>
             <div class="panel panel-body">
                     <form class="form-horizontal" ng-submit="customerFeedback(feedbackDetails)">
                       <div class="form-group">
@@ -13,9 +13,9 @@
                       <div class="form-group">
                           <div class="col-sm-push-2 col-md-push-2 col-lg-push-2 col-sm-10 col-md-10 col-lg-5">
                               <p class="form-control-static">
-                                  (<span class="red">*</span>)These fields are required
+                                  (<span class="red">*</span>){{ 'LOGIN_REQUIRED' | translate }}
                               </p>
-                              <h4>Your Feedback</h4>
+                              <h4>{{'Your_Feedback' | translate}}</h4>
                           </div>
                       </div>
                       <div class="form-group">
@@ -30,7 +30,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">Your Email
+                        <label class="col-sm-2 col-md-2 col-lg-2 control-label">{{'Your_email' | translate }}
                             <span class="red"></span>
                           </label>
                         <div class="col-sm-10 col-md-10 col-lg-5">
@@ -42,7 +42,7 @@
                       </div>
                       <div class="form-group">
                         <label class="col-sm-2 col-md-2 col-lg-2 control-label">
-                            Your Feedback<span class="red">*</span>
+                            {{'Your_Feedback' | translate}}<span class="red">*</span>
                           </label>
                         <div class="col-sm-10 col-md-10 col-lg-5">
                           <textarea class="form-control" rows="3" ng-model="feedbackDetails.feedback" required></textarea>
@@ -52,31 +52,62 @@
 
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 col-lg-offset-2 col-lg-2">
-                            <input type="submit" class="btn btn-danger form-control" value="SUBMIT"/>
+                            <input type="submit" class="btn btn-danger form-control" value="{{ 'Submit' | translate}}"/>
                         </div>
                       </div>
                 </form>
             </div>
         </div>
-        
-        <!--<div class = "panel-group" id = "accordion">
-           <div class = "panel panel-default" ng-repeat="x in data">
-              <div class = "panel-heading">
-                 <h4 class = "panel-title">
-                    <a data-toggle = "collapse" data-parent = "#accordion" href = "{{ '/#/#collapseOne' + $index }}">
-                       Click me to expand. Click me again to collapse.Section 1
-                    </a>
-                 </h4>
-              </div>
-              <div id = "{{ 'collapseOne' + $index }}" class = "panel-collapse collapse in">
-                 <div class = "panel-body">
-                    {{x.Description}}
-                 </div>
-              </div>
-
-           </div>
-        </div>-->
         <accordian data='list'></accordian>
         <!--<div accordian data='list'></div>-->
     </div>
+    
+    
+    <!--Touch Functionality start-->
+    <dkiv class="row"> 
+        <div class="content-area">
+         <div id="myCarousel" class="carousel slide">
+          <!-- Indicators -->
+          <ol>
+             <li ng-repeat="item in dataImg" 
+                data-target="#myCarousel" 
+                data-slide-to="{{$index}}" 
+                ng-class="{'active' : item.status == true}">
+              </li>
+          </ol>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" >
+               <div ng-repeat="item in dataImg" ng-class="{'item' : true, 'active' : $index == 0}" >
+                 <img src="{{item.img}}">
+               </div>
+           </div>
+          </div>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+          </a>
+        </div>
+    </div>
+<script>
+$(document).ready(function() {  
+
+                //Enable swiping...
+                $(".carousel-inner").swipe( {
+                    //Generic swipe handler for all directions
+                    swipeLeft:function(event, direction, distance, duration, fingerCount) {
+                        $(this).parent().carousel('next'); 
+                    },
+                    swipeRight: function() {
+                        $(this).parent().carousel('prev'); 
+                    },
+                    //Default is 75px, set to 0 for demo so any distance triggers swipe
+                    threshold:0
+                });
+            });
+</script>
+<!--End-->
+    
 </div>

@@ -5,7 +5,7 @@
  * @requires $location
  * @description Controller for payment gateway.
  */
-rogersWeb.controller("paymentCtrl", function($scope, $http, $location) {
+rogersWeb.controller("paymentCtrl", function($scope, $http, $location, registrationService) {
     'use strict';
     $scope.message = "";
     /**
@@ -16,14 +16,16 @@ rogersWeb.controller("paymentCtrl", function($scope, $http, $location) {
      * @description Payment.
      */
     $scope.submitCardDetails = function(card) {
-        $scope.$emit("spinner",{"flag":true});
+        $scope.$emit("spinner", {
+            "flag": true
+        });
         var cardDetails = {
             "intent": "sale",
             "payer": {
                 "payment_method": "credit_card",
                 "funding_instruments": [{
                     "credit_card": {
-                        "type": "visa",
+                        "type": "discover",
                         "number": card.number,
                         "expire_month": card.month.value,
                         "cvv2": card.cvv,
@@ -56,11 +58,24 @@ rogersWeb.controller("paymentCtrl", function($scope, $http, $location) {
             "processData": false,
             "data": cardDetails
         };
-        $http(settings).then(function successCallback(response) {
-            $scope.$emit("spinner",{"flag":false});
-            $location.path('/thankyou');
-        }, function errorCallback(response) {
-            $scope.$emit("spinner",{"flag":false});
+        $http(settings).then(function() {
+            var loggedEmail = {
+                email: sessionStorage.getItem('loggedInUser')
+            };
+            registrationService.deleteCartDetail(loggedEmail, function(result) {
+                sessionStorage.setItem('refrenceNumber', result.data.referenceNumber);
+                $scope.getProductCount();
+                $scope.$emit("spinner", {
+                    "flag": false
+                });
+                $location.path('/thankyou');
+            }, function(error) {
+                $scope.errorMessage = "error message" + error;
+            });
+        }, function() {
+            $scope.$emit("spinner", {
+                "flag": false
+            });
             $scope.message = "Invalid card details";
         });
     };
@@ -70,7 +85,7 @@ rogersWeb.controller("paymentCtrl", function($scope, $http, $location) {
      * @methodOf rogersWeb.controllers:paymentCtrl
      * @description Month list.
      */
-   $http.get('json/monthList.json').success(function(data) {
+    $http.get('json/monthList.json').success(function(data) {
         $scope.monthList = data;
     });
     /**

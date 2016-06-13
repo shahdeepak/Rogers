@@ -36,7 +36,7 @@
             try {
                 jsonData = new APP.Models.Product(data[i]);
             } catch (e) {
-                console.log(e);
+                
             }
             this.product.push(jsonData);
         }

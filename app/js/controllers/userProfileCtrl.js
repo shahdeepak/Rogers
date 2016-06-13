@@ -25,11 +25,10 @@ rogersWeb.controller('userProfileCtrl', function($scope, userProfileService, reg
     $scope.curPage = 0;
     $scope.pageSize = 5;
     userProfileService.getProfileWithParamDetails(email, success, failure);
-
     function success(user) {
+        user.data.email = email;
         $scope.userDetails = user.data;
     };
-
     function failure() {
         $scope.message = "Error";
     };
@@ -40,11 +39,9 @@ rogersWeb.controller('userProfileCtrl', function($scope, userProfileService, reg
      * @description Bringing product history data from server by taking user valid email address.
      */
     registrationService.getHistory(email, successHistory, failureHistory);
-
     function successHistory(result) {
         $scope.productItem = result;
     };
-
     function failureHistory() {
         $scope.message = "Error";
     };
@@ -55,7 +52,13 @@ rogersWeb.controller('userProfileCtrl', function($scope, userProfileService, reg
      * @description update user profile
      */
     $scope.updateProfile = function(userProfileDetails) {
-        userProfileService.updateProfileDetails(email, userProfileDetails,
+        var userProfile_Details = {
+            "email": userProfileDetails.email,
+            "password": userProfileDetails.password,
+            "dateOfBirth": userProfileDetails.dateOfBirth,
+            "contact": userProfileDetails.contact
+        };
+        userProfileService.updateProfileDetails(email, userProfile_Details,
             function() {
                 $scope.message = 'Your profile updated successfully';
             },
@@ -84,6 +87,12 @@ rogersWeb.controller('userProfileCtrl', function($scope, userProfileService, reg
     });
     $scope.$emit("quantity");
 });
+/**
+     * @ngdoc method
+     * @name rogersWeb.controllers:userProfileCtrl#filter
+     * @methodOf rogersWeb.controllers:userProfileCtrl
+     * @description using for pagination
+     */
 rogersWeb.filter('pagination', function() {
     return function(input, start) {
         start = +start;

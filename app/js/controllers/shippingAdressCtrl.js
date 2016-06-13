@@ -42,13 +42,16 @@ rogersWeb.controller('shippingCtrl', function($scope, $location, registrationSer
         };
         postShippingDetails(details);
     };
-
     function postShippingDetails(details) {
         if ($scope.result.length > 0) {
             registrationService.updateShippingDetails(details, success, error);
         } else {
             if ($scope.result.length === 0) {
-                registrationService.saveShippingDetails(details, success, error);
+                registrationService.saveShippingDetails(details, function(){
+                    $location.path('/review');
+                }, function(data){
+                    $scope.errorMessage = "error message" + data;
+                });
             }
         }
     };
@@ -69,7 +72,7 @@ rogersWeb.controller('shippingCtrl', function($scope, $location, registrationSer
      * @description send message to other controller communication between controller This function is a sender function
      */
     $scope.$emit("showHide", {
-        "pagelink": "profile"
+        "pagelink": "Profile"
     });
     $scope.$emit("quantity");
 });

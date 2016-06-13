@@ -44,9 +44,14 @@
     text-decoration: none;
     color: #DA291C;
 }
-
+.position{
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+}
 @media (max-width:768px){
 .headerShow{
+    
     background-color: #DA291C;
     font-family: sans-serif;
     font-size: 40%;

@@ -4,7 +4,7 @@
 
 
 //var START_URL = 'http://cf-techm-app.cfapps.io', 
-    var START_URL = 'http://10.10.20.209:9005',
+    var START_URL = 'http://10.10.22.125:9905',
     ADD_USER = START_URL + '/api/adduser',
     LANG_ENG = 'en',
     LANG_FR = 'fr',
@@ -15,17 +15,27 @@
     UPDATE_USER = START_URL + '/api/updateUser',
     ADD_CART = START_URL + '/api/addCart',
     REMOVE_CART = START_URL + '/api/removeCart',
+    SEND_EMAIL = START_URL + '/api/sendEmail',
     GET_CART = START_URL + '/api/getCart/',
+    GET_PURCHASE_REF = START_URL + '/api/getPurchaseData/',
+    //GET_PURCHASE_DETAIL = START_URL + '/api/getPurchaseData/',
     GET_HISTORY = START_URL + '/api/getHistory/',
     UPDATE_CART = START_URL + '/api/updateCart',
     GET_SINGLE_USER = START_URL + '/api/getSingleUser/',
     GET_PHONE = START_URL + '/api/getPhone',
-    EN_JSON_PATH = './i18n/en.json',
-    FR_JSON_PATH = './i18n/fr.json',
+    EN_JSON_PATH = START_URL+'/api/getI18eng',
+    FR_JSON_PATH = START_URL+'/api/getI18fr',
     REMOVE_ITEM = START_URL + '/api/removeProduct',
-    PHONE_JSON_PATH = START_URL + '/api/getProduct/',
+    GET_PRODUCTS = START_URL + '/api/getProduct/',
     ADD_PRODUCT = START_URL + '/api/addProduct',
-    UPDATE_PRODUCT = START_URL + '/api/updateProduct'
+    UPDATE_FR = START_URL + '/api/updateI18fr',
+    ADD_FR = START_URL + '/api/setI18fr',
+    DELETE_FR = START_URL + '/api/deleteI18fr',
+    UPDATE_EN = START_URL + '/api/updateI18eng',
+    ADD_EN = START_URL + '/api/setI18eng',
+    DELETE_EN = START_URL + '/api/deleteI18eng',
+    UPDATE_PRODUCT = START_URL + '/api/updateProduct',
+    REMOVE_SINGLE_CART = START_URL + '/api/removeSingleCart'
     CONFIG = {
         header: {
             "Content-Type": "application/json;"

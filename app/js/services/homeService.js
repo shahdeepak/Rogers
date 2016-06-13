@@ -16,11 +16,13 @@ rogersWeb.factory('homeService', function(backendFactory) {
          */
         getMobileDetal: function(successCallback, failureCallback) {
             var urlRoot = PHONE_JSON_PATH;
-            var promise = backendFactory.getHttpCall(urlRoot).then(function(obj) {
+            backendFactory.getHttpCall(urlRoot).then(function(obj) {
                 var productList = new APP.Models.ProductList(obj.data);
                 productList.setProducts(obj.data);
                 successCallback(productList);
-            }, function(obj) {});
+            }, function(obj) {
+                failureCallback(obj);
+            });
         }
     };
 });

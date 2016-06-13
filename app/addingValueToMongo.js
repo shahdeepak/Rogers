@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 //creating connection with mongoose
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost/rockrock')
 
 
 var db=mongoose.connection;

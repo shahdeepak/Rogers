@@ -47,7 +47,7 @@ rogersWeb.controller('checkoutCtrl', function($scope, $rootScope, $http, $locati
         var obj = {
             "id": data.productDetails.id + sessionStorage.getItem('loggedInUser')
         };
-        registrationService.removeItem(obj, function(data) {
+        registrationService.removeItem(obj, function() {
             $scope.sumTotal = 0;
             $scope.totalCart = 0;
             $scope.getProductListDetails();
@@ -61,7 +61,7 @@ rogersWeb.controller('checkoutCtrl', function($scope, $rootScope, $http, $locati
      * @name rogersWeb.controllers:checkoutCtrl#addCart
      * @methodOf rogersWeb.controllers:checkoutCtrl
      * @param {object} arg  - arg
-     * @description invoke addProductToCart method from another controller using  $controller service 
+     * @description invoke addProductToCart method from another controller using  $controller service
      * @creating new child scope using $scope.$new()
      */
     $scope.addCart = function(data) {
@@ -82,7 +82,7 @@ rogersWeb.controller('checkoutCtrl', function($scope, $rootScope, $http, $locati
             if (data.code) {
                 data = {
                     id: data.op._id
-                }
+                };
                 updateProductToCart();
             } else {
                 $scope.getProductCount();
@@ -108,10 +108,6 @@ rogersWeb.controller('checkoutCtrl', function($scope, $rootScope, $http, $locati
      * @description Invoked on final submit of user
      */
     $scope.confirmOrder = function() {
-        /*$http(PAY_PAL_CONFIG).then(function successCallback(response) {
-            sessionStorage.setItem("access_token", response.data.access_token);
-            sessionStorage.setItem("token_type", response.data.token_type);
-        }, function errorCallback() {});*/
         $location.path('/shipping');
     };
     /**
@@ -123,23 +119,7 @@ rogersWeb.controller('checkoutCtrl', function($scope, $rootScope, $http, $locati
      * @description send message to other controller communication between controller This function is a sender function
      */
     $scope.$emit("showHide", {
-        "pagelink": "profile"
+        "pagelink": "Profile"
     });
     $scope.$emit("quantity");
-    
-    /*back*/
-/*     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){            
-    // Here you can take the control and call your own functions:
-    // Prevent the browser default action (Going back):
-       console.log('hello');        
-       if ($location.path().indexOf("thankyou") != 1) {
-                   event.preventDefault();
-                   $location.path('/thankyou');
-                }
-});
-    */
-    
-    
-    
-    
 });

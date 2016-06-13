@@ -1,5 +1,4 @@
 <!--created by Anurati date:16/4/2016-->
-
 <!--This makes carousel slide automatically-->
 <script type='text/javascript'>
    $(document).ready(function() {
@@ -10,7 +9,7 @@
 </script>
 <div class="container-fluid">
  
-<!--Banner Carousel-->   
+<!--Banner Carousel-->
  <div class="row">
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
          <!-- Indicators -->
@@ -34,17 +33,18 @@
       </div>
    </div>
 <!--First Slide Container-->  
-<div ng-include = "'./views/carousel1.html'"></div>
-
-<!--2nd Carousel Container-->
-<div ng-include = "'./views/carousel2.html'"></div>   
-
-<!--3rd Carousel Container-->
+<div class="hidden-xs hidden-sm" ng-include = "'./views/carousel1.html'"></div>
     
-<div ng-include = "'./views/carousel3.html'"></div>
+ <!--Mobile view  --> 
+<div class="hidden-md hidden-lg" ng-include = "'./views/carouselMobile1.html'"></div>
+ <!--end-->
+    
+<!--2nd Carousel Container-->
+<div class="hidden-xs hidden-sm" ng-include = "'./views/carousel2.html'"></div>   
 
-<!--About-Us Container-->
-<div ng-include = "'./views/aboutUs.html'"></div>
+<!--3rd Carousel Container-->  
+<div class="hidden-xs hidden-sm" ng-include = "'./views/carousel3.html'"></div>
+
 </div>
 
 <!--Internal CSS-->
@@ -168,4 +168,3 @@
     margin-right: 10px;
 }
 </style>
-

@@ -13,19 +13,28 @@
     <script src="js/lib/less-1.7.5.min.js"></script>
     <script src="js/lib/angular.js"></script>
     <script src="js/lib/angular-animate.js"></script>
+    
+    <!--touchswipe-->
+    <script src="js/lib/angular-touch.min.js"></script>
+    <script src="js/lib/TweenMax.min.js"></script>
+    <!--end-->
+    
+    
     <script src="js/lib/angular-ui-bootstrap.js"></script>
     <script src="js/lib/angular-route.js"></script>
     <script src="js/lib/angular-cache.js"></script>
+    <!--touchswipe-->
+    <script src="js/lib/touchswipe.js"></script>
+    <!--end-->
 
     <script src="js/lib/angular-sanitize.js"></script>
     <script src="js/lib/ui-bootstrap-tpls.js"></script>
-    
     <script src="js/lib/bootstrap.min.js"></script>
-    
     <script src="js/lib/angular-translate.js"></script>
 	<script src="js/lib/angular-translate-loader-static-files.js"></script>
     <script src="js/lib/angular-datepicker.js"></script>
     <script src="js/lib/underscore.js"></script>
+    <script src="js/lib/qrcode.js"></script>
     <!--cart-animation-->
     <script src="js/lib/cart-animation.js"></script>
     <!--css-->
@@ -34,13 +43,12 @@
     <!--bootstarp.css-->
     <link rel="stylesheet" type="text/css" href="css/bootstarp.min.css"></link>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"></link>
-    <!--end-->
 
     <link rel="stylesheet" type="text/css" href="css/angular-datepicker.css"></link>
-  <!--  <link rel="stylesheet" type="text/css" href="./css/home.css"></link>-->
     <link rel="stylesheet" type="text/css" href="css/index.css"></link>
     <link rel="stylesheet" type="text/css" href="css/phone-List.css"></link>
     <link rel="stylesheet" type="text/css" href="css/footer.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/cart.css"></link>
     <link rel="stylesheet" type="text/css" href="css/header.css"></link>
     <link rel="stylesheet" type="text/css" href="css/productDetails.css"></link>
     <link rel="stylesheet" type="text/css" href="css/productMobileView.css"></link>
@@ -71,6 +79,9 @@
         }
         @media (min-width: 1200px) {
         }
+        .height{
+            padding-top: 65px;
+        }
     </style>
 
     <!--[if lt IE 9]>
@@ -87,7 +98,7 @@
     <div data-ng-include="'./views/header.html'"></div>
     <!--End-->
     
-    <div >
+    <div>
         <div ng-view class="height"></div>
     </div>
     
@@ -105,9 +116,9 @@
 <script src="js/controllers/loginCtrl.js"></script>
 <script src="js/controllers/userProfileCtrl.js"></script>
 <script src="js/controllers/headerCtrl.js"></script>
-<script src="js/controllers/modalCtrl.js"></script>
 <script src="js/controllers/productDetailCtrl.js"></script>
 <script src="js/controllers/paymentCtrl.js"></script>
+<script src="js/controllers/adminEntryCtrl.js"></script>
 <!--cartCtrl-->
 <script src="js/controllers/cartCtrl.js"></script>
 <script src="js/controllers/checkoutCtrl.js"></script>
@@ -117,15 +128,18 @@
 <script src="js/controllers/reviewCtrl.js"></script>
 <script src="js/controllers/supplierCtrl.js"></script>
 <script src="js/controllers/productEntryCtrl.js"></script>
+<script src="js/directives/qrCodeDir.js"></script>
     
 <!-- services -->
 <script src="js/services/backendFactory.js"></script>
 <script src="js/services/registrationService.js"></script>
 <script src="js/services/userProfileService.js"></script>
+<script src="js/services/adminEntryService.js"></script>
 
 <script src="js/services/localize.js"></script>
 <script src="js/services/randomStringFactory.js"></script>
 <script src="js/services/homeService.js"></script>
+
 <script src="js/config/common.js"></script>
 
     

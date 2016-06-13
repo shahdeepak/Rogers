@@ -24,7 +24,6 @@ rogersWeb.controller('reviewCtrl', function($scope, $http, $location, $controlle
         });
     }
     getShippingDetails();
-    
     $scope.sumTotal = 0;
     $scope.totalCart = 0;
     /**
@@ -53,7 +52,6 @@ rogersWeb.controller('reviewCtrl', function($scope, $http, $location, $controlle
     if ($scope.isLoggedIn()) {
         $scope.getProductListDetails();
     };
-    
     /**
      * @ngdoc method
      * @name rogersWeb.controllers:checkoutCtrl#confirmOrder
@@ -61,11 +59,16 @@ rogersWeb.controller('reviewCtrl', function($scope, $http, $location, $controlle
      * @description Invoked on final submit of user
      */
     $scope.submitOrder = function() {
-        $http(PAY_PAL_CONFIG).then(function successCallback(response) {
+        $http(PAY_PAL_CONFIG).then(function(response) {
             sessionStorage.setItem("access_token", response.data.access_token);
             sessionStorage.setItem("token_type", response.data.token_type);
-        }, function errorCallback() {});
+        }, function() {
+            $scope.errorMessage = "error";
+        });
         $location.path('/payment');
+    };
+    $scope.BackToShipping=function(){
+        $location.path('/shipping');
     };
     /**
      * @ngdoc method
@@ -76,7 +79,7 @@ rogersWeb.controller('reviewCtrl', function($scope, $http, $location, $controlle
      * @description send message to other controller communication between controller This function is a sender function
      */
     $scope.$emit("showHide", {
-        "pagelink": "profile"
+        "pagelink": "Profile"
     });
     $scope.$emit("quantity");
 });

@@ -13,12 +13,11 @@ rogersWeb.controller('productEntryCtrl', function($scope, registrationService) {
      * @methodOf rogersWeb.controllers:productEntryCtrl
      * @description get product from database.
      */
-    function getProductList(){
+    function getProductList() {
         registrationService.getProduct(function(data) {
-            // console.log(data);
             $scope.productDetails = data;
         }, function(data) {
-            $scope.message = "error";
+            $scope.message = "error"+" "+data;
         });
     };
     getProductList();
@@ -29,7 +28,7 @@ rogersWeb.controller('productEntryCtrl', function($scope, registrationService) {
      * @description update/add data into database.
      */
     $scope.submitProductDetails = function() {
-        if ($scope.status == "update") {
+        if ($scope.status === "update") {
             var updateProductDetails = {
                 "id": $scope.id,
                 "productName": $scope.pName,
@@ -62,14 +61,14 @@ rogersWeb.controller('productEntryCtrl', function($scope, registrationService) {
             };
             registrationService.updateProduct(
                 updateProductDetails,
-                function(data) {
+                function() {
                     $scope.message = "Successfully data inserted into database";
                     $scope.status = "create";
                     clearField();
                     getProductList();
                 },
                 function(data) {
-                    $scope.message = "Error";
+                    $scope.message = "Error"+" "+data;
                 });
         } else {
             if ($scope.productDetails[$scope.productDetails.length - 1].id === null) {
@@ -109,14 +108,14 @@ rogersWeb.controller('productEntryCtrl', function($scope, registrationService) {
             };
             registrationService.addProduct(
                 addProductDetails,
-                function(data) {
+                function() {
                     $scope.message = "Successfully data inserted into database";
                     $scope.status = "create";
                     clearField();
                     getProductList();
                 },
                 function(data) {
-                    $scope.message = "Error";
+                    $scope.message = "Error"+" "+data;
                 });
         }
     };
@@ -181,14 +180,16 @@ rogersWeb.controller('productEntryCtrl', function($scope, registrationService) {
      * @description remove item from database .
      */
     $scope.removeItem = function(id) {
-        var idDetails = {"id": id}
+        var idDetails = {
+            "id": id
+        };
         registrationService.removeProduct(
             idDetails,
-            function(data) {
+            function() {
                 $scope.message = "Successfully deleted from database";
             },
             function(data) {
-                $scope.message = "Error";
+                $scope.message = "Error"+" " +data;
             });
     };
 });

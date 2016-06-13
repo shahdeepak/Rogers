@@ -37,7 +37,7 @@ rogersWeb.directive('onlyAlphabets', function() {
             });
         }
     };
-});/*Add blank spaces in a string after 4 digits..*/
+}); /*Add blank spaces in a string after 4 digits..*/
 rogersWeb.directive('addSpace', function() {
     return {
         restrict: 'A',
@@ -72,7 +72,7 @@ rogersWeb.directive('accordian', function() {
         '</div>' +
         '</div>' +
         '</div>';
-    return {//Default for 1.3+
+    return { //Default for 1.3+
         restrict: 'EA',
         scope: {
             data: '='

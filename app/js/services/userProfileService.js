@@ -13,7 +13,7 @@ rogersWeb.service('userProfileService', function(backendFactory) {
          */
         updateProfileDetails: function(email, userDetail, successCallback, errorCallback) {
             userDetail.email = email;
-            var promise = backendFactory.postHttpCall(UPDATE_USER, userDetail, CONFIG).then(function(obj) {
+            backendFactory.postHttpCall(UPDATE_USER, userDetail, CONFIG).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);
@@ -21,7 +21,7 @@ rogersWeb.service('userProfileService', function(backendFactory) {
         },
         //@description Get data from localstorage with param
         getProfileWithParamDetails: function(email, successCallback, errorCallback) {
-            var promise = backendFactory.getHttpCall(GET_SINGLE_USER + email).then(function(obj) {
+            backendFactory.getHttpCall(GET_SINGLE_USER + email).then(function(obj) {
                 successCallback(obj);
             }, function(obj) {
                 errorCallback(obj);

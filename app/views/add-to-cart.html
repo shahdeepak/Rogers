@@ -1,83 +1,60 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="hidden-xs col-sm-2 col-lg-2 col-md-2">
-            <!--<div class="panel panel-default">
-                <div class="panel panel-heading">Category</div>
-                <div class="panel panel-body">
-                    <div class="form-controll"><input type="checkbox"/> Nokia</div>
-                    <div class="form-controll"><input type="checkbox"/> Samsung</div>
-                    <div class="form-controll"><input type="checkbox"/> Micromax</div>
-                </div>
-            </div>-->
-            <!--<div class="filter panel panel-default">
-                <div class="panel panel-heading">Price</div>
-                <div class="panel panel-body">
-                    <div ng-repeat="productPrice in priceGroup">
-                        <input type="checkbox" ng-model="useprice[productPrice]"/>{{productPrice}}
-                    </div>
-                </div>
-            </div>-->
-            <div class="filter panel panel-default">
-                <div class="panel panel-heading">Price</div>
-                <div class="panel panel-body">
-                    <div ng-repeat="val in range">
-                        <input type="checkbox" ng-model="useprice[$index]"/>
-                        {{val.minValue}} to {{val.maxValue}}
-                    </div>
-                </div>
-            </div>
-            
-            <!--<div class="panel panel-default">
-                <div class="panel panel-heading">Inches</div>
-                <div class="panel panel-body">
-                    <div class="form-controll"><input type="checkbox"/> 5.1''</div>
-                    <div class="form-controll"><input type="checkbox"/> 5.3''</div>
-                    <div class="form-controll"><input type="checkbox"/> 5.5''</div>
-                </div>
-            </div>-->
-        </div>
-        <div class="col-xs-12 col-sm-10 col-lg-10 col-md-10" style="diaplay: inline-block;">
-            <div class="col-xs-9 col-sm-3 col-lg-3 col-md-3" 
-             ng-repeat="cart in filteredcart | filter:query"
-             style="float:left; 
-                    display:inline-block;
-                    width:220px;
-                    margin-right: 25px;
-                    margin-bottom: 25px;
-                    height:350px; ">
-                <div class="thumbnail" style=" width:220px; height:365px;">
-                    <div style="height:212px width:210px;">
-                        <p style="font-size: 15px; padding:5px;" class="bg-success">
-                            {{cart.productName}}
-                        </p>
-                    <img src="{{cart.imagePath}}" alt="img" 
-                         class="img-responsive" 
-                         style="height:212px display:inline-block; width:160px;">
-                    <!--<div class="caption">-->
-                        <span class="pull-right"><b>{{cart.productPrice | currency}}</b></span>
-                                              </div>
-                        <div style="width:195px;">{{cart.productDetails}}</div>
-                    <!--</div>-->
-                    <div style="padding-top:10px; float:left;">
-                        <a href="javascript:void(0);"
-                       class="btn btn-success"
-                       ng-click="addProductToCart(cart)" >
-                        <span>Add to cart
-                            <img src="images/shop.png" class="img-circle">
-                        </span>
-                        </a>
-                        </div>
-                       <!--<script src="js/lib/cart.js"></script>  -->
-                   </div>
-              </div>
+<div class="row">
+   <div class="hidden-xs col-sm-2 col-lg-2 col-md-2">
+      <div class="panel panel-default">
+         <div class="panel panel-heading">Category</div>
+         <div class="panel panel-body">
+            <div class="form-controll"><input type="checkbox"/> Nokia</div>
+            <div class="form-controll"><input type="checkbox"/> Samsung</div>
+            <div class="form-controll"><input type="checkbox"/> Micromax</div>
          </div>
-    </div>
-<!--
-<div>
-<a class="scroll-to-top visible" href="#" id="scrollToTop">
-    <i class="icon icon-chevron-up icon-white"></i>
-</a>
+      </div>
+      <div class="filter panel panel-default">
+         <div class="panel panel-heading">Price</div>
+         <div class="panel panel-body">
+            <div ng-repeat="val in range">
+               <input type="checkbox" ng-model="useprice[$index]"/>
+               {{val.minValue}} to {{val.maxValue}}
+            </div>
+         </div>
+      </div>
+      <div class="panel panel-default">
+         <div class="panel panel-heading">Inches</div>
+         <div class="panel panel-body">
+            <div class="form-controll"><input type="checkbox"/> 5.1''</div>
+            <div class="form-controll"><input type="checkbox"/> 5.3''</div>
+            <div class="form-controll"><input type="checkbox"/> 5.5''</div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xs-12 col-sm-10 col-lg-10 col-md-10" style="diaplay: inline-block;">
+      <div class=" maindiv col-xs-9 col-sm-3 col-lg-3 col-md-3" 
+         ng-repeat="cart in filteredcart | filter:query">
+         <div class="thumbnail">
+            <div style="height:212px width:210px;">
+               <p class="bg-success">
+                  {{cart.productName}}
+               </p>
+               <img src="{{cart.imagePath}}" alt="img" 
+                  class="img-responsive">         
+                <span class="pull-right">
+                    <b>
+                        {{cart.productPrice | currency}}
+                    </b>
+                </span>
+             </div>
+             <div class="detail">{{cart.productDetails}}</div>
+          
+            <div style="padding-top:10px; float:left;">
+               <a href="javascript:void(0);"
+                  class="btn btn-success button"
+                  ng-click="addProductToCart(cart)">
+               <span>{{ 'Add_to_cart' | translate }}
+               <img src="images/shop.png" class="img-circle">
+               </span>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
--->
-
-
